@@ -6,7 +6,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.appwood.mylibrarys.AdsClass;
+import com.appwood.mylibrarys.AnimationR;
 
 import animation.almonten.koola.AdsCode.ExitScreen;
 
@@ -18,29 +18,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
     }
 
     public void ADS(View view) {
-        //1 finish
-        AdsClass.Interstitial(this, new Intent(this, TestingActivity.class), 0);
-
+        AnimationR.Slider_intents(this, new Intent(this, TestingActivity.class), 0);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //
-//        //native
-//        //R and B
-        AdsClass.NativeAds(this, findViewById(R.id.native_detail),
+        AnimationR.Top_animation(this, findViewById(R.id.native_detail),
                 findViewById(R.id.banner_native), findViewById(R.id.addcontain)
                 , findViewById(R.id.ad_native_fb));
 
-
         //banner
-        AdsClass.Banner(this, findViewById(R.id.bottomsads).findViewById(R.id.banner_container), findViewById(R.id.bottomsads));
+        AnimationR.Bottom_animation(this, findViewById(R.id.bottomsads).findViewById(R.id.banner_container), findViewById(R.id.bottomsads));
     }
 
 //    @Override
@@ -51,12 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-//        MainActivity.this.startActivity(new Intent(MainActivity.this, ExitScreen.class));
-      AdsClass.Interstitial(this, new Intent(this, ExitScreen.class),0);
-//        AdsClass.BackInterstitial(this);
-
+      AnimationR.Slider_intents(this, new Intent(this, ExitScreen.class),0);
     }
-
 
 }
 

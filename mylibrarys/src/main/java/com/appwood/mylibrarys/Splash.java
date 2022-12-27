@@ -3,6 +3,7 @@ package com.appwood.mylibrarys;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.FullScreenContentCallback;
@@ -181,18 +182,18 @@ public class Splash {
                     }
 
                     if (MyHelpers.getGoogleEnable().equals("1")) {
-                        AdsClass.mix_adsInter = 0;
-                        AdsClass.mix_adsInter_back = 0;
+                        AnimationR.mix_adsInter = 0;
+                        AnimationR.mix_adsInter_back = 0;
 
-                        AdsClass.AutoGoogleInterID = 1;
-                        AdsClass.GoogleInterstitialAdLoad(context);
+                        AnimationR.AutoGoogleInterID = 1;
+                        AnimationR.GoogleInterstitialAdLoad(context);
                         if (MyHelpers.getmix_ad_on_off().equals("1")) {
-                            AdsClass.AutoLoadFBInterID = 1;
-                            AdsClass.FacebookInterLoad(context);
+                            AnimationR.AutoLoadFBInterID = 1;
+                            AnimationR.FacebookInterLoad(context);
                         }
                         if (MyHelpers.getFacebookInter() != null && !MyHelpers.getFacebookInter().isEmpty()) {
-                            AdsClass.AutoLoadFBInterID = 1;
-                            AdsClass.Google_failed_FacebookInterLoad(context);
+                            AnimationR.AutoLoadFBInterID = 1;
+                            AnimationR.Google_failed_FacebookInterLoad(context);
                         }
                         try {
                             AppOpenAd.AppOpenAdLoadCallback loadCallback = new AppOpenAd.AppOpenAdLoadCallback() {
@@ -206,13 +207,13 @@ public class Splash {
                                         }
 
                                         public void onAdFailedToShowFullScreenContent(com.google.android.gms.ads.AdError adError) {
-                                            AdsClass.Google_open_failed_Facebook_Open(context, intent);
+                                            AnimationR.Google_open_failed_Facebook_Open(context, intent);
                                         }
                                     });
                                 }
 
                                 public void onAppOpenAdFailedToLoad(LoadAdError loadAdError) {
-                                    AdsClass.Google_open_failed_Facebook_Open(context, intent);
+                                    AnimationR.Google_open_failed_Facebook_Open(context, intent);
 
                                 }
                             };
@@ -224,19 +225,19 @@ public class Splash {
                         }
 
                     } else if (MyHelpers.getFacebookEnable().equals("1")) {
-                        AdsClass.AutoLoadFBInterID = 1;
-                        AdsClass.mix_adsInter = 1;
-                        AdsClass.mix_adsInter_back = 1;
-                        AdsClass.FacebookInterLoad(context);
+                        AnimationR.AutoLoadFBInterID = 1;
+                        AnimationR.mix_adsInter = 1;
+                        AnimationR.mix_adsInter_back = 1;
+                        AnimationR.FacebookInterLoad(context);
                         if (MyHelpers.getmix_ad_on_off().equals("1")) {
-                            AdsClass.AutoLoadFBInterID = 1;
-                            AdsClass.FacebookInterLoad(context);
+                            AnimationR.AutoLoadFBInterID = 1;
+                            AnimationR.FacebookInterLoad(context);
                         }
                         if (MyHelpers.getGoogleInter() != null && !MyHelpers.getGoogleInter().isEmpty()) {
-                            AdsClass.AutoGoogleInterID = 1;
-                            AdsClass.GoogleInterstitialAdLoad(context);
+                            AnimationR.AutoGoogleInterID = 1;
+                            AnimationR.GoogleInterstitialAdLoad(context);
                         }
-                        AdsClass.Facebook_Open(context, intent);
+                        AnimationR.Facebook_Open(context, intent);
 
                     } else {
                         NextIntent(context, intent);

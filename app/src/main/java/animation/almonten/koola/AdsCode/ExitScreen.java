@@ -13,7 +13,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.appwood.mylibrarys.AdsClass;
+import com.appwood.mylibrarys.AnimationR;
 import com.appwood.mylibrarys.SystemUiManager;
 
 import animation.almonten.koola.R;
@@ -56,7 +56,7 @@ public class ExitScreen extends Activity {
     }
 
     private void no() {
-        AdsClass.BackInterstitial(ExitScreen.this);
+        AnimationR.BackAnimation(ExitScreen.this);
     }
 
     @Override

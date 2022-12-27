@@ -6,7 +6,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.appwood.mylibrarys.AdsClass;
+import com.appwood.mylibrarys.AnimationR;
 
 
 public class TestingActivity extends AppCompatActivity {
@@ -19,13 +19,11 @@ public class TestingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        AdsClass.BackInterstitial(TestingActivity.this);
+        AnimationR.BackAnimation(TestingActivity.this);
     }
 
     public void ADS(View view) {
-
-        AdsClass.Interstitial(this, new Intent(this,  MainActivity.class), 0);
-
+        AnimationR.Slider_intents(this, new Intent(this,  MainActivity.class), 1);
     }
 
 
