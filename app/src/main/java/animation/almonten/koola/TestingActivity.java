@@ -23,7 +23,7 @@ public class TestingActivity extends AppCompatActivity {
     }
 
     public void ADS(View view) {
-        AnimationR.Slider_intents(this, new Intent(this,  MainActivity.class), 1);
+        AnimationR.Slider_intents(this, new Intent(this,  MainActivity.class), null,1);
     }
 
 

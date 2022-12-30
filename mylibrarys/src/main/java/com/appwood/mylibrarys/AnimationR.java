@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.facebook.ads.Ad;
 import com.facebook.ads.InterstitialAdListener;
@@ -79,11 +80,12 @@ public class AnimationR {
     }
 
     /* Inter Code */
-    public static void Slider_intents(Activity context, Intent intent, int ActivityFinish) {
+    public static void Slider_intents(Activity context, Intent intent, FragmentTransaction replace_fragment, int ActivityFinish) {
         /**
          * ActivityFinish == 0 next activity
          * ActivityFinish == 1 next and finish activity
-         * ActivityFinish == 2 finish activity  `
+         * ActivityFinish == 2 finish activity
+         * ActivityFinish == 3 Fragment activity
          */
 
         if (checkConnection(context)) {
@@ -91,7 +93,7 @@ public class AnimationR {
             if (MyHelpers.getCounter() != 5000) {
                 auto_notShow_ads++;
                 if (MyHelpers.getCounter() + 1 == auto_notShow_ads) {
-                    Next_Slider_intents(context, intent, ActivityFinish);
+                    Next_Slider_intents(context, intent, replace_fragment, ActivityFinish);
                     auto_notShow_ads = 0;
                     return;
                 }
@@ -103,7 +105,7 @@ public class AnimationR {
                     if (MyHelpers.getmix_ad_counter() != 5000) {
                         mix_adsInter++;
                         if (MyHelpers.getmix_ad_counter() + 1 == mix_adsInter) {
-                            Next_Slider_intents(context, intent, ActivityFinish);
+                            Next_Slider_intents(context, intent, replace_fragment, ActivityFinish);
                             FacebookInterShowBack(context, new RandomBackAdListener() {
                                 @Override
                                 public void onClick() {
@@ -112,7 +114,7 @@ public class AnimationR {
                             mix_adsInter = 0;
                         } else {
                             googleInterShow(context, () -> {
-                                Next_Slider_intents(context, intent, ActivityFinish);
+                                Next_Slider_intents(context, intent, replace_fragment, ActivityFinish);
                             });
                         }
                         return;
@@ -122,11 +124,11 @@ public class AnimationR {
                         mix_adsInter++;
                         if (MyHelpers.getmix_ad_counter() + 1 == mix_adsInter) {
                             googleInterShow(context, () -> {
-                                Next_Slider_intents(context, intent, ActivityFinish);
+                                Next_Slider_intents(context, intent, replace_fragment, ActivityFinish);
                             });
                             mix_adsInter = 0;
                         } else {
-                            Next_Slider_intents(context, intent, ActivityFinish);
+                            Next_Slider_intents(context, intent, replace_fragment, ActivityFinish);
                             FacebookInterShowBack(context, new RandomBackAdListener() {
                                 @Override
                                 public void onClick() {
@@ -141,10 +143,10 @@ public class AnimationR {
             //simple ads
             if (MyHelpers.getGoogleEnable().equals("1")) {
                 googleInterShow(context, () -> {
-                    Next_Slider_intents(context, intent, ActivityFinish);
+                    Next_Slider_intents(context, intent, replace_fragment, ActivityFinish);
                 });
             } else if (MyHelpers.getFacebookEnable().equals("1")) {
-                Next_Slider_intents(context, intent, ActivityFinish);
+                Next_Slider_intents(context, intent, replace_fragment, ActivityFinish);
                 FacebookInterShowNext(context, new RandomAdListener() {
                     @Override
                     public void onClick() {
@@ -152,14 +154,14 @@ public class AnimationR {
                     }
                 });
             } else {
-                Next_Slider_intents(context, intent, ActivityFinish);
+                Next_Slider_intents(context, intent, replace_fragment, ActivityFinish);
             }
         } else {
-            Next_Slider_intents(context, intent, ActivityFinish);
+            Next_Slider_intents(context, intent, replace_fragment, ActivityFinish);
         }
     }
 
-    private static void Next_Slider_intents(Activity context, Intent intent, int ActivityFinish) {
+    private static void Next_Slider_intents(Activity context, Intent intent, FragmentTransaction replace, int ActivityFinish) {
         if (ActivityFinish == 0) {
             context.startActivity(intent);
         } else if (ActivityFinish == 1) {
@@ -167,6 +169,8 @@ public class AnimationR {
             context.finish();
         } else if (ActivityFinish == 2) {
             context.finish();
+        } else if (ActivityFinish == 3) {
+            replace.commit();
         }
     }
 
