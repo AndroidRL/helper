@@ -38,16 +38,15 @@ public class MainActivity extends AppCompatActivity {
         AnimationR.Bottom_animation(this, findViewById(R.id.bottomsads).findViewById(R.id.banner_container), findViewById(R.id.bottomsads));
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        AdsClass.BackInterstitial(this);
-//
-//    }
-
     @Override
     public void onBackPressed() {
-      AnimationR.Slider_intents(this, new Intent(this, ExitScreen.class),null,0);
+        AnimationR.BackAnimation(this);
     }
+
+//    @Override
+//    public void onBackPressed() {
+//      AnimationR.Slider_intents(this, new Intent(this, ExitScreen.class),null,0);
+//    }
 
 }
 

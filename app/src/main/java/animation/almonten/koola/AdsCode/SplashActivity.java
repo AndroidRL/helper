@@ -1,5 +1,6 @@
 package animation.almonten.koola.AdsCode;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -65,6 +66,14 @@ public class SplashActivity extends AppCompatActivity {
         NetworkInfo activeNetworkInfo = ((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == 8565) {
+            Splash.start();
+        } else {
+            Splash.prepare(SplashActivity.this);
+        }
+    }
 
 }

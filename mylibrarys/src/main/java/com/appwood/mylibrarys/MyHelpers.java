@@ -28,6 +28,7 @@ public class MyHelpers extends Application {
     public static SharedPreferences.Editor editor;
     public static String PACKAGE_NAME;
     public static String android_id;
+
     public static MyHelpers app;
 
     public static MyHelpers instance;
@@ -38,6 +39,10 @@ public class MyHelpers extends Application {
 
     public static AppOpenManager appOpenManager;
 
+    public static String FREE_SERVERS;
+    public static String PREMIUM_SERVERS;
+    public static String pack;
+    public static String Kyyy;
 
     public static synchronized MyHelpers getInstance() {
         MyHelpers application;
@@ -72,6 +77,14 @@ public class MyHelpers extends Application {
 
 
         super.onCreate();
+    }
+
+    public static void setCallBacks(String CallBacks) {
+        editor.putString("CallBacks", CallBacks).commit();
+    }
+
+    public static String getCallBacks() {
+        return sharedPreferences.getString("CallBacks", "No");
     }
 
 
