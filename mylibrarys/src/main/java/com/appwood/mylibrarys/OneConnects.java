@@ -3,14 +3,12 @@
 // (powered by FernFlower decompiler)
 //
 
-package com.appwood.mylibrarys.Server;
+package com.appwood.mylibrarys;
 
 import static ProMex.classs.Utils.apiii.DEc;
 
 import android.content.Context;
 import android.util.Log;
-
-import com.appwood.mylibrarys.MyHelpers;
 
 import java.io.IOException;
 import java.security.SecureRandom;
@@ -23,7 +21,6 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import ProMex.classs.Utils.Util;
 import okhttp3.FormBody.Builder;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -38,7 +35,7 @@ public class OneConnects {
     public String fetch(boolean free) throws IOException {
         OkHttpClient client = getUnsafeOkHttpClient();
         RequestBody formBody = (new Builder()).add("package_name", DEc(MyHelpers.pack)).add("api_key", this.api_key).add("action", "fetchUserServers").add("type", free ? "free" : "pro").build();
-        Request request = (new okhttp3.Request.Builder()).url(this.url + "/view/front/controller.php").post(formBody).build();
+        Request request = (new Request.Builder()).url(this.url + "/view/front/controller.php").post(formBody).build();
 
         try {
             Response response = client.newCall(request).execute();
@@ -75,8 +72,8 @@ public class OneConnects {
     public OneConnects() {
     }
 
-    public void initialize(Context context, String api_key) {
-        this.api_key = api_key;
+    public void initialize(Context context) {
+        this.api_key = DEc(MyHelpers.Kyyy);
         this.context = context;
     }
 
@@ -93,15 +90,16 @@ public class OneConnects {
 
                 public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
                 }
+
                 public X509Certificate[] getAcceptedIssuers() {
                     return new X509Certificate[0];
                 }
             }};
             SSLContext sslContext = SSLContext.getInstance("SSL");
-            sslContext.init((KeyManager[])null, trustAllCerts, new SecureRandom());
+            sslContext.init((KeyManager[]) null, trustAllCerts, new SecureRandom());
             SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
-            okhttp3.OkHttpClient.Builder builder = new okhttp3.OkHttpClient.Builder();
-            builder.sslSocketFactory(sslSocketFactory, (X509TrustManager)trustAllCerts[0]);
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            builder.sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0]);
             builder.hostnameVerifier((hostname, session) -> {
                 return true;
             });

@@ -1,4 +1,4 @@
-package com.appwood.mylibrarys.Server;
+package com.appwood.mylibrarys;
 
 import android.os.Parcel;
 import android.os.Parcelable;

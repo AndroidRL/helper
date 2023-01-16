@@ -75,7 +75,7 @@ public class MyHelpers extends Application {
         sharedPreferences = getSharedPreferences("babaji", MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-
+        MyHelpers.setCallBacks("No");
         super.onCreate();
     }
 

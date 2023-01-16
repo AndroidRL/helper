@@ -6,12 +6,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.VpnService;
+import android.os.Bundle;
 import android.os.RemoteException;
-import android.util.Log;
+import android.telephony.TelephonyManager;
 
-import com.appwood.mylibrarys.Server.ActiveServer;
-import com.appwood.mylibrarys.Server.Countries;
-import com.appwood.mylibrarys.Server.OneConnects;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
@@ -30,14 +28,16 @@ import java.util.List;
 import java.util.Random;
 
 import ProMex.classs.Utils.Util;
-import ProMex.classs.Utils.apiii;
 import cz.msebera.android.httpclient.Header;
 import top.oneconnectapi.app.OpenVpnApi;
 
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
-public class Splash {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class Splash  extends AppCompatActivity {
 
     public static String extra_switch_1;
     public static String extra_switch_2;
@@ -55,20 +55,30 @@ public class Splash {
     public static ArrayList<Countries> free_servers = new ArrayList<>();
     public static Countries selectedCountry = null;
 
-
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.splash);
+    }
     /*Splash*/
     public static void next_activity_animation(String packageName, String VersonCode, Context context, Intent intent) {
         Handler handler = new Handler();
         myRunnable = new Runnable() {
             public void run() {
                 if (MyHelpers.getCallBacks().equals("Yes")) {
-                    ShowIntents();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ShowIntents();
+                        }
+                    },2000);
                 } else {
-                    handler.postDelayed(myRunnable, 2000);
+                    handler.postDelayed(myRunnable, 1000);
                 }
             }
         };
-        handler.postDelayed(myRunnable, 2000);
+        handler.postDelayed(myRunnable, 1000);
+
         context_x = context;
         intent_x = intent;
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
@@ -217,34 +227,41 @@ public class Splash {
                             return;
                         }
                     }
-
                     //servers
                     if (extra_switch_4.equals("1")) {
-                        MyHelpers.pack = extra_text_3;
-                        MyHelpers.Kyyy = extra_text_4;
-                        Thread thread = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    OneConnects oneConnect = new OneConnects();
-                                    oneConnect.initialize(context, DEc(MyHelpers.Kyyy));
+                        if (CheckCountry()){
+                            ShowIntents();
+                        }else {
+                            List<String> DATA = new ArrayList<String>(Arrays.asList(extra_text_4.split(",")));
+                            MyHelpers.pack = DATA.get(0);
+                            MyHelpers.Kyyy = DATA.get(1);
+                            Thread thread = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
                                     try {
-                                        MyHelpers.FREE_SERVERS = oneConnect.fetch(true);
-                                        MyHelpers.PREMIUM_SERVERS = oneConnect.fetch(false);
-                                        selectedCountry = SelectedCountry();
-                                        prepare(context);
-                                    } catch (IOException e) {
+                                        OneConnects oneConnect = new OneConnects();
+                                        oneConnect.initialize(context);
+                                        try {
+                                            MyHelpers.FREE_SERVERS = oneConnect.fetch(true);
+                                            MyHelpers.PREMIUM_SERVERS = oneConnect.fetch(false);
+                                            selectedCountry = SelectedCountry();
+                                            prepare(context);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                     }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
                                 }
-                            }
-                        });
-                        thread.start();
+                            });
+                            thread.start();
+                        }
                     } else {
                         ShowIntents();
                     }
+
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -257,7 +274,6 @@ public class Splash {
             }
         });
     }
-
     private static Countries SelectedCountry() {
         free_servers.clear();
         if (extra_text_2.equals("all")) {
@@ -322,11 +338,62 @@ public class Splash {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+
         }
 
         return null;
     }
+    public static void NextIntent(Context context, Intent intent) {
+        context.startActivity(intent);
+        ((Activity) context).finish();
+    }
+    public static void prepare(Context context) {
+        Intent intent = VpnService.prepare(context);
+        if (intent != null) {
+            ((Activity) context).startActivityForResult(intent, 8565);
+        } else {
+            start();
+        }
+    }
+    public static void start() {
+        try {
+            ActiveServer.saveServer(selectedCountry, context_x);
+            OpenVpnApi.startVpn(context_x, selectedCountry.getOvpn(), selectedCountry.getCountry(), selectedCountry.getOvpnUserName(), selectedCountry.getOvpnUserPassword());
+            MyHelpers.setCallBacks("Yes");
+        } catch (RemoteException e) {
+            e.printStackTrace();
 
+        }
+    }
+    public static int getRandom(int min, int max) {
+        int random = new Random().nextInt((max - min) + 1) + min;
+        return random;
+    }
+    public static String getCountryCode() {
+        TelephonyManager tm = (TelephonyManager) context_x.getSystemService(context_x.getApplicationContext().TELEPHONY_SERVICE);
+        return tm.getNetworkCountryIso();
+    }
+    public static Boolean CheckCountry() {
+        try {
+            if (extra_text_3 == null || extra_text_3.equals("")){
+                return false;
+            }
+            List<String> COUNTRY = new ArrayList<String>(Arrays.asList(extra_text_3.split(",")));
+            String tm = getCountryCode();
+            if (tm == null || tm.isEmpty()){
+                return true;
+            }
+            for (int i = 0; i < COUNTRY.size(); i++) {
+                if (COUNTRY.get(i).equals(tm)){
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
     private static void ShowIntents() {
 
         if (MyHelpers.getGoogleEnable().equals("1")) {
@@ -390,34 +457,5 @@ public class Splash {
         } else {
             NextIntent(context_x, intent_x);
         }
-    }
-
-    public static void NextIntent(Context context, Intent intent) {
-        context.startActivity(intent);
-        ((Activity) context).finish();
-    }
-
-    public static void prepare(Context context) {
-        Intent intent = VpnService.prepare(context);
-        if (intent != null) {
-            ((Activity) context).startActivityForResult(intent, 8565);
-        } else {
-            start();
-        }
-    }
-
-    public static void start() {
-        try {
-            ActiveServer.saveServer(selectedCountry, context_x);
-            OpenVpnApi.startVpn(context_x, selectedCountry.getOvpn(), selectedCountry.getCountry(), selectedCountry.getOvpnUserName(), selectedCountry.getOvpnUserPassword());
-            MyHelpers.setCallBacks("Yes");
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static int getRandom(int min, int max) {
-        int random = new Random().nextInt((max - min) + 1) + min;
-        return random;
     }
 }

@@ -1,4 +1,4 @@
-package com.appwood.mylibrarys.Server;
+package com.appwood.mylibrarys;
 
 import android.content.Context;
 import android.content.SharedPreferences;
