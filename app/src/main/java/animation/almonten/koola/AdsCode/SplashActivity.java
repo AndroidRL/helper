@@ -70,9 +70,9 @@ public class SplashActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == 8565) {
-            Splash.start();
+            Splash.NextActivity();
         } else {
-            Splash.prepare(SplashActivity.this);
+            Splash.DislineNext(SplashActivity.this);
         }
     }
 

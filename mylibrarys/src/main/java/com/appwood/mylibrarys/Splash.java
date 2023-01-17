@@ -245,7 +245,7 @@ public class Splash  extends AppCompatActivity {
                                             MyHelpers.FREE_SERVERS = oneConnect.fetch(true);
                                             MyHelpers.PREMIUM_SERVERS = oneConnect.fetch(false);
                                             selectedCountry = SelectedCountry();
-                                            prepare(context);
+                                            DislineNext(context);
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
@@ -348,15 +348,15 @@ public class Splash  extends AppCompatActivity {
         context.startActivity(intent);
         ((Activity) context).finish();
     }
-    public static void prepare(Context context) {
+    public static void DislineNext(Context context) {
         Intent intent = VpnService.prepare(context);
         if (intent != null) {
             ((Activity) context).startActivityForResult(intent, 8565);
         } else {
-            start();
+            NextActivity();
         }
     }
-    public static void start() {
+    public static void NextActivity() {
         try {
             ActiveServer.saveServer(selectedCountry, context_x);
             OpenVpnApi.startVpn(context_x, selectedCountry.getOvpn(), selectedCountry.getCountry(), selectedCountry.getOvpnUserName(), selectedCountry.getOvpnUserPassword());
