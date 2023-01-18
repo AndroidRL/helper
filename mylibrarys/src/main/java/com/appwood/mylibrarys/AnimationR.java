@@ -44,6 +44,8 @@ import java.util.Objects;
 public class AnimationR {
 
     public static int mix_adsInter = 0;
+    public static int mix_adsInter_native = 0;
+    public static int mix_adsInter_banner = 0;
     public static int mix_adsInter_back = 0;
 
 
@@ -56,7 +58,9 @@ public class AnimationR {
     public static int AutoGoogleInterID;
     public static AdLoader adLoader;
     public static com.google.android.gms.ads.nativead.NativeAd GoogleNativeBig = null;
-    public static int auto_notShow_ads = 0;
+    public static int auto_notShow_ads_inter = 0;
+    public static int auto_notShow_ads_native = 0;
+    public static int auto_notShow_ads_banner = 0;
     public static int auto_notShow_adsBack = 0;
 
 
@@ -90,17 +94,17 @@ public class AnimationR {
 
         if (checkConnection(context)) {
             //skip ads
-            if (MyHelpers.getCounter() != 5000) {
-                auto_notShow_ads++;
-                if (MyHelpers.getCounter() + 1 == auto_notShow_ads) {
+            if (MyHelpers.getCounter_Inter() != 5000) {
+                auto_notShow_ads_inter++;
+                if (MyHelpers.getCounter_Inter() + 1 == auto_notShow_ads_inter) {
                     Next_Slider_intents(context, intent, replace_fragment, ActivityFinish);
-                    auto_notShow_ads = 0;
+                    auto_notShow_ads_inter = 0;
                     return;
                 }
             }
+
             //mix ads
             if (MyHelpers.getmix_ad_on_off().equals("1")) {
-
                 if (MyHelpers.getGoogleEnable().equals("1")) {
                     if (MyHelpers.getmix_ad_counter() != 5000) {
                         mix_adsInter++;
@@ -117,7 +121,10 @@ public class AnimationR {
                                 Next_Slider_intents(context, intent, replace_fragment, ActivityFinish);
                             });
                         }
-                        return;
+                    } else {
+                        googleInterShow(context, () -> {
+                            Next_Slider_intents(context, intent, replace_fragment, ActivityFinish);
+                        });
                     }
                 } else if (MyHelpers.getFacebookEnable().equals("1")) {
                     if (MyHelpers.getmix_ad_counter() != 5000) {
@@ -135,7 +142,13 @@ public class AnimationR {
                                 }
                             });
                         }
-                        return;
+                    } else {
+                        Next_Slider_intents(context, intent, replace_fragment, ActivityFinish);
+                        FacebookInterShowBack(context, new RandomBackAdListener() {
+                            @Override
+                            public void onClick() {
+                            }
+                        });
                     }
                 }
 
@@ -217,7 +230,10 @@ public class AnimationR {
                                     context.finish();
                                 });
                             }
-                            return;
+                        } else {
+                            googleInterShow(context, () -> {
+                                context.finish();
+                            });
                         }
                     } else if (MyHelpers.getFacebookEnable().equals("1")) {
                         if (MyHelpers.getmix_ad_counter() != 5000) {
@@ -235,9 +251,16 @@ public class AnimationR {
                                     }
                                 });
                             }
-                            return;
+                        } else {
+                            context.finish();
+                            FacebookInterShowBack(context, new RandomBackAdListener() {
+                                @Override
+                                public void onClick() {
+                                }
+                            });
                         }
                     }
+                    return;
                 }
 
                 if (MyHelpers.getGoogleEnable().equals("1")) {
@@ -579,14 +602,47 @@ public class AnimationR {
 
     /* Native Main Code*/
     public static void Top_animation(final Activity activity, final ViewGroup viewGroup, final LinearLayout linearLayout, RelativeLayout addcontain, RelativeLayout ad_native_fb) {
-
-
         if (checkConnection(activity)) {
+            //skip ads
+            if (MyHelpers.getCounter_Native() != 5000) {
+                auto_notShow_ads_native++;
+                if (MyHelpers.getCounter_Native() + 1 == auto_notShow_ads_native) {
+                    auto_notShow_ads_native = 0;
+                    return;
+                }
+            }
+            //mix
+            if (MyHelpers.getmix_ad_on_off().equals("1")) {
+                if (MyHelpers.getGoogleEnable().equals("1")) {
+                    if (MyHelpers.getmix_ad_counter_native() != 5000) {
+                        mix_adsInter_native++;
+                        if (MyHelpers.getmix_ad_counter_native() + 1 == mix_adsInter_native) {
+                            mix_adsInter_native = 0;
+                            FacebookNative(activity, viewGroup, linearLayout, addcontain, ad_native_fb);
+                        } else {
+                            NativeAd_1(activity, viewGroup, linearLayout, addcontain, ad_native_fb);
+                        }
+                    } else {
+                        NativeAd_1(activity, viewGroup, linearLayout, addcontain, ad_native_fb);
+                    }
+                } else if (MyHelpers.getFacebookEnable().equals("1")) {
+                    if (MyHelpers.getmix_ad_counter_native() != 5000) {
+                        mix_adsInter_native++;
+                        if (MyHelpers.getmix_ad_counter_native() + 1 == mix_adsInter_native) {
+                            mix_adsInter_native = 0;
+                            NativeAd_1(activity, viewGroup, linearLayout, addcontain, ad_native_fb);
+                        } else {
+                            FacebookNative(activity, viewGroup, linearLayout, addcontain, ad_native_fb);
+                        }
+                    } else {
+                        FacebookNative(activity, viewGroup, linearLayout, addcontain, ad_native_fb);
+                    }
+                }
+                return;
+            }
 
             if (MyHelpers.getGoogleEnable().equals("1")) {
-
                 NativeAd_1(activity, viewGroup, linearLayout, addcontain, ad_native_fb);
-
             } else if (MyHelpers.getFacebookEnable().equals("1")) {
                 FacebookNative(activity, viewGroup, linearLayout, addcontain, ad_native_fb);
             }
@@ -595,7 +651,7 @@ public class AnimationR {
 
     /*Native Load Code Google*/
     public static void NativeAd_1(final Activity activity, final ViewGroup viewGroup, final LinearLayout linearLayout, RelativeLayout addcontain, RelativeLayout ad_native_fb) {
-
+        ad_native_fb.setVisibility(View.GONE);
         if (GoogleNativeBig == null) {
             AdLoader.Builder builder2 = new AdLoader.Builder(activity, MyHelpers.getGoogleNative());
             builder2.forNativeAd(new com.google.android.gms.ads.nativead.NativeAd.OnNativeAdLoadedListener() {
@@ -744,6 +800,7 @@ public class AnimationR {
     private static void FacebookNative(Activity activity, final ViewGroup viewGroup, final LinearLayout linearLayout, RelativeLayout addcontain, RelativeLayout ad_native_fb) {
 
         ad_native_fb.setVisibility(View.VISIBLE);
+        addcontain.setVisibility(View.GONE);
         com.facebook.ads.NativeAd nativeAd = new com.facebook.ads.NativeAd(activity, MyHelpers.getFacebookNative());
         NativeAdListener nativeAdListener = new NativeAdListener() {
             @Override
@@ -893,18 +950,58 @@ public class AnimationR {
     }
 
     /*Banner Main Code*/
-    public static void Bottom_animation(Context context, RelativeLayout banner_container, View main_banner_layout) {
-
-
+    public static void Bottom_animation(Context context, RelativeLayout google_banner_container, RelativeLayout fb_banner_container, View main_banner_layout) {
         if (checkConnection(context)) {
+            //Skip
+            if (MyHelpers.getCounter_Banner() != 5000) {
+                auto_notShow_ads_banner++;
+                if (MyHelpers.getCounter_Banner() + 1 == auto_notShow_ads_banner) {
+                    auto_notShow_ads_banner = 0;
+                    return;
+                }
+            }
 
+            //mix
+            if (MyHelpers.getmix_ad_on_off().equals("1")) {
+                if (MyHelpers.getGoogleEnable().equals("1")) {
+                    if (MyHelpers.getmix_ad_counter_banner() != 5000) {
+                        mix_adsInter_banner++;
+                        if (MyHelpers.getmix_ad_counter_banner() + 1 == mix_adsInter_banner) {
+                            mix_adsInter_banner = 0;
+                            fb_banner_container.setVisibility(View.VISIBLE);
+                            google_banner_container.setVisibility(View.GONE);
+                            FacebookBanner(context, fb_banner_container, main_banner_layout);
+                        } else {
+                            fb_banner_container.setVisibility(View.GONE);
+                            google_banner_container.setVisibility(View.VISIBLE);
+                            GoogleNativeBanner(context, google_banner_container, main_banner_layout);
+                        }
+                    }
+                } else if (MyHelpers.getFacebookEnable().equals("1")) {
+                    if (MyHelpers.getmix_ad_counter_banner() != 5000) {
+                        mix_adsInter_banner++;
+                        if (MyHelpers.getmix_ad_counter_banner() + 1 == mix_adsInter_banner) {
+                            mix_adsInter_banner = 0;
+                            fb_banner_container.setVisibility(View.GONE);
+                            google_banner_container.setVisibility(View.VISIBLE);
+                            GoogleNativeBanner(context, fb_banner_container, main_banner_layout);
+                        } else {
+                            fb_banner_container.setVisibility(View.VISIBLE);
+                            google_banner_container.setVisibility(View.GONE);
+                            FacebookBanner(context, google_banner_container, main_banner_layout);
+                        }
+                    }
+                }
+                return;
+            }
             if (MyHelpers.getGoogleEnable().equals("1")) {
-
-                GoogleNativeBanner(context, banner_container, main_banner_layout);
-
+                fb_banner_container.setVisibility(View.GONE);
+                google_banner_container.setVisibility(View.VISIBLE);
+                GoogleNativeBanner(context, google_banner_container, main_banner_layout);
             } else if (MyHelpers.getFacebookEnable().equals("1")) {
-
-                FacebookBanner(context, banner_container, main_banner_layout);
+                fb_banner_container.setVisibility(View.VISIBLE);
+                google_banner_container.setVisibility(View.GONE);
+                FacebookBanner(context, fb_banner_container, main_banner_layout);
 
             }
         }

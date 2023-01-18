@@ -15,8 +15,6 @@ import animation.almonten.koola.AdsCode.ExitScreen;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +31,8 @@ public class MainActivity extends AppCompatActivity {
         AnimationR.Top_animation(this, findViewById(R.id.native_detail),
                 findViewById(R.id.banner_native), findViewById(R.id.addcontain)
                 , findViewById(R.id.ad_native_fb));
-
         //banner
-        AnimationR.Bottom_animation(this, findViewById(R.id.bottomsads).findViewById(R.id.banner_container), findViewById(R.id.bottomsads));
+        AnimationR.Bottom_animation(this, findViewById(R.id.bottomsads).findViewById(com.appwood.mylibrarys.R.id.google_banner_container), findViewById(R.id.bottomsads).findViewById(com.appwood.mylibrarys.R.id.fb_banner_container), findViewById(R.id.bottomsads));
     }
 
     @Override

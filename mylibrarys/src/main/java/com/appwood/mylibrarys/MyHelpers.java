@@ -41,8 +41,6 @@ public class MyHelpers extends Application {
 
     public static String FREE_SERVERS;
     public static String PREMIUM_SERVERS;
-    public static String pack;
-    public static String Kyyy;
 
     public static synchronized MyHelpers getInstance() {
         MyHelpers application;
@@ -75,18 +73,8 @@ public class MyHelpers extends Application {
         sharedPreferences = getSharedPreferences("babaji", MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        MyHelpers.setCallBacks("No");
         super.onCreate();
     }
-
-    public static void setCallBacks(String CallBacks) {
-        editor.putString("CallBacks", CallBacks).commit();
-    }
-
-    public static String getCallBacks() {
-        return sharedPreferences.getString("CallBacks", "No");
-    }
-
 
     public static void setBackAdsOnOff(String BackAdsOnOff) {
         editor.putString("BackAdsOnOff", BackAdsOnOff).commit();
@@ -259,12 +247,28 @@ public class MyHelpers extends Application {
         return sharedPreferences.getString("Qurega_link", null);
     }
 
-    public static void setCounter(Integer Counter) {
+    public static void setCounter_Inter(Integer Counter) {
         editor.putInt("Counter", Counter).commit();
     }
 
-    public static Integer getCounter() {
+    public static Integer getCounter_Inter() {
         return sharedPreferences.getInt("Counter", 5000);
+    }
+
+    public static void setCounter_Banner(Integer CounterBanner) {
+        editor.putInt("CounterBanner", CounterBanner).commit();
+    }
+
+    public static Integer getCounter_Banner() {
+        return sharedPreferences.getInt("CounterBanner", 5000);
+    }
+
+    public static void setCounter_Native(Integer CounterNative) {
+        editor.putInt("CounterNative", CounterNative).commit();
+    }
+
+    public static Integer getCounter_Native() {
+        return sharedPreferences.getInt("CounterNative", 5000);
     }
 
     public static void setBackCounter(Integer BackCounter) {
@@ -385,6 +389,22 @@ public class MyHelpers extends Application {
 
     public static Integer getmix_ad_counter() {
         return sharedPreferences.getInt("mix_ad_counter", 5000);
+    }
+
+    public static void setmix_ad_counter_native(Integer mix_ad_counter_native) {
+        editor.putInt("mix_ad_counter_native", mix_ad_counter_native).commit();
+    }
+
+    public static Integer getmix_ad_counter_native() {
+        return sharedPreferences.getInt("mix_ad_counter_native", 5000);
+    }
+
+ public static void setmix_ad_counter_banner(Integer mix_ad_counter_banner) {
+        editor.putInt("mix_ad_counter_banner", mix_ad_counter_banner).commit();
+    }
+
+    public static Integer getmix_ad_counter_banner() {
+        return sharedPreferences.getInt("mix_ad_counter_banner", 5000);
     }
 
 
