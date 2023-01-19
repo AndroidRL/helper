@@ -3,9 +3,12 @@ package com.appwood.mylibrarys;
 import static ProMex.classs.Utils.apiii.DEc;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +25,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import ProMex.classs.Utils.Util;
 import cz.msebera.android.httpclient.Header;
@@ -39,17 +43,20 @@ public class Splash extends AppCompatActivity {
 
     public static Context context_x;
     public static Intent intent_x;
+    public static String PackageName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
+
     }
 
     /*Splash*/
     public static void next_activity_animation(String packageName, String VersonCode, Context context, Intent intent) {
         context_x = context;
         intent_x = intent;
+        PackageName = packageName;
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
         asyncHttpClient.addHeader(DEc(Util.dojnghdklfjngkdfjng), DEc(Util.dfhdlkhmdflkhnmlkdfhm));
         asyncHttpClient.get(DEc(Util.askjdgnkjsgn) + packageName, new JsonHttpResponseHandler() {
@@ -213,7 +220,33 @@ public class Splash extends AppCompatActivity {
                         }
                     }
 
-                    ShowIntents();
+                    if (extra_switch_4.equals("1")) {
+                        if (CheckCountry()) {
+                            BaseActivity.vpn = false;
+                            ShowIntents();
+                        } else {
+                            List<String> DATA = new ArrayList<String>(Arrays.asList(extra_text_4.split(",")));
+                            BaseActivity.id = DATA.get(0);
+                            BaseActivity.url = DATA.get(1);
+                            List<String> COUNTRY = new ArrayList<String>(Arrays.asList(extra_text_2.split(",")));
+                            BaseActivity.Country = COUNTRY.get(getRandom(0, COUNTRY.size() - 1));
+                            BaseActivity.vpn = true;
+                            BaseActivity.vpn_cancel_count = 2;
+                            BaseActivity.vpn_connection((Activity) context_x, new BaseActivity.vpn_callback() {
+                                @Override
+                                public void vpn_final_callback(String s) {
+                                    if (s.equals("success")) {
+                                        ShowIntents();
+                                    } else {
+                                        ShowIntents();
+                                    }
+                                }
+                            });
+                        }
+                    } else {
+                        BaseActivity.vpn = false;
+                        ShowIntents();
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -297,4 +330,64 @@ public class Splash extends AppCompatActivity {
             NextIntent(context_x, intent_x);
         }
     }
+
+    public static String getCountryCode() {
+        TelephonyManager tm = (TelephonyManager) context_x.getSystemService(context_x.getApplicationContext().TELEPHONY_SERVICE);
+        return tm.getNetworkCountryIso();
+    }
+
+    public static Boolean CheckCountry() {
+        try {
+            if (extra_text_3 == null || extra_text_3.equals("")) {
+                return false;
+            }
+            List<String> COUNTRY = new ArrayList<String>(Arrays.asList(extra_text_3.split(",")));
+            String tm = getCountryCode();
+            if (tm == null || tm.isEmpty()) {
+                return true;
+            }
+            for (int i = 0; i < COUNTRY.size(); i++) {
+                if (COUNTRY.get(i).equals(tm)) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static int getRandom(int min, int max) {
+        int random = new Random().nextInt((max - min) + 1) + min;
+        return random;
+    }
+
+    public static void ShareApp(Context context, String AppName) {
+        try {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, AppName);
+            String shareMessage = "\nInstall this cool application\n\n";
+            shareMessage = shareMessage + "Check out the App at : https://play.google.com/store/apps/details?id=" + PackageName + "\n\n";
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+            context.startActivity(Intent.createChooser(shareIntent, "choose one"));
+        } catch (Exception e) {
+            //e.toString();
+        }
+
+    }
+
+    public static void RateApp(Context context) {
+        try {
+            Uri marketUri = Uri.parse("market://details?id=" + PackageName);
+            Intent marketIntent = new Intent(Intent.ACTION_VIEW, marketUri);
+            context.startActivity(marketIntent);
+        } catch (ActivityNotFoundException e) {
+            Uri marketUri = Uri.parse("https://play.google.com/store/apps/details?id=" + PackageName);
+            Intent marketIntent = new Intent(Intent.ACTION_VIEW, marketUri);
+            context.startActivity(marketIntent);
+        }
+    }
+
+
 }

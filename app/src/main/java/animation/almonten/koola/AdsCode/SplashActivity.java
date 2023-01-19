@@ -49,7 +49,6 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         });
-
         dialog.findViewById(R.id.retry_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

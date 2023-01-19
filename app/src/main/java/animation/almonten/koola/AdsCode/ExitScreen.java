@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.appwood.mylibrarys.AnimationR;
-import com.appwood.mylibrarys.SystemUiManager;
 
 import animation.almonten.koola.R;
 
@@ -26,13 +25,7 @@ public class ExitScreen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SystemUiManager.setTransparentStatus(ExitScreen.this, true);
         setContentView(R.layout.exit_screen);
-
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        params.setMargins(0, SystemUiManager.getStatusBarHeight(ExitScreen.this), 0, 0);
-        findViewById(R.id.rRoot_main).setLayoutParams(params);
-
         txt_rate = findViewById(R.id.txt_rate);
         txt_yes = findViewById(R.id.txt_yes);
         txt_no = findViewById(R.id.txt_no);
