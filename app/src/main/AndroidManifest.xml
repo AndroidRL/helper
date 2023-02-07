@@ -27,11 +27,9 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".AdsCode.ExitScreen"
             android:exported="false" />
-
         <activity
             android:name=".AdsCode.SplashActivity"
             android:exported="true">
@@ -40,10 +38,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <meta-data
-            android:name="com.google.android.gms.ads.AD_MANAGER_APP"
-            android:value="true" />
     </application>
 
 </manifest>

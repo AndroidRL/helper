@@ -1,21 +1,12 @@
 package animation.almonten.koola;
 
-import android.app.ActivityManager;
-import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import com.appwood.mylibrarys.AnimationR;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import animation.almonten.koola.AdsCode.ExitScreen;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ADS(View view) {
-         AnimationR.Slider_intents(this, new Intent(this, TestingActivity.class), null,0);
+        AnimationR.Slider_intents(this, new Intent(this, TestingActivity.class), null, 0);
     }
 
     @Override
@@ -49,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
 //    public void onBackPressed() {
 //      AnimationR.Slider_intents(this, new Intent(this, ExitScreen.class),null,0);
 //    }
-
 
 
 }

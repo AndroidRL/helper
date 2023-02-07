@@ -27,7 +27,6 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         FirebaseGetId();
-
     }
 
     private void FirebaseGetId() {
@@ -60,11 +59,9 @@ public class SplashActivity extends AppCompatActivity {
         dialog.show();
 
     }
-
     public boolean isOnline() {
         NetworkInfo activeNetworkInfo = ((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
-
 
 }

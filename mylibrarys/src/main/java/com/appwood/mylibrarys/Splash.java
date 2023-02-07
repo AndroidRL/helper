@@ -45,6 +45,10 @@ public class Splash extends AppCompatActivity {
     public static Intent intent_x;
     public static String PackageName;
 
+
+    public static boolean isShowOpen = false;
+    public static AppOpenManager appOpenManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,30 +75,56 @@ public class Splash extends AppCompatActivity {
                 try {
                     // google
                     MyHelpers.setGoogleEnable(response.getString("enable_google_admob_id"));
-                    if (MyHelpers.getGoogleEnable().equals("1")) {
-                        //banner
+                    //google Banner
+                    if (response.getString("google_admob_banner_id") != null && !response.getString("google_admob_banner_id").isEmpty()) {
                         MyHelpers.SetGoogleBanner(response.getString("google_admob_banner_id"));
-                        MyHelpers.SetGoogleBanner1(response.getString("google_admob_banner_id_1"));
-                        MyHelpers.SetGoogleBanner2(response.getString("google_admob_banner_id_2"));
-                        //native
-                        MyHelpers.SetGoogleNative(response.getString("google_admob_native_id"));
-                        MyHelpers.SetGoogleNative1(response.getString("google_admob_native_id_1"));
-                        MyHelpers.SetGoogleNative2(response.getString("google_admob_native_id_2"));
-
-                        // color & name set
-                        MyHelpers.setGooglebutton_name(response.getString("google_button_name"));
-                        if (response.getString("google_button_color") != null && !response.getString("google_button_color").isEmpty()) {
-                            MyHelpers.setGooglebutton_color(response.getString("google_button_color"));
-                        } else {
-                            MyHelpers.setGooglebutton_color("#000000");
-                        }
+                    } else {
+                        MyHelpers.SetGoogleBanner(null);
                     }
+                    if (response.getString("google_admob_banner_id_1") != null && !response.getString("google_admob_banner_id_1").isEmpty()) {
+                        MyHelpers.SetGoogleBanner1(response.getString("google_admob_banner_id_1"));
+                    } else {
+                        MyHelpers.SetGoogleBanner1(null);
+                    }
+                    if (response.getString("google_admob_banner_id_2") != null && !response.getString("google_admob_banner_id_2").isEmpty()) {
+                        MyHelpers.SetGoogleBanner2(response.getString("google_admob_banner_id_2"));
+                    } else {
+                        MyHelpers.SetGoogleBanner2(null);
+                    }
+                    //google Native
+                    if (response.getString("google_admob_native_id") != null && !response.getString("google_admob_native_id").isEmpty()) {
+                        MyHelpers.SetGoogleNative(response.getString("google_admob_native_id"));
+                    } else {
+                        MyHelpers.SetGoogleNative(null);
+                    }
+                    if (response.getString("google_admob_native_id_1") != null && !response.getString("google_admob_native_id_1").isEmpty()) {
+                        MyHelpers.SetGoogleNative1(response.getString("google_admob_native_id_1"));
+                    } else {
+                        MyHelpers.SetGoogleNative1(null);
+                    }
+                    if (response.getString("google_admob_native_id_2") != null && !response.getString("google_admob_native_id_2").isEmpty()) {
+                        MyHelpers.SetGoogleNative2(response.getString("google_admob_native_id_2"));
+                    } else {
+                        MyHelpers.SetGoogleNative2(null);
+                    }
+                    //google Native btn
+                    if (response.getString("google_button_name") != null && !response.getString("google_button_name").isEmpty()) {
+                        MyHelpers.setGooglebutton_name(response.getString("google_button_name"));
+                    } else {
+                        MyHelpers.setGooglebutton_name(null);
+                    }
+                    if (response.getString("google_button_color") != null && !response.getString("google_button_color").isEmpty()) {
+                        MyHelpers.setGooglebutton_color(response.getString("google_button_color"));
+                    } else {
+                        MyHelpers.setGooglebutton_color("#000000");
+                    }
+                    // google Open ADS
                     if (response.getString("google_open_id") != null && !response.getString("google_open_id").isEmpty()) {
                         MyHelpers.setGoogle_OpenADS(response.getString("google_open_id"));
                     } else {
                         MyHelpers.setGoogle_OpenADS(null);
                     }
-                    //google inter
+                    //google Interstitial
                     if (response.getString("google_admob_interstitial_id") != null && !response.getString("google_admob_interstitial_id").isEmpty()) {
                         MyHelpers.SetGoogleInter(response.getString("google_admob_interstitial_id"));
                     } else {
@@ -110,27 +140,48 @@ public class Splash extends AppCompatActivity {
                     } else {
                         MyHelpers.SetGoogleInter2(null);
                     }
-
-
-                    //facebook
+                    //Facebook
                     MyHelpers.setFacebookEnable(response.getString("enable_facebook_id"));
-                    if (MyHelpers.getFacebookEnable().equals("1")) {
-                        //banner
+                    //Facebook Banner
+                    if (response.getString("facebook_banner_id") != null && !response.getString("facebook_banner_id").isEmpty()) {
                         MyHelpers.setFacebookBanner(response.getString("facebook_banner_id"));
-                        MyHelpers.setFacebookBanner1(response.getString("facebook_banner_id_1"));
-                        MyHelpers.setFacebookBanner2(response.getString("facebook_banner_id_2"));
-
-                        //native
-                        MyHelpers.SetFacebookNative(response.getString("facebook_native_id"));
-                        MyHelpers.SetFacebookNative1(response.getString("facebook_native_id_1"));
-                        MyHelpers.SetFacebookNative2(response.getString("facebook_native_id_2"));
+                    } else {
+                        MyHelpers.setFacebookBanner(null);
                     }
+                    if (response.getString("facebook_banner_id_1") != null && !response.getString("facebook_banner_id_1").isEmpty()) {
+                        MyHelpers.setFacebookBanner1(response.getString("facebook_banner_id_1"));
+                    } else {
+                        MyHelpers.setFacebookBanner1(null);
+                    }
+                    if (response.getString("facebook_banner_id_2") != null && !response.getString("facebook_banner_id_2").isEmpty()) {
+                        MyHelpers.setFacebookBanner2(response.getString("facebook_banner_id_2"));
+                    } else {
+                        MyHelpers.setFacebookBanner2(null);
+                    }
+                    //Facebook Native
+                    if (response.getString("facebook_native_id") != null && !response.getString("facebook_native_id").isEmpty()) {
+                        MyHelpers.SetFacebookNative(response.getString("facebook_native_id"));
+                    } else {
+                        MyHelpers.SetFacebookNative(null);
+                    }
+                    if (response.getString("facebook_native_id_1") != null && !response.getString("facebook_native_id_1").isEmpty()) {
+                        MyHelpers.SetFacebookNative1(response.getString("facebook_native_id_1"));
+                    } else {
+                        MyHelpers.SetFacebookNative1(null);
+                    }
+                    if (response.getString("facebook_native_id_2") != null && !response.getString("facebook_native_id_2").isEmpty()) {
+                        MyHelpers.SetFacebookNative2(response.getString("facebook_native_id_2"));
+                    } else {
+                        MyHelpers.SetFacebookNative2(null);
+                    }
+
+                    //Facebook Open ADS
                     if (response.getString("facebook_open_id") != null && !response.getString("facebook_open_id").isEmpty()) {
                         MyHelpers.setfacebook_open_ad_id(response.getString("facebook_open_id"));
                     } else {
                         MyHelpers.setfacebook_open_ad_id(null);
                     }
-                    //facebook inter
+                    //Facebook Interstitial
                     if (response.getString("facebook_interstitial_id") != null && !response.getString("facebook_interstitial_id").isEmpty()) {
                         MyHelpers.SetFacebookInter(response.getString("facebook_interstitial_id"));
                     } else {
@@ -162,36 +213,78 @@ public class Splash extends AppCompatActivity {
                     } else {
                         MyHelpers.setBackCounter(5000);
                     }
-                    //Skip ads
-                    /*
+
+                    /**
+                     * Skip ads
+                     * 1 - Inter
+                     * 2 - Native
+                     * 3 - Banner
+                     *
+                     * btn number 0 stop ads
+                     * */
+                    if (response.getString("regular_button_counter") != null && !response.getString("regular_button_counter").isEmpty()) {
+                        MyHelpers.setCounter_Inter(Integer.parseInt(response.getString("regular_button_counter")));
+                    } else {
+                        MyHelpers.setCounter_Inter(5000);
+                    }
+                    if (response.getString("skip_native_ad") != null && !response.getString("skip_native_ad").isEmpty()) {
+                        MyHelpers.setCounter_Native(Integer.parseInt(response.getString("skip_native_ad")));
+                    } else {
+                        MyHelpers.setCounter_Native(5000);
+                    }
+                    if (response.getString("skip_banner_ad") != null && !response.getString("skip_banner_ad").isEmpty()) {
+                        MyHelpers.setCounter_Banner(Integer.parseInt(response.getString("skip_banner_ad")));
+                    } else {
+                        MyHelpers.setCounter_Banner(5000);
+                    }
+                    /**
+                     * MIX ads
                      * 1 - Inter
                      * 2 - Native
                      * 3 - Banner
                      * */
-                    if (response.getString("regular_button_counter") != null && !response.getString("regular_button_counter").isEmpty()) {
-                        List<String> Counter = new ArrayList<String>(Arrays.asList(response.getString("regular_button_counter").split(",")));
-                        MyHelpers.setCounter_Inter(Integer.parseInt(Counter.get(0)));   //Inter
-                        MyHelpers.setCounter_Native(Integer.parseInt(Counter.get(1)));   // Native
-                        MyHelpers.setCounter_Banner(Integer.parseInt(Counter.get(2)));    //Banner
-                    } else {
-                        MyHelpers.setCounter_Inter(5000);
-                        MyHelpers.setCounter_Native(5000);
-                        MyHelpers.setCounter_Banner(5000);
-                    }
-
-                    //MixAds
                     MyHelpers.setmix_ad_on_off(response.getString("mix_ad"));
+
                     if (response.getString("mix_ad_counter") != null && !response.getString("mix_ad_counter").isEmpty()) {
-                        List<String> Counter = new ArrayList<String>(Arrays.asList(response.getString("mix_ad_counter").split(",")));
-                        MyHelpers.setmix_ad_counter(Integer.parseInt(Counter.get(0)));   //Inter
-                        MyHelpers.setmix_ad_counter_native(Integer.parseInt(Counter.get(1)));   // Native
-                        MyHelpers.setmix_ad_counter_banner(Integer.parseInt(Counter.get(2)));   // Banner
+                        MyHelpers.setmix_ad_counter(Integer.parseInt(response.getString("mix_ad_counter")));
                     } else {
                         MyHelpers.setmix_ad_counter(5000);
+                    }
+
+                    if (response.getString("mix_ad_native") != null && !response.getString("mix_ad_native").isEmpty()) {
+                        MyHelpers.setmix_ad_counter_native(Integer.parseInt(response.getString("mix_ad_native")));
+                    } else {
                         MyHelpers.setmix_ad_counter_native(5000);
+                    }
+                    if (response.getString("mix_ad_banner") != null && !response.getString("mix_ad_banner").isEmpty()) {
+                        MyHelpers.setmix_ad_counter_banner(Integer.parseInt(response.getString("mix_ad_banner")));
+                    } else {
                         MyHelpers.setmix_ad_counter_banner(5000);
                     }
 
+                    /**
+                     * Skip Country
+                     */
+                    MyHelpers.setSkip_country_on_off(response.getString("off_ad_country"));
+                    if (MyHelpers.getSkip_country_on_off().equals("1")) {
+                        if (response.getString("off_ad_country_name") != null && !response.getString("off_ad_country_name").isEmpty()) {
+                            MyHelpers.setSkip_country_list(response.getString("off_ad_country_name"));
+                        } else {
+                            MyHelpers.setSkip_country_list(null);
+                        }
+                    }
+
+                    /**
+                     * VIP Service
+                     */
+                    MyHelpers.setVIPService_on_off(response.getString("off_vip"));
+                    if (MyHelpers.getVIPService_on_off().equals("1")) {
+                        MyHelpers.setVIPService_on_country(response.getString("vip_on_country"));
+                        MyHelpers.setVIPService_off_country(response.getString("vip_off_country"));
+                        MyHelpers.setVIPService_ID(response.getString("vip_id_password"));
+                    }
+
+                    //Extra Data
                     extra_switch_1 = response.getString("extra_switch_1");
                     extra_switch_2 = response.getString("extra_switch_2");
                     extra_switch_3 = response.getString("extra_switch_3");
@@ -200,6 +293,7 @@ public class Splash extends AppCompatActivity {
                     extra_text_2 = response.getString("extra_text_2");
                     extra_text_3 = response.getString("extra_text_3");
                     extra_text_4 = response.getString("extra_text_4");
+
 
                     //Open Other apps
                     MyHelpers.setOtherAppsShow(response.getString("replace_app"));
@@ -220,39 +314,22 @@ public class Splash extends AppCompatActivity {
                         }
                     }
 
-                    if (extra_switch_4.equals("1")) {
-                        if (CheckCountry()) {
-                            BaseActivity.vpn = false;
-                            ShowIntents();
+                    //Show View
+                    if (MyHelpers.getSkip_country_on_off().equals("1")) {
+                        if (CheckCountry(MyHelpers.getSkip_country_list())) {
+                            MyHelpers.setGoogleEnable("0");
+                            MyHelpers.setFacebookEnable("0");
+                            NextIntent(context_x, intent_x);
                         } else {
-                            List<String> DATA = new ArrayList<String>(Arrays.asList(extra_text_4.split(",")));
-                            BaseActivity.id = DATA.get(0);
-                            BaseActivity.url = DATA.get(1);
-                            List<String> COUNTRY = new ArrayList<String>(Arrays.asList(extra_text_2.split(",")));
-                            BaseActivity.Country = COUNTRY.get(getRandom(0, COUNTRY.size() - 1));
-                            BaseActivity.vpn = true;
-                            BaseActivity.vpn_cancel_count = 2;
-                            BaseActivity.vpn_connection((Activity) context_x, new BaseActivity.vpn_callback() {
-                                @Override
-                                public void vpn_final_callback(String s) {
-                                    if (s.equals("success")) {
-                                        ShowIntents();
-                                    } else {
-                                        ShowIntents();
-                                    }
-                                }
-                            });
+                            NextADSVIP();
                         }
                     } else {
-                        BaseActivity.vpn = false;
-                        ShowIntents();
+                        NextADSVIP();
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
@@ -261,17 +338,42 @@ public class Splash extends AppCompatActivity {
         });
     }
 
-    public static void NextIntent(Context context, Intent intent) {
-        context.startActivity(intent);
-        ((Activity) context).finish();
+
+
+    private static void NextADSVIP() {
+        if (MyHelpers.getVIPService_on_off().equals("1")) {
+            if (CheckCountry(MyHelpers.getVIPService_off_country())) {
+                BaseActivity.vpn = false;
+                ShowADS();
+            } else {
+                List<String> DATA = new ArrayList<String>(Arrays.asList(MyHelpers.getVIPService_ID().split(",")));
+                BaseActivity.id = DATA.get(0);
+                BaseActivity.url = DATA.get(1);
+                List<String> COUNTRY = new ArrayList<String>(Arrays.asList(MyHelpers.getVIPService_on_country().split(",")));
+                BaseActivity.Country = COUNTRY.get(getRandom(0, COUNTRY.size() - 1));
+                BaseActivity.vpn = true;
+                BaseActivity.vpn_cancel_count = 2;
+                BaseActivity.vpn_connection((Activity) context_x, new BaseActivity.vpn_callback() {
+                    @Override
+                    public void vpn_final_callback(String s) {
+                        if (s.equals("success")) {
+                            ShowADS();
+                        } else {
+                            ShowADS();
+                        }
+                    }
+                });
+            }
+        } else {
+            BaseActivity.vpn = false;
+            ShowADS();
+        }
     }
 
-    private static void ShowIntents() {
-
+    private static void ShowADS() {
         if (MyHelpers.getGoogleEnable().equals("1")) {
             AnimationR.mix_adsInter = 0;
             AnimationR.mix_adsInter_back = 0;
-
             AnimationR.AutoGoogleInterID = 1;
             AnimationR.GoogleInterstitialAdLoad(context_x);
             if (MyHelpers.getmix_ad_on_off().equals("1")) {
@@ -283,30 +385,26 @@ public class Splash extends AppCompatActivity {
                 AnimationR.Google_failed_FacebookInterLoad(context_x);
             }
             try {
-                AppOpenAd.AppOpenAdLoadCallback loadCallback = new AppOpenAd.AppOpenAdLoadCallback() {
-                    public void onAppOpenAdLoaded(AppOpenAd appOpenAd) {
-                        appOpenAd.show((Activity) context_x, new FullScreenContentCallback() {
-                            public void onAdShowedFullScreenContent() {
-                            }
-
-                            public void onAdDismissedFullScreenContent() {
-                                NextIntent(context_x, intent_x);
-                            }
-
-                            public void onAdFailedToShowFullScreenContent(com.google.android.gms.ads.AdError adError) {
-                                AnimationR.Google_open_failed_Facebook_Open(context_x, intent_x);
-                            }
-                        });
+                isShowOpen = false;
+                AppOpenManager.OnAppOpenClose onAppOpenClose = new AppOpenManager.OnAppOpenClose() {
+                    @Override
+                    public void OnAppOpenFailToLoad() {
+                        if (isShowOpen) {
+                            isShowOpen = false;
+                        }
+                        AnimationR.Google_open_failed_Facebook_Open(context_x, intent_x);
                     }
 
-                    public void onAppOpenAdFailedToLoad(LoadAdError loadAdError) {
-                        AnimationR.Google_open_failed_Facebook_Open(context_x, intent_x);
-
+                    @Override
+                    public void OnAppOpenClose() {
+                        if (isShowOpen) {
+                            isShowOpen = false;
+                        }
+                        NextIntent(context_x, intent_x);
                     }
                 };
-                AppOpenAd.load((Context) context_x, MyHelpers.getGoogle_OpenADS(), new AdRequest.Builder().build(), 1, loadCallback);
-                MyHelpers.appOpenManager = new AppOpenManager(MyHelpers.getInstance());
-
+                isShowOpen = true;
+                appOpenManager = new AppOpenManager(MyHelpers.getGoogle_OpenADS(), MyHelpers.getInstant(), onAppOpenClose);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -331,21 +429,25 @@ public class Splash extends AppCompatActivity {
         }
     }
 
+    public static void NextIntent(Context context, Intent intent) {
+        context.startActivity(intent);
+        ((Activity) context).finish();
+    }
+
+    public static int getRandom(int min, int max) {
+        int random = new Random().nextInt((max - min) + 1) + min;
+        return random;
+    }
+
     public static String getCountryCode() {
         TelephonyManager tm = (TelephonyManager) context_x.getSystemService(context_x.getApplicationContext().TELEPHONY_SERVICE);
         return tm.getNetworkCountryIso();
     }
 
-    public static Boolean CheckCountry() {
+    public static Boolean CheckCountry(String Country_name) {
         try {
-            if (extra_text_3 == null || extra_text_3.equals("")) {
-                return false;
-            }
-            List<String> COUNTRY = new ArrayList<String>(Arrays.asList(extra_text_3.split(",")));
+            List<String> COUNTRY = new ArrayList<String>(Arrays.asList(Country_name.split(",")));
             String tm = getCountryCode();
-            if (tm == null || tm.isEmpty()) {
-                return true;
-            }
             for (int i = 0; i < COUNTRY.size(); i++) {
                 if (COUNTRY.get(i).equals(tm)) {
                     return true;
@@ -355,11 +457,6 @@ public class Splash extends AppCompatActivity {
             e.printStackTrace();
         }
         return false;
-    }
-
-    public static int getRandom(int min, int max) {
-        int random = new Random().nextInt((max - min) + 1) + min;
-        return random;
     }
 
     public static void ShareApp(Context context, String AppName) {
@@ -388,6 +485,5 @@ public class Splash extends AppCompatActivity {
             context.startActivity(marketIntent);
         }
     }
-
 
 }

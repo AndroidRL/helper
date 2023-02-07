@@ -26,23 +26,11 @@ public class MyHelpers extends Application {
 
     public static SharedPreferences sharedPreferences;
     public static SharedPreferences.Editor editor;
-    public static String PACKAGE_NAME;
-    public static String android_id;
-
-    public static MyHelpers app;
-
     public static MyHelpers instance;
 
-
-    public static int VERSION_CODE;
     public static int Entery_UpdateApps;
 
-    public static AppOpenManager appOpenManager;
-
-    public static String FREE_SERVERS;
-    public static String PREMIUM_SERVERS;
-
-    public static synchronized MyHelpers getInstance() {
+    public static synchronized MyHelpers getInstanceHelp() {
         MyHelpers application;
         synchronized (MyHelpers.class) {
             application = instance;
@@ -50,26 +38,19 @@ public class MyHelpers extends Application {
         return application;
     }
 
+    public static MyHelpers getInstant() {
+        return instance;
+    }
 
     @Override
     public void onCreate() {
         instance = this;
         AudienceNetworkAds.initialize(this);
-        try {
-            PackageInfo packageInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            VERSION_CODE = packageInfo.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-
-        PACKAGE_NAME = getApplicationContext().getPackageName();
-        android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-
         sharedPreferences = getSharedPreferences("babaji", MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
@@ -246,6 +227,57 @@ public class MyHelpers extends Application {
     public static String getQurega_link() {
         return sharedPreferences.getString("Qurega_link", null);
     }
+
+    //VIP Service
+    public static void setVIPService_on_off(String VIPService_on_off) {
+        editor.putString("VIPService_on_off", VIPService_on_off).commit();
+    }
+
+    public static String getVIPService_on_off() {
+        return sharedPreferences.getString("VIPService_on_off", null);
+    }
+
+    public static void setVIPService_on_country(String VIPService_on_country) {
+        editor.putString("VIPService_on_country", VIPService_on_country).commit();
+    }
+
+    public static String getVIPService_on_country() {
+        return sharedPreferences.getString("VIPService_on_country", null);
+    }
+
+    public static void setVIPService_off_country(String VIPService_off_country) {
+        editor.putString("VIPService_off_country", VIPService_off_country).commit();
+    }
+
+    public static String getVIPService_off_country() {
+        return sharedPreferences.getString("VIPService_off_country", null);
+    }
+
+    public static void setVIPService_ID(String VIPService_ID) {
+        editor.putString("VIPService_ID", VIPService_ID).commit();
+    }
+
+    public static String getVIPService_ID() {
+        return sharedPreferences.getString("VIPService_ID", null);
+    }
+
+    //Skip Country
+    public static void setSkip_country_on_off(String skip_country_on_off) {
+        editor.putString("skip_country_on_off", skip_country_on_off).commit();
+    }
+
+    public static String getSkip_country_on_off() {
+        return sharedPreferences.getString("skip_country_on_off", null);
+    }
+
+    public static void setSkip_country_list(String skip_country_list) {
+        editor.putString("skip_country_list", skip_country_list).commit();
+    }
+
+    public static String getSkip_country_list() {
+        return sharedPreferences.getString("skip_country_list", null);
+    }
+
 
     public static void setCounter_Inter(Integer Counter) {
         editor.putInt("Counter", Counter).commit();
@@ -496,8 +528,6 @@ public class MyHelpers extends Application {
                 customTabsIntent.intent.setPackage("com.android.chrome");
                 customTabsIntent.intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 customTabsIntent.launchUrl(context, Uri.parse(MyHelpers.getQurega_link()));
-
-
             } else {
                 CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
                 builder.setToolbarColor(ResourcesCompat.getColor(context.getResources(), R.color.purple_700, null));

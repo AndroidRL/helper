@@ -38,7 +38,6 @@ public class BaseActivity extends AppCompatActivity {
     public static String id = "";
     public static String Country;
 
-
     public static UnifiedSdk unifiedSDK;
     public static String selectedCountry;
     public static int vpn_cancel_count = 0;
