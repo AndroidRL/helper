@@ -1,7 +1,5 @@
 <resources>
-    <string name="app_name">RAD</string>
-
-
+    <string name="app_name">Animation</string>
 
         <string name="no_text">No</string>
         <string name="yes_text">Yes</string>

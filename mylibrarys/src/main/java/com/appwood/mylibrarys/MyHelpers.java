@@ -12,6 +12,8 @@ import android.os.Handler;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.applovin.sdk.AppLovinSdk;
+import com.applovin.sdk.AppLovinSdkConfiguration;
 import com.facebook.ads.AudienceNetworkAds;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
@@ -28,6 +30,9 @@ public class MyHelpers extends Application {
 
     public static int Entery_UpdateApps;
 
+    public static Intent CustomIntent;
+    public static int ActivityFinishs;
+
     public static synchronized MyHelpers getInstanceHelp() {
         MyHelpers application;
         synchronized (MyHelpers.class) {
@@ -43,12 +48,29 @@ public class MyHelpers extends Application {
     @Override
     public void onCreate() {
         instance = this;
+        /*Facebook*/
         AudienceNetworkAds.initialize(this);
+        /*Google*/
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
+
+        /*App Lving*/
+        try {
+            AppLovinSdk.getInstance(this).setMediationProvider("max");
+            AppLovinSdk.initializeSdk(this, new AppLovinSdk.SdkInitializationListener() {
+                @Override
+                public void onSdkInitialized(final AppLovinSdkConfiguration configuration) {
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Splash.CustomAds();
+
         sharedPreferences = getSharedPreferences("babaji", MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
@@ -371,6 +393,72 @@ public class MyHelpers extends Application {
         return sharedPreferences.getString("auto_link_timer", null);
     }
 
+    public static void set_q_link_btn_on_off(String _q_link_btn_on_off) {
+        editor.putString("_q_link_btn_on_off", _q_link_btn_on_off).commit();
+    }
+
+    public static String get_q_link_btn_on_off() {
+        return sharedPreferences.getString("_q_link_btn_on_off", null);
+    }
+
+    public static void set_q_link_array(String _q_link_array) {
+        editor.putString("_q_link_array", _q_link_array).commit();
+    }
+
+    public static String get_q_link_array() {
+        return sharedPreferences.getString("_q_link_array", null);
+    }
+
+
+    /**
+     * Custom ads
+     */
+    public static void setCustomEnable(String CustomEnable) {
+        editor.putString("CustomEnable", CustomEnable).commit();
+    }
+
+    public static String getCustomEnable() {
+        return sharedPreferences.getString("CustomEnable", null);
+    }
+
+    /**
+     * AppLovin
+     */
+    public static void setAppLovinEnable(String AppLovinEnable) {
+        editor.putString("AppLovinEnable", AppLovinEnable).commit();
+    }
+
+    public static String getAppLovinEnable() {
+        return sharedPreferences.getString("AppLovinEnable", null);
+    }
+
+    public static void setAppLovinBanner(String AppLovinBanner) {
+        editor.putString("AppLovinBanner", AppLovinBanner).commit();
+    }
+
+    public static String getAppLovinBanner() {
+        return sharedPreferences.getString("AppLovinBanner", null);
+    }
+
+    public static void setAppLovinNative(String AppLovinNative) {
+        editor.putString("AppLovinNative", AppLovinNative).commit();
+    }
+
+    public static String getAppLovinNative() {
+        return sharedPreferences.getString("AppLovinNative", null);
+    }
+
+    public static void setAppLovinInter(String AppLovinInter) {
+        editor.putString("AppLovinInter", AppLovinInter).commit();
+    }
+
+    public static String getAppLovinInter() {
+        return sharedPreferences.getString("AppLovinInter", null);
+    }
+
+    /**
+     * Mix Ads
+     */
 
     public static void setmix_ad_on_off(String mix_ad_on_off) {
         editor.putString("mix_ad_on_off", mix_ad_on_off).commit();
@@ -404,6 +492,37 @@ public class MyHelpers extends Application {
         return sharedPreferences.getInt("mix_ad_counter_banner", 5000);
     }
 
+    public static void setmix_ad_banner(String mix_ad_banner) {
+        editor.putString("mix_ad_banner", mix_ad_banner).commit();
+    }
+
+    public static String getmix_ad_banner() {
+        return sharedPreferences.getString("mix_ad_banner", null);
+    }
+
+    public static void setmix_ad_native(String mix_ad_native) {
+        editor.putString("mix_ad_native", mix_ad_native).commit();
+    }
+
+    public static String getmix_ad_native() {
+        return sharedPreferences.getString("mix_ad_native", null);
+    }
+
+    public static void setmix_ad_inter(String mix_ad_inter) {
+        editor.putString("mix_ad_inter", mix_ad_inter).commit();
+    }
+
+    public static String getmix_ad_inter() {
+        return sharedPreferences.getString("mix_ad_inter", null);
+    }
+
+    public static void setmix_ad_name(String mix_ad_name) {
+        editor.putString("mix_ad_name", mix_ad_name).commit();
+    }
+
+    public static String getmix_ad_name() {
+        return sharedPreferences.getString("mix_ad_name", null);
+    }
 
     public static void setfacebook_open_ad_id(String facebook_open_ad_id) {
         editor.putString("facebook_open_ad_id", facebook_open_ad_id).commit();

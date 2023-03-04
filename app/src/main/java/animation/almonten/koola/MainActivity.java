@@ -7,6 +7,9 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.appwood.mylibrarys.AnimationR;
+import com.appwood.mylibrarys.BigAnimation;
+import com.appwood.mylibrarys.NextAnimationActivity;
+import com.appwood.mylibrarys.SmallAnimation;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -18,22 +21,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ADS(View view) {
-        AnimationR.Slider_intents(this, new Intent(this, TestingActivity.class), null, 0);
+        NextAnimationActivity.Slider_intents(this, new Intent(this, TestingActivity.class), null, 0);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        AnimationR.Top_animation(this, findViewById(R.id.native_detail),
+        BigAnimation.Top_animation(this, findViewById(R.id.native_detail),
                 findViewById(R.id.banner_native), findViewById(R.id.addcontain)
-                , findViewById(R.id.ad_native_fb));
+                , findViewById(R.id.ad_native_fb), findViewById(R.id.applovin_native), findViewById(R.id.custom_native));
         //banner
-        AnimationR.Bottom_animation(this, findViewById(R.id.bottomsads).findViewById(com.appwood.mylibrarys.R.id.google_banner_container), findViewById(R.id.bottomsads).findViewById(com.appwood.mylibrarys.R.id.fb_banner_container), findViewById(R.id.bottomsads));
+        SmallAnimation.Bottom_animation(this, findViewById( R.id.google_banner_container),
+                findViewById(R.id.fb_banner_container),
+                findViewById(R.id.applovin_banner),
+                findViewById(R.id.custom_banner),
+                findViewById(R.id.bottomsads));
     }
 
     @Override
     public void onBackPressed() {
-        AnimationR.BackAnimation(this);
+        NextAnimationActivity.BackAnimation(this);
     }
 
 //    @Override

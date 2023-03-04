@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.appwood.mylibrarys.AnimationR;
+import com.appwood.mylibrarys.NextAnimationActivity;
 
 import animation.almonten.koola.R;
 
@@ -49,7 +50,7 @@ public class ExitScreen extends Activity {
     }
 
     private void no() {
-        AnimationR.BackAnimation(ExitScreen.this);
+        NextAnimationActivity.BackAnimation(ExitScreen.this);
     }
 
     @Override
