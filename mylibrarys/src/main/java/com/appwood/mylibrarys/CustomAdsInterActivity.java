@@ -2,18 +2,24 @@ package com.appwood.mylibrarys;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
 
 public class CustomAdsInterActivity extends AppCompatActivity {
 
@@ -21,8 +27,7 @@ public class CustomAdsInterActivity extends AppCompatActivity {
     private TextView appName;
     private TextView appShot;
     private ImageView close;
-    private AppCompatButton btnInstall;
-    private AppCompatButton btnCancel;
+
     private ImageView adBanner;
     private RelativeLayout mainView;
 
@@ -34,24 +39,14 @@ public class CustomAdsInterActivity extends AppCompatActivity {
         setContentView(R.layout.custom_inter);
         ads_number = MyHelpers.getRandomNumber(0, Splash.adsModals.size() - 1);
         initView();
-        btnInstall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                InstallApps();
-            }
-        });
+
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
            Next();
             }
         });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Next();
-            }
-        });
+
         mainView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,9 +87,21 @@ public class CustomAdsInterActivity extends AppCompatActivity {
                 .into(adBanner);
 
         close = (ImageView) findViewById(R.id.close);
-        btnInstall = (AppCompatButton) findViewById(R.id.btn_install);
-        btnCancel = (AppCompatButton) findViewById(R.id.btn_cancel);
-        mainView = (RelativeLayout) findViewById(R.id.main_view);
+       mainView = (RelativeLayout) findViewById(R.id.main_view);
+
+
+
+
+        int number  = Splash.getRandom(0,MyHelpers.color_array.size() - 1);
+        try {
+            LinearLayout btn_layout = (LinearLayout) findViewById(R.id.btn_layout);
+            AppCompatImageView img_install = (AppCompatImageView) findViewById(R.id.img_install);
+            btn_layout.setBackgroundColor(Color.parseColor(MyHelpers.color_array.get(number)));
+            img_install.setSupportBackgroundTintList(ColorStateList.valueOf(Color.parseColor(MyHelpers.color_array.get(number))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
