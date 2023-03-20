@@ -15,20 +15,6 @@
             android:orientation="vertical"
             android:weightSum="10.0">
 
-            <RelativeLayout
-                android:id="@+id/ad_native"
-                android:layout_width="match_parent"
-                android:layout_height="0sp"
-                android:layout_weight="5.0"
-                android:gravity="center">
-
-                <include
-                    android:id="@+id/native_ads"
-                    layout="@layout/ad_mix_native"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="fill_parent"

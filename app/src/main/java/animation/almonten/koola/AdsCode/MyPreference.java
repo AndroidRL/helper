@@ -3,6 +3,8 @@ package animation.almonten.koola.AdsCode;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.appwood.mylibrarys.MyProHelperClass;
+
 
 public class MyPreference {
 
@@ -11,8 +13,8 @@ public class MyPreference {
     Context context;
 
     public MyPreference(Context context) {
-        this.context = com.appwood.mylibrarys.MyHelpers.getInstanceHelp();
-        sharedPreferences = com.appwood.mylibrarys.MyHelpers.getInstanceHelp().getSharedPreferences("datastore", Context.MODE_PRIVATE);
+        this.context = MyProHelperClass.getInstanceHelp();
+        sharedPreferences = MyProHelperClass.getInstanceHelp().getSharedPreferences("datastore", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
 

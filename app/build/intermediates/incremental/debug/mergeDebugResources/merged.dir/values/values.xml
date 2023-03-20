@@ -664,6 +664,13 @@
     <color name="applovin_sdk_brand_color">#0583aa</color>
     <color name="applovin_sdk_brand_color_dark">#02627F</color>
     <color name="applovin_sdk_checkmarkColor">#4CD964</color>
+    <color name="applovin_sdk_consentFlowGdprAccentActiveColor">#3fae7f</color>
+    <color name="applovin_sdk_consentFlowGdprAccentColor">#2bcc9b</color>
+    <color name="applovin_sdk_consentFlowGdprAccentDisabledColor">#a2dfc5</color>
+    <color name="applovin_sdk_consentFlowGdprBackground">#ffffff</color>
+    <color name="applovin_sdk_consentFlowGdprSwitchThumb">#fffefe</color>
+    <color name="applovin_sdk_consentFlowGdprSwitchTrackDisabled">#cbcccc</color>
+    <color name="applovin_sdk_consentFlowGdprTextColor">#000000</color>
     <color name="applovin_sdk_ctaButtonColor">#4285F4</color>
     <color name="applovin_sdk_ctaButtonPressedColor">#0059c1</color>
     <color name="applovin_sdk_disclosureButtonColor">#C4C4C4</color>
@@ -1069,6 +1076,9 @@
     <dimen name="applovin_sdk_actionBarHeight">60dp</dimen>
     <dimen name="applovin_sdk_adControlButton_height">40dp</dimen>
     <dimen name="applovin_sdk_adControlButton_width">70dp</dimen>
+    <dimen name="applovin_sdk_consentFlowGdprControlsViewHeight">150dp</dimen>
+    <dimen name="applovin_sdk_consentFlowGdprHorizontalMargin">16dp</dimen>
+    <dimen name="applovin_sdk_consentFlowGdprPartnersControlViewHeight">100dp</dimen>
     <dimen name="applovin_sdk_mediationDebuggerDetailListItemTextSize">15sp</dimen>
     <dimen name="applovin_sdk_mediationDebuggerSectionHeight">50dp</dimen>
     <dimen name="applovin_sdk_mediationDebuggerSectionTextSize">13sp</dimen>
@@ -1950,9 +1960,36 @@
     <string name="androidx_startup" translatable="false">androidx.startup</string>
     <string name="app_name">Animation</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
-    <string name="applovin_creative_debugger_disabled_text">Enable the Creative Debugger SDK settings in order to view recent ads.</string>
-    <string name="applovin_creative_debugger_no_ads_text">No recently displayed ads found.</string>
-    <string name="applovin_list_item_image_description">Displays more info about the list item.</string>
+    <string name="applovin_agree_message">Please press \"Continue\" if you choose to start using our app.</string>
+    <string name="applovin_continue_button_text">Continue</string>
+    <string name="applovin_creative_debugger_disabled_text" translatable="false">Enable the Creative Debugger SDK settings in order to view recent ads.</string>
+    <string name="applovin_creative_debugger_no_ads_text" translatable="false">No recently displayed ads found.</string>
+    <string name="applovin_gdpr_advertising_partners_screen_message">As explained in our Privacy Policy, with your consent, we may share this data with the following partners to allow them to serve personalized ads or content:</string>
+    <string name="applovin_gdpr_advertising_partners_screen_title">Personalized Ads and Content</string>
+    <string name="applovin_gdpr_analytics_partners_screen_message">As explained in our Privacy Policy, with your consent, we may share this data with the following partners to help measure performance and improve our products and services:</string>
+    <string name="applovin_gdpr_analytics_partners_screen_title">Performance Measurements and Product Development</string>
+    <string name="applovin_gdpr_are_you_sure_screen_message">Allowing us and/or our partners to use this data for personalized ads and content and other purposes, as described in our Privacy Policy:\n\n\u2022 Gives you a more personalized experience, ads, and content\n\n\u2022 Helps support product improvements and developments\n\n\u2022 Allows you to participate in promotions</string>
+    <string name="applovin_gdpr_are_you_sure_screen_title">Are you sure?</string>
+    <string name="applovin_gdpr_back_button_text">Back</string>
+    <string name="applovin_gdpr_learn_more_screen_bullet_1">Helping keep our App free!</string>
+    <string name="applovin_gdpr_learn_more_screen_bullet_2">Giving you a more personal experience, including personalized ads and content</string>
+    <string name="applovin_gdpr_learn_more_screen_bullet_3">Helping support product improvements and developments</string>
+    <string name="applovin_gdpr_learn_more_screen_bullet_4">Allowing you to participate in promotions</string>
+    <string name="applovin_gdpr_learn_more_screen_message_1">Thank you for downloading our App! Allowing us and our partners to use this data helps us create a unique App experience, including by:</string>
+    <string name="applovin_gdpr_learn_more_screen_message_2">You can always change your selections later. If you choose not to share your data, you will still be able to access the App and you will still receive ads. However, those ads may be less relevant to your interests.</string>
+    <string name="applovin_gdpr_main_screen_analytics_purposes_switch_text">Performance measurements and product development</string>
+    <string name="applovin_gdpr_main_screen_learn_more_button_text">Learn More</string>
+    <string name="applovin_gdpr_main_screen_message">As explained in our Privacy Policy, with your consent, we collect certain information concerning your device, such as IP address and advertising identifiers. This data allows us and our partners to serve personalized ads and content and make improvements.\n\nBelow you can choose to allow us and/or our partners to use this data for the following purposes:</string>
+    <string name="applovin_gdpr_main_screen_personalized_advertising_purposes_switch_text">Personalized ads and content</string>
+    <string name="applovin_gdpr_main_screen_privacy_policy_switch_text">I certify that I am over the age of sixteen and that I have read and understood the Privacy Policy.</string>
+    <string name="applovin_gdpr_main_screen_title">Thank you for downloading \n%s!</string>
+    <string name="applovin_gdpr_understand_and_continue_button_text">I understand and confirm</string>
+    <string name="applovin_learn_more_screen_title">Help us keep %s free and more fun for you!</string>
+    <string name="applovin_list_item_image_description" translatable="false">Displays more info about the list item.</string>
+    <string name="applovin_pp_and_tos_title">To use %s you must agree to our Terms \u0026 Conditions and affirm you have reviewed our Privacy Policy</string>
+    <string name="applovin_pp_title">To use %s you must affirm that you have reviewed and acknowledged our Privacy Policy.</string>
+    <string name="applovin_privacy_policy_text">Privacy Policy</string>
+    <string name="applovin_terms_of_service_text">Terms \u0026 Conditions</string>
     <string name="are_you_sure_n_you_want_to_exit">Are you sure, \n you want to Exit</string>
     <string name="are_you_sure_you_want_to">Are you sure, you want to</string>
     <string name="bottom_sheet_behavior" translatable="false">com.google.android.material.bottomsheet.BottomSheetBehavior</string>
@@ -8606,6 +8643,38 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">18sp</item>
         <item name="android:singleLine">true</item>
+    </style>
+    <style name="com.applovin.mediation.ConsentFlow.BodyTextView" parent="android:Widget.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/applovin_sdk_consentFlowGdprTextColor</item>
+    </style>
+    <style name="com.applovin.mediation.ConsentFlow.NeutralButton" parent="android:Widget.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/applovin_sdk_consentFlowGdprTextColor</item>
+        <item name="android:background">@null</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:padding">8dp</item>
+    </style>
+    <style name="com.applovin.mediation.ConsentFlow.PositiveButton" parent="android:Widget.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/applovin_consent_flow_gdpr_positive_button_background</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="com.applovin.mediation.ConsentFlow.TitleTextView" parent="android:Widget.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/applovin_sdk_consentFlowGdprTextColor</item>
     </style>
     <style name="com.applovin.mediation.MaxDebuggerActivity.ActionBar" parent="android:Widget.Holo.Light.ActionBar">
         <item name="android:background">@color/applovin_sdk_brand_color</item>

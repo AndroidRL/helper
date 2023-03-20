@@ -4,7 +4,7 @@
             "outputFile": "animation.almonten.koola.app-mergeDebugResources-40:/values-v21/values-v21.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\eork\\.gradle\\caches\\transforms-3\\92eea927c9560b7e6b322890881095cc\\transformed\\applovin-sdk-11.8.1\\res\\values-v21\\values-v21.xml",
+                    "source": "C:\\Users\\eork\\.gradle\\caches\\transforms-3\\07f87049221293ed919e4ad241903f8c\\transformed\\applovin-sdk-11.8.2\\res\\values-v21\\values-v21.xml",
                     "from": {
                         "startLines": "2,9,12,19,25,28",
                         "startColumns": "4,4,4,4,4,4",

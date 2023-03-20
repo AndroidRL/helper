@@ -76,10 +76,6 @@
         "source": "animation.almonten.koola.app-main-44:/drawable/ic_launcher_background.xml"
     },
     {
-        "merged": "animation.almonten.koola.app-merged_res-42:/layout_ad_banner_ad_view.xml.flat",
-        "source": "animation.almonten.koola.app-main-44:/layout/ad_banner_ad_view.xml"
-    },
-    {
         "merged": "animation.almonten.koola.app-merged_res-42:/layout_activity_testing.xml.flat",
         "source": "animation.almonten.koola.app-main-44:/layout/activity_testing.xml"
     },
@@ -122,10 +118,6 @@
     {
         "merged": "animation.almonten.koola.app-merged_res-42:/mipmap-xxhdpi_ic_launcher.webp.flat",
         "source": "animation.almonten.koola.app-main-44:/mipmap-xxhdpi/ic_launcher.webp"
-    },
-    {
-        "merged": "animation.almonten.koola.app-merged_res-42:/layout_ad_mix_native.xml.flat",
-        "source": "animation.almonten.koola.app-main-44:/layout/ad_mix_native.xml"
     },
     {
         "merged": "animation.almonten.koola.app-merged_res-42:/mipmap-mdpi_ic_launcher_round.webp.flat",
