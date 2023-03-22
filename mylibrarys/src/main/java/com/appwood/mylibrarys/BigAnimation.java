@@ -281,8 +281,6 @@ public class BigAnimation {
         }
         main_native.removeAllViews();
         main_native.addView(nativeAdView);
-
-        Log.e("TAG", "GoogleNativeShow: ");
     }
 
     /*Facebook*/

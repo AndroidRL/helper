@@ -34,6 +34,7 @@ import com.unity3d.services.banners.UnityBannerSize;
 import java.util.Objects;
 
 public class SmallAnimation {
+
     /*Google*/
     public static AdLoader regular_google_banner_ad_loader;
     public static AdLoader regular_google_banner_ad_loader_1;
@@ -399,7 +400,7 @@ public class SmallAnimation {
                 Mix1AdsBanner(MyProHelperClass.getmix_ad_banner());  // 1 ads
             } else if (MyProHelperClass.getmix_ad_banner().length() == 2) {
                 Mix2AdsBanner(MyProHelperClass.getmix_ad_banner());  // 2 ads
-            } else{
+            } else {
                 MixUnlimitedAdsBanner(MyProHelperClass.getmix_ad_banner()); // Unlimited
             }
         }

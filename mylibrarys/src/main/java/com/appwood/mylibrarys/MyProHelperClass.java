@@ -65,7 +65,7 @@ public class MyProHelperClass extends Application {
         });
         /*Facebook*/
         AudienceNetworkAds.initialize(this);
-        AdSettings.setTestMode(true);
+//        AdSettings.setTestMode(true);
 
         /*App Lovin*/
         AppLovinSdk.getInstance(this).setMediationProvider("max");

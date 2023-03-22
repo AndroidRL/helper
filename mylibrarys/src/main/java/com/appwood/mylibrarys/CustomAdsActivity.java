@@ -36,7 +36,6 @@ public class CustomAdsActivity extends AppCompatActivity {
         setContentView(R.layout.custom_inter);
         ads_number = MyProHelperClass.getRandomNumber(0, Splash.adsViewModals.size() - 1);
         initView();
-
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

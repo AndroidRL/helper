@@ -3,32 +3,20 @@ package com.appwood.mylibrarys;
 import static ProMex.classs.Utils.apiii.DECode;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
 
 import com.applovin.mediation.MaxAd;
 import com.applovin.mediation.MaxAdListener;
 import com.applovin.mediation.MaxError;
 import com.applovin.mediation.ads.MaxInterstitialAd;
-import com.bumptech.glide.Glide;
 import com.facebook.ads.Ad;
 import com.facebook.ads.InterstitialAdListener;
 import com.loopj.android.http.AsyncHttpClient;
@@ -50,7 +38,6 @@ import ProMex.classs.Utils.Util;
 import cz.msebera.android.httpclient.Header;
 
 public class Splash extends AppCompatActivity {
-
     public static String extra_switch_1;
     public static String extra_switch_2;
     public static String extra_switch_3;
@@ -60,8 +47,8 @@ public class Splash extends AppCompatActivity {
     public static String extra_text_3;
     public static String extra_text_4;
 
-    public static Context main_context;
-    public static Intent main_intent;
+    public static Context contextx;
+    public static Intent intentx;
 
     public static boolean isShowOpen = false;
     public static AppOpenManager appOpenManager;
@@ -69,9 +56,10 @@ public class Splash extends AppCompatActivity {
 
     public static ArrayList<AdsViewModal> adsViewModals = new ArrayList<>();
 
-
-    public static boolean custom_ads_status = false;
+    public static boolean customads_status = false;
     public static boolean OpenAdsStatus = false;
+
+    public static boolean checkAppOpen = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +69,10 @@ public class Splash extends AppCompatActivity {
     }
 
     /*Splash*/
-    public static void StartAnimation(Context context,Intent intent,String packageName, String versionCode) {
+    public static void StartAnimation(Context context, Intent intent, String packageName, String versionCode) {
         PackName = packageName;
-        main_context = context;
-        main_intent = intent;
+        contextx = context;
+        intentx = intent;
 
         /*Custom*/
         Splash.CustomAPICalls();
@@ -101,7 +89,6 @@ public class Splash extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
-
 
                     /**
                      * Google
@@ -276,7 +263,7 @@ public class Splash extends AppCompatActivity {
                     MyProHelperClass.setUnityEnable(response.getString("enable_unity_id"));  //on_off Unity
                     if (response.getString("unity_game_id") != null && !response.getString("unity_game_id").isEmpty()) {   //Unity ID
                         MyProHelperClass.setUnityAppID(response.getString("unity_game_id"));
-                        UnityAds.initialize(MyProHelperClass.instance, MyProHelperClass.getUnityAppID(), true);
+                        UnityAds.initialize(MyProHelperClass.instance, MyProHelperClass.getUnityAppID(), false);
                     } else {
                         MyProHelperClass.setUnityAppID(null);
                     }
@@ -446,7 +433,7 @@ public class Splash extends AppCompatActivity {
                         MyProHelperClass.setCustomEnable("0");
                         MyProHelperClass.setmix_ad_on_off("0");
                         MyProHelperClass.setBackAdsOnOff("0");
-                        NextIntent(main_context, main_intent);
+                        NextIntent(contextx, intentx);
                     } else {
                         ShowADS();
                     }
@@ -456,11 +443,13 @@ public class Splash extends AppCompatActivity {
                 }
             }
 
+
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
+
     }
 
     public static void NextIntent(Context context, Intent intent) {
@@ -480,36 +469,147 @@ public class Splash extends AppCompatActivity {
 
         if (MyProHelperClass.getGoogleEnable().equals("1") && MyProHelperClass.getlive_status().equals("1")) {
 
-            try {
-                isShowOpen = false;
-                AppOpenManager.OnAppOpenClose onAppOpenClose = new AppOpenManager.OnAppOpenClose() {
-                    @Override
-                    public void OnAppOpenFailToLoad() {
-                        if (isShowOpen) {
-                            isShowOpen = false;
-                        }
-                        FailsAds("g");
-                    }
-
-                    @Override
-                    public void OnAppOpenClose() {
-                        if (isShowOpen) {
-                            isShowOpen = false;
-                        }
-                        if (!OpenAdsStatus) {
-                            OpenAdsStatus = true;
-                            NextIntent(main_context, main_intent);
-                        }
-                    }
-                };
-                isShowOpen = true;
-                appOpenManager = new AppOpenManager(MyProHelperClass.getGoogle_OpenADS(), MyProHelperClass.getInstant(), onAppOpenClose);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            GoogleAppOpen();
 
         } else if (MyProHelperClass.getFacebookEnable().equals("1") && MyProHelperClass.getlive_status().equals("1")) {
-            com.facebook.ads.InterstitialAd interstitialAd_FB_1 = new com.facebook.ads.InterstitialAd(main_context, MyProHelperClass.getfacebook_open_ad_id());
+
+            FaceBookAppOpen();
+
+        } else if (MyProHelperClass.getAppLovinEnable().equals("1")) {
+
+            AppLovingAppOpen();
+
+        } else if (MyProHelperClass.getUnityEnable().equals("1")) {
+
+            UnityAppOpen();
+
+        } else if (MyProHelperClass.getCustomEnable().equals("1")) {
+
+            CustomOpenAds();
+
+        } else {
+            NextIntent(contextx, intentx);
+        }
+    }
+
+    private static void UnityAppOpen() {
+
+        if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
+
+            UnityAds.load(MyProHelperClass.getUnityInterID(), new IUnityAdsLoadListener() {
+                @Override
+                public void onUnityAdsAdLoaded(String placementId) {
+                    UnityAds.show((Activity) contextx, MyProHelperClass.getUnityInterID(), new UnityAdsShowOptions(), new IUnityAdsShowListener() {
+                        @Override
+                        public void onUnityAdsShowFailure(String placementId, UnityAds.UnityAdsShowError error, String message) {
+                            /*Unity Mix Auto Load Inter*/
+                            if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
+                                NextAnimation.UnityInterPreLoad();
+                            }
+                            FailsAds("u");
+                        }
+
+                        @Override
+                        public void onUnityAdsShowStart(String placementId) {
+
+
+                        }
+
+                        @Override
+                        public void onUnityAdsShowClick(String placementId) {
+
+                        }
+
+                        @Override
+                        public void onUnityAdsShowComplete(String placementId, UnityAds.UnityAdsShowCompletionState state) {
+                            NextIntent(contextx, intentx);
+                            /*Unity Mix Auto Load Inter*/
+                            if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
+                                NextAnimation.UnityInterPreLoad();
+                            }
+                        }
+                    });
+                }
+
+                @Override
+                public void onUnityAdsFailedToLoad(String placementId, UnityAds.UnityAdsLoadError error, String message) {
+                    /*Unity Mix Auto Load Inter*/
+                    if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
+                        NextAnimation.UnityInterPreLoad();
+                    }
+                    FailsAds("u");
+                }
+            });
+
+        } else {
+            FailsAds("u");
+        }
+
+    }
+
+    private static void AppLovingAppOpen() {
+
+        if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
+            MaxInterstitialAd interstitialAd = new MaxInterstitialAd(MyProHelperClass.getAppLovinInter(), (Activity) contextx);
+            interstitialAd.setListener(new MaxAdListener() {
+                @Override
+                public void onAdLoaded(MaxAd ad) {
+                    if (interstitialAd.isReady()) {
+                        interstitialAd.showAd();
+                    } else {
+                        FailsAds("a");
+                        /*AppLoving Inter PreLoad*/
+                        if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
+                            NextAnimation.AppLovingInterPreLoad();
+                        }
+                    }
+                }
+
+                @Override
+                public void onAdDisplayed(MaxAd ad) {
+                }
+
+                @Override
+                public void onAdHidden(MaxAd ad) {
+                    NextIntent(contextx, intentx);
+                    /*AppLoving Inter PreLoad*/
+                    if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
+                        NextAnimation.AppLovingInterPreLoad();
+                    }
+
+                }
+
+                @Override
+                public void onAdClicked(MaxAd ad) {
+
+                }
+
+                @Override
+                public void onAdLoadFailed(String adUnitId, MaxError error) {
+                    FailsAds("a");
+                    /*AppLoving Inter PreLoad*/
+                    if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
+                        NextAnimation.AppLovingInterPreLoad();
+                    }
+                }
+
+                @Override
+                public void onAdDisplayFailed(MaxAd ad, MaxError error) {
+
+                }
+            });
+            interstitialAd.loadAd();
+        } else {
+            FailsAds("a");
+        }
+
+    }
+
+    private static void FaceBookAppOpen() {
+
+        if (MyProHelperClass.getfacebook_open_ad_id() != null && !MyProHelperClass.getfacebook_open_ad_id().isEmpty()) {
+
+            com.facebook.ads.InterstitialAd interstitialAd_FB_1 = new com.facebook.ads.InterstitialAd(contextx, MyProHelperClass.getfacebook_open_ad_id());
             InterstitialAdListener adListener = new InterstitialAdListener() {
                 @Override
                 public void onInterstitialDisplayed(Ad ad) {
@@ -518,7 +618,7 @@ public class Splash extends AppCompatActivity {
 
                 @Override
                 public void onInterstitialDismissed(Ad ad) {
-                    NextIntent(main_context, main_intent);
+                    NextIntent(contextx, intentx);
                 }
 
                 @Override
@@ -547,127 +647,80 @@ public class Splash extends AppCompatActivity {
             };
             interstitialAd_FB_1.loadAd(interstitialAd_FB_1.buildLoadAdConfig().withAdListener(adListener).build());
 
-        } else if (MyProHelperClass.getAppLovinEnable().equals("1")) {
-
-            MaxInterstitialAd interstitialAd = new MaxInterstitialAd(MyProHelperClass.getAppLovinInter(), (Activity) main_context);
-            interstitialAd.setListener(new MaxAdListener() {
-                @Override
-                public void onAdLoaded(MaxAd ad) {
-                    if (interstitialAd.isReady()) {
-                        interstitialAd.showAd();
-                    } else {
-                        FailsAds("a");
-                        /*AppLoving Inter PreLoad*/
-                        if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
-                            NextAnimation.AppLovingInterPreLoad();
-                        }
-                    }
-                }
-
-                @Override
-                public void onAdDisplayed(MaxAd ad) {
-                }
-
-                @Override
-                public void onAdHidden(MaxAd ad) {
-                    NextIntent(main_context, main_intent);
-                    /*AppLoving Inter PreLoad*/
-                    if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
-                        NextAnimation.AppLovingInterPreLoad();
-                    }
-
-                }
-
-                @Override
-                public void onAdClicked(MaxAd ad) {
-
-                }
-
-                @Override
-                public void onAdLoadFailed(String adUnitId, MaxError error) {
-                    FailsAds("a");
-                    /*AppLoving Inter PreLoad*/
-                    if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
-                        NextAnimation.AppLovingInterPreLoad();
-                    }
-                }
-
-                @Override
-                public void onAdDisplayFailed(MaxAd ad, MaxError error) {
-
-                }
-            });
-            interstitialAd.loadAd();
-
-        } else if (MyProHelperClass.getUnityEnable().equals("1")) {
-
-            UnityAds.load(MyProHelperClass.getUnityInterID(), new IUnityAdsLoadListener() {
-                @Override
-                public void onUnityAdsAdLoaded(String placementId) {
-                    UnityAds.show((Activity) main_context, MyProHelperClass.getUnityInterID(), new UnityAdsShowOptions(), new IUnityAdsShowListener() {
-                        @Override
-                        public void onUnityAdsShowFailure(String placementId, UnityAds.UnityAdsShowError error, String message) {
-                            /*Unity Mix Auto Load Inter*/
-                            if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
-                                NextAnimation.UnityInterPreLoad();
-                            }
-                            FailsAds("u");
-                        }
-
-                        @Override
-                        public void onUnityAdsShowStart(String placementId) {
-
-
-                        }
-
-                        @Override
-                        public void onUnityAdsShowClick(String placementId) {
-
-                        }
-
-                        @Override
-                        public void onUnityAdsShowComplete(String placementId, UnityAds.UnityAdsShowCompletionState state) {
-                            NextIntent(main_context, main_intent);
-                            /*Unity Mix Auto Load Inter*/
-                            if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
-                                NextAnimation.UnityInterPreLoad();
-                            }
-                        }
-                    });
-                }
-
-                @Override
-                public void onUnityAdsFailedToLoad(String placementId, UnityAds.UnityAdsLoadError error, String message) {
-                    /*Unity Mix Auto Load Inter*/
-                    if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
-                        NextAnimation.UnityInterPreLoad();
-                    }
-                    FailsAds("u");
-                }
-            });
-
-        } else if (MyProHelperClass.getCustomEnable().equals("1")) {
-            CustomOpenAds();
         } else {
-            NextIntent(main_context, main_intent);
+            FailsAds("f");
         }
+
+    }
+
+    private static void GoogleAppOpen() {
+
+        if (MyProHelperClass.getGoogle_OpenADS() != null && !MyProHelperClass.getGoogle_OpenADS().isEmpty()) {
+
+            try {
+                isShowOpen = false;
+                AppOpenManager.OnAppOpenClose onAppOpenClose = new AppOpenManager.OnAppOpenClose() {
+                    @Override
+                    public void OnAppOpenFailToLoad() {
+                        if (isShowOpen) {
+                            isShowOpen = false;
+                        }
+                        if (checkAppOpen) {
+                            checkAppOpen = false;
+                            FailsAds("g");
+                        }
+                    }
+
+                    @Override
+                    public void OnAppOpenClose() {
+
+                        if (checkAppOpen) {
+                            checkAppOpen = false;
+                        }
+
+                        if (isShowOpen) {
+                            isShowOpen = false;
+                        }
+
+                        if (!OpenAdsStatus) {
+                            OpenAdsStatus = true;
+                            NextIntent(contextx, intentx);
+                        }
+
+
+                    }
+                };
+                isShowOpen = true;
+                appOpenManager = new AppOpenManager(MyProHelperClass.getGoogle_OpenADS(), MyProHelperClass.getInstant(), onAppOpenClose);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            if (checkAppOpen) {
+                checkAppOpen = false;
+                FailsAds("g");
+            }
+        }
+
     }
 
     private static void CustomOpenAds() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (custom_ads_status) {
+                if (customads_status) {
                     if (Splash.adsViewModals.size() == 0) {
-                        NextIntent(main_context, main_intent);
+                        NextIntent(contextx, intentx);
                         return;
                     }
-                    Custom_ads_Dialog();
+                    NextIntent(contextx, intentx);
+                    contextx.startActivity(new Intent(contextx, CustomAdsActivity.class));
                 } else {
                     CustomOpenAds();
                 }
             }
-        }, 1000);
+        }, 100);
     }
 
     /**
@@ -678,7 +731,7 @@ public class Splash extends AppCompatActivity {
         if (Skip.equals("g")) {
 
             if (MyProHelperClass.getfacebook_open_ad_id() != null && !MyProHelperClass.getfacebook_open_ad_id().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
-                com.facebook.ads.InterstitialAd interstitialAd_FB_1 = new com.facebook.ads.InterstitialAd(main_context, MyProHelperClass.getfacebook_open_ad_id());
+                com.facebook.ads.InterstitialAd interstitialAd_FB_1 = new com.facebook.ads.InterstitialAd(contextx, MyProHelperClass.getfacebook_open_ad_id());
                 InterstitialAdListener adListener = new InterstitialAdListener() {
                     @Override
                     public void onInterstitialDisplayed(Ad ad) {
@@ -687,7 +740,7 @@ public class Splash extends AppCompatActivity {
 
                     @Override
                     public void onInterstitialDismissed(Ad ad) {
-                        NextIntent(main_context, main_intent);
+                        NextIntent(contextx, intentx);
                     }
 
                     @Override
@@ -726,21 +779,33 @@ public class Splash extends AppCompatActivity {
                 AppOpenManager.OnAppOpenClose onAppOpenClose = new AppOpenManager.OnAppOpenClose() {
                     @Override
                     public void OnAppOpenFailToLoad() {
+
                         if (isShowOpen) {
                             isShowOpen = false;
                         }
-                        GoogleandFacebookFails();
+
+                        if (checkAppOpen) {
+                            checkAppOpen = false;
+                            GoogleandFacebookFails();
+                        }
+
                     }
 
                     @Override
                     public void OnAppOpenClose() {
+
+                        if (checkAppOpen) {
+                            checkAppOpen = false;
+                        }
+
                         if (isShowOpen) {
                             isShowOpen = false;
                         }
                         if (!OpenAdsStatus) {
                             OpenAdsStatus = true;
-                            NextIntent(main_context, main_intent);
+                            NextIntent(contextx, intentx);
                         }
+
                     }
                 };
                 isShowOpen = true;
@@ -760,18 +825,29 @@ public class Splash extends AppCompatActivity {
                         if (isShowOpen) {
                             isShowOpen = false;
                         }
-                        FailAdsAppLovin_ShowFacebookUnityCustom();
+
+                        if (checkAppOpen) {
+                            checkAppOpen = false;
+                            FailAdsAppLovin_ShowFacebookUnityCustom();
+                        }
+
+
                     }
 
 
                     @Override
                     public void OnAppOpenClose() {
+
+                        if (checkAppOpen) {
+                            checkAppOpen = false;
+                        }
+
                         if (isShowOpen) {
                             isShowOpen = false;
                         }
                         if (!OpenAdsStatus) {
                             OpenAdsStatus = true;
-                            NextIntent(main_context, main_intent);
+                            NextIntent(contextx, intentx);
                         }
                     }
                 };
@@ -792,17 +868,29 @@ public class Splash extends AppCompatActivity {
                         if (isShowOpen) {
                             isShowOpen = false;
                         }
-                        FailUnity_ShowFacebookAppLovinCustom();
+
+                        if (checkAppOpen) {
+                            checkAppOpen = false;
+                            FailUnity_ShowFacebookAppLovinCustom();
+                        }
+
+
                     }
 
                     @Override
                     public void OnAppOpenClose() {
+
+                        if (checkAppOpen) {
+                            checkAppOpen = false;
+                        }
+
                         if (isShowOpen) {
                             isShowOpen = false;
                         }
+
                         if (!OpenAdsStatus) {
                             OpenAdsStatus = true;
-                            NextIntent(main_context, main_intent);
+                            NextIntent(contextx, intentx);
                         }
                     }
                 };
@@ -819,8 +907,10 @@ public class Splash extends AppCompatActivity {
     }
 
     private static void GoogleandFacebookFails() {
+
         if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
-            MaxInterstitialAd interstitialAd = new MaxInterstitialAd(MyProHelperClass.getAppLovinInter(), (Activity) main_context);
+
+            MaxInterstitialAd interstitialAd = new MaxInterstitialAd(MyProHelperClass.getAppLovinInter(), (Activity) contextx);
             interstitialAd.setListener(new MaxAdListener() {
                 @Override
                 public void onAdLoaded(MaxAd ad) {
@@ -831,11 +921,13 @@ public class Splash extends AppCompatActivity {
                         if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
                             NextAnimation.AppLovingInterPreLoad();
                         }
+
                         if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
                             FailsAdsUnityShow();
                         } else {
                             CustomOpenAds();
                         }
+
                     }
                 }
 
@@ -846,7 +938,7 @@ public class Splash extends AppCompatActivity {
 
                 @Override
                 public void onAdHidden(MaxAd ad) {
-                    NextIntent(main_context, main_intent);
+                    NextIntent(contextx, intentx);
                     /*AppLoving Inter PreLoad*/
                     if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
                         NextAnimation.AppLovingInterPreLoad();
@@ -887,7 +979,7 @@ public class Splash extends AppCompatActivity {
 
     public static void FailAdsAppLovin_ShowFacebookUnityCustom() {
         if (MyProHelperClass.getfacebook_open_ad_id() != null && !MyProHelperClass.getfacebook_open_ad_id().isEmpty()) {
-            com.facebook.ads.InterstitialAd interstitialAd_FB_1 = new com.facebook.ads.InterstitialAd(main_context, MyProHelperClass.getfacebook_open_ad_id());
+            com.facebook.ads.InterstitialAd interstitialAd_FB_1 = new com.facebook.ads.InterstitialAd(contextx, MyProHelperClass.getfacebook_open_ad_id());
             InterstitialAdListener adListener = new InterstitialAdListener() {
                 @Override
                 public void onInterstitialDisplayed(Ad ad) {
@@ -896,7 +988,7 @@ public class Splash extends AppCompatActivity {
 
                 @Override
                 public void onInterstitialDismissed(Ad ad) {
-                    NextIntent(main_context, main_intent);
+                    NextIntent(contextx, intentx);
                 }
 
                 @Override
@@ -942,7 +1034,7 @@ public class Splash extends AppCompatActivity {
     public static void FailUnity_ShowFacebookAppLovinCustom() {
 
         if (MyProHelperClass.getfacebook_open_ad_id() != null && !MyProHelperClass.getfacebook_open_ad_id().isEmpty()) {
-            com.facebook.ads.InterstitialAd interstitialAd_FB_1 = new com.facebook.ads.InterstitialAd(main_context, MyProHelperClass.getfacebook_open_ad_id());
+            com.facebook.ads.InterstitialAd interstitialAd_FB_1 = new com.facebook.ads.InterstitialAd(contextx, MyProHelperClass.getfacebook_open_ad_id());
             InterstitialAdListener adListener = new InterstitialAdListener() {
                 @Override
                 public void onInterstitialDisplayed(Ad ad) {
@@ -951,14 +1043,14 @@ public class Splash extends AppCompatActivity {
 
                 @Override
                 public void onInterstitialDismissed(Ad ad) {
-                    NextIntent(main_context, main_intent);
+                    NextIntent(contextx, intentx);
                 }
 
                 @Override
                 public void onError(Ad ad, com.facebook.ads.AdError adError) {
                     if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
 
-                        MaxInterstitialAd interstitialAd = new MaxInterstitialAd(MyProHelperClass.getAppLovinInter(), (Activity) main_context);
+                        MaxInterstitialAd interstitialAd = new MaxInterstitialAd(MyProHelperClass.getAppLovinInter(), (Activity) contextx);
                         interstitialAd.setListener(new MaxAdListener() {
                             @Override
                             public void onAdLoaded(MaxAd ad) {
@@ -980,7 +1072,7 @@ public class Splash extends AppCompatActivity {
 
                             @Override
                             public void onAdHidden(MaxAd ad) {
-                                NextIntent(main_context, main_intent);
+                                NextIntent(contextx, intentx);
                                 /*AppLoving Inter PreLoad*/
                                 if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
                                     NextAnimation.AppLovingInterPreLoad();
@@ -1020,7 +1112,7 @@ public class Splash extends AppCompatActivity {
                     } else {
                         if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
 
-                            MaxInterstitialAd interstitialAd = new MaxInterstitialAd(MyProHelperClass.getAppLovinInter(), (Activity) main_context);
+                            MaxInterstitialAd interstitialAd = new MaxInterstitialAd(MyProHelperClass.getAppLovinInter(), (Activity) contextx);
                             interstitialAd.setListener(new MaxAdListener() {
                                 @Override
                                 public void onAdLoaded(MaxAd ad) {
@@ -1046,7 +1138,7 @@ public class Splash extends AppCompatActivity {
                                     if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
                                         NextAnimation.AppLovingInterPreLoad();
                                     }
-                                    NextIntent(main_context, main_intent);
+                                    NextIntent(contextx, intentx);
                                 }
 
                                 @Override
@@ -1090,7 +1182,7 @@ public class Splash extends AppCompatActivity {
             interstitialAd_FB_1.loadAd(interstitialAd_FB_1.buildLoadAdConfig().withAdListener(adListener).build());
 
         } else if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
-            MaxInterstitialAd interstitialAd = new MaxInterstitialAd(MyProHelperClass.getAppLovinInter(), (Activity) main_context);
+            MaxInterstitialAd interstitialAd = new MaxInterstitialAd(MyProHelperClass.getAppLovinInter(), (Activity) contextx);
             interstitialAd.setListener(new MaxAdListener() {
                 @Override
                 public void onAdLoaded(MaxAd ad) {
@@ -1112,7 +1204,7 @@ public class Splash extends AppCompatActivity {
 
                 @Override
                 public void onAdHidden(MaxAd ad) {
-                    NextIntent(main_context, main_intent);
+                    NextIntent(contextx, intentx);
                     /*AppLoving Inter PreLoad*/
                     if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
                         NextAnimation.AppLovingInterPreLoad();
@@ -1148,7 +1240,7 @@ public class Splash extends AppCompatActivity {
         UnityAds.load(MyProHelperClass.getUnityInterID(), new IUnityAdsLoadListener() {
             @Override
             public void onUnityAdsAdLoaded(String placementId) {
-                UnityAds.show((Activity) main_context, MyProHelperClass.getUnityInterID(), new UnityAdsShowOptions(), new IUnityAdsShowListener() {
+                UnityAds.show((Activity) contextx, MyProHelperClass.getUnityInterID(), new UnityAdsShowOptions(), new IUnityAdsShowListener() {
                     @Override
                     public void onUnityAdsShowFailure(String placementId, UnityAds.UnityAdsShowError error, String message) {
                         /*Unity Mix Auto Load Inter*/
@@ -1171,7 +1263,7 @@ public class Splash extends AppCompatActivity {
 
                     @Override
                     public void onUnityAdsShowComplete(String placementId, UnityAds.UnityAdsShowCompletionState state) {
-                        NextIntent(main_context, main_intent);
+                        NextIntent(contextx, intentx);
                         /*Unity Mix Auto Load Inter*/
                         if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
                             NextAnimation.UnityInterPreLoad();
@@ -1197,9 +1289,9 @@ public class Splash extends AppCompatActivity {
      */
 
     public static void AllAdsPreLoad() {
-        NextAnimation.main_context = (Activity) main_context;
-        SmallAnimation.main_context = (Activity) main_context;
-        BigAnimation.main_context = (Activity) main_context;
+        NextAnimation.main_context = (Activity) contextx;
+        SmallAnimation.main_context = (Activity) contextx;
+        BigAnimation.main_context = (Activity) contextx;
         MixAdOnBanner();
         MixAdOnNative();
         MixAdOnInter();
@@ -1319,7 +1411,6 @@ public class Splash extends AppCompatActivity {
             NextAnimation.FacebookInterPreLoad();
         }
 
-
     }
 
 
@@ -1330,15 +1421,15 @@ public class Splash extends AppCompatActivity {
     /*Mix Open*/
     private static void MixOpenAds(String valueOf) {
         if (valueOf.equals("g")) {
-            MixGoogleOpen();
+            GoogleAppOpen();
         } else if (valueOf.equals("f")) {
-            MixFacebookOpen();
+            FaceBookAppOpen();
         } else if (valueOf.equals("a")) {
-            MixAppLovinOpen();
+            AppLovingAppOpen();
         } else if (valueOf.equals("u")) {
-            MixUnityOpen();
+            UnityAppOpen();
         } else if (valueOf.equals("q")) {
-            NextIntent(main_context, main_intent);
+            NextIntent(contextx, intentx);
             MyProHelperClass.BtnAutolink();
         } else if (valueOf.equals("c")) {
             CustomOpenAds();
@@ -1347,238 +1438,13 @@ public class Splash extends AppCompatActivity {
         }
     }
 
-    /*Google*/
-    private static void MixGoogleOpen() {
-        try {
-            isShowOpen = false;
-            AppOpenManager.OnAppOpenClose onAppOpenClose = new AppOpenManager.OnAppOpenClose() {
-                @Override
-                public void OnAppOpenFailToLoad() {
-                    if (isShowOpen) {
-                        isShowOpen = false;
-                    }
-                    CustomOpenAds();
-                }
-
-                @Override
-                public void OnAppOpenClose() {
-                    if (isShowOpen) {
-                        isShowOpen = false;
-                    }
-                    if (!OpenAdsStatus) {
-                        OpenAdsStatus = true;
-                        NextIntent(main_context, main_intent);
-                    }
-                }
-            };
-            isShowOpen = true;
-            appOpenManager = new AppOpenManager(MyProHelperClass.getGoogle_OpenADS(), MyProHelperClass.getInstant(), onAppOpenClose);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    /*Facebook*/
-    private static void MixFacebookOpen() {
-        com.facebook.ads.InterstitialAd interstitialAd_FB_1 = new com.facebook.ads.InterstitialAd(main_context, MyProHelperClass.getfacebook_open_ad_id());
-        InterstitialAdListener adListener = new InterstitialAdListener() {
-            @Override
-            public void onInterstitialDisplayed(Ad ad) {
-
-            }
-
-            @Override
-            public void onInterstitialDismissed(Ad ad) {
-                NextIntent(main_context, main_intent);
-            }
-
-            @Override
-            public void onError(Ad ad, com.facebook.ads.AdError adError) {
-                CustomOpenAds();
-            }
-
-            @Override
-            public void onAdLoaded(Ad ad) {
-                if (interstitialAd_FB_1 != null) {
-                    interstitialAd_FB_1.show();
-                }
-            }
-
-            @Override
-            public void onAdClicked(Ad ad) {
-
-            }
-
-            @Override
-            public void onLoggingImpression(Ad ad) {
-            }
-        };
-        interstitialAd_FB_1.loadAd(interstitialAd_FB_1.buildLoadAdConfig().withAdListener(adListener).build());
-    }
-
-    /*AppLovin*/
-    private static void MixAppLovinOpen() {
-        MaxInterstitialAd interstitialAd = new MaxInterstitialAd(MyProHelperClass.getAppLovinInter(), (Activity) main_context);
-        interstitialAd.setListener(new MaxAdListener() {
-            @Override
-            public void onAdLoaded(MaxAd ad) {
-                if (interstitialAd.isReady()) {
-                    interstitialAd.showAd();
-                } else {
-                    /*AppLoving Inter PreLoad*/
-                    if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
-                        NextAnimation.AppLovingInterPreLoad();
-                    }
-                    CustomOpenAds();
-                }
-            }
-
-            @Override
-            public void onAdDisplayed(MaxAd ad) {
-
-            }
-
-            @Override
-            public void onAdHidden(MaxAd ad) {
-                NextIntent(main_context, main_intent);
-                /*AppLoving Inter PreLoad*/
-                if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
-                    NextAnimation.AppLovingInterPreLoad();
-                }
-            }
-
-            @Override
-            public void onAdClicked(MaxAd ad) {
-
-
-            }
-
-            @Override
-            public void onAdLoadFailed(String adUnitId, MaxError error) {
-                /*AppLoving Inter PreLoad*/
-                if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
-                    NextAnimation.AppLovingInterPreLoad();
-                }
-                CustomOpenAds();
-
-            }
-
-            @Override
-            public void onAdDisplayFailed(MaxAd ad, MaxError error) {
-
-            }
-        });
-        interstitialAd.loadAd();
-
-    }
-
-    /*Unity*/
-    private static void MixUnityOpen() {
-        UnityAds.load(MyProHelperClass.getUnityInterID(), new IUnityAdsLoadListener() {
-            @Override
-            public void onUnityAdsAdLoaded(String placementId) {
-                UnityAds.show((Activity) main_context, MyProHelperClass.getUnityInterID(), new UnityAdsShowOptions(), new IUnityAdsShowListener() {
-                    @Override
-                    public void onUnityAdsShowFailure(String placementId, UnityAds.UnityAdsShowError error, String message) {
-                        /*Unity Mix Auto Load Inter*/
-                        if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
-                            NextAnimation.UnityInterPreLoad();
-                        }
-                        CustomOpenAds();
-                    }
-
-                    @Override
-                    public void onUnityAdsShowStart(String placementId) {
-                    }
-
-                    @Override
-                    public void onUnityAdsShowClick(String placementId) {
-                    }
-
-                    @Override
-                    public void onUnityAdsShowComplete(String placementId, UnityAds.UnityAdsShowCompletionState state) {
-                        NextIntent(main_context, main_intent);
-                        /*Unity Mix Auto Load Inter*/
-                        if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
-                            NextAnimation.UnityInterPreLoad();
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void onUnityAdsFailedToLoad(String placementId, UnityAds.UnityAdsLoadError error, String message) {
-                /*Unity Mix Auto Load Inter*/
-                if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
-                    NextAnimation.UnityInterPreLoad();
-                }
-                CustomOpenAds();
-            }
-        });
-    }
-
-    /*Custom*/
-    public static void Custom_ads_Dialog() {
-        int ads_number = MyProHelperClass.getRandomNumber(0, Splash.adsViewModals.size() - 1);
-
-        Dialog dialog = new Dialog(main_context);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.custom_openads);
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-
-        dialog.findViewById(R.id.full_view).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    main_context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + Splash.adsViewModals.get(ads_number).getApp_name())));
-                } catch (ActivityNotFoundException anfe) {
-                    main_context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + Splash.adsViewModals.get(ads_number).getApp_name())));
-                }
-            }
-        });
-        dialog.findViewById(R.id.next_view).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NextIntent(main_context, main_intent);
-            }
-        });
-
-        ImageView app_icon1 = dialog.findViewById(R.id.app_icon1);
-        ImageView app_icon = dialog.findViewById(R.id.app_icon);
-        ImageView ad_banner = dialog.findViewById(R.id.ad_banner);
-        TextView app_name = dialog.findViewById(R.id.app_name);
-        TextView app_name1 = dialog.findViewById(R.id.app_name1);
-        TextView app_shot = dialog.findViewById(R.id.app_shot);
-
-        Glide.with(main_context).load(Splash.adsViewModals.get(ads_number).getApp_logo()).into(app_icon1);
-        Glide.with(main_context).load(Splash.adsViewModals.get(ads_number).getApp_logo()).into(app_icon);
-        Glide.with(main_context).load(Splash.adsViewModals.get(ads_number).getApp_banner()).into(ad_banner);
-        app_name.setText(Splash.adsViewModals.get(ads_number).getAd_app_name());
-        app_name1.setText(Splash.adsViewModals.get(ads_number).getAd_app_name());
-        app_shot.setText(Splash.adsViewModals.get(ads_number).getApp_description());
-
-        int number = MyProHelperClass.getRandomNumber(0, MyProHelperClass.color_array.size() - 1);
-        try {
-            LinearLayout btn_layout = (LinearLayout) dialog.findViewById(R.id.btn_layout);
-            AppCompatImageView img_install = (AppCompatImageView) dialog.findViewById(R.id.img_install);
-            btn_layout.setBackgroundColor(Color.parseColor(MyProHelperClass.color_array.get(number)));
-            img_install.setSupportBackgroundTintList(ColorStateList.valueOf(Color.parseColor(MyProHelperClass.color_array.get(number))));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        dialog.show();
-    }
-
     /**
      * Custom All Ad Load
      */
     public static void CustomAPICalls() {
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
         asyncHttpClient.addHeader(DECode(Util.dojnghdklfjngkdfjng), DECode(Util.dfhdlkhmdflkhnmlkdfhm));
-        asyncHttpClient.get(DECode(Util.custom) + PackName, new JsonHttpResponseHandler() {
+        asyncHttpClient.get(DECode(Util.askjdgnkjsgn) + PackName, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -1587,12 +1453,15 @@ public class Splash extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 super.onSuccess(statusCode, headers, response);
+
+
                 try {
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject firstEvent = (JSONObject) response.get(i);
                         adsViewModals.add(new AdsViewModal(firstEvent.getString("app_name"), firstEvent.getString("enable_ads"), firstEvent.getString("ad_app_name"), firstEvent.getString("app_description"), firstEvent.getString("app_logo"), firstEvent.getString("app_banner")));
                     }
-                    custom_ads_status = true;
+                    customads_status = true;
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1601,6 +1470,7 @@ public class Splash extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                customads_status = true;
             }
         });
     }
@@ -1609,7 +1479,7 @@ public class Splash extends AppCompatActivity {
      * Country Check
      */
     public static String getCountryCode() {
-        TelephonyManager tm = (TelephonyManager) main_context.getSystemService(main_context.getApplicationContext().TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) contextx.getSystemService(contextx.getApplicationContext().TELEPHONY_SERVICE);
         return tm.getNetworkCountryIso();
     }
 
@@ -1627,6 +1497,7 @@ public class Splash extends AppCompatActivity {
         }
         return false;
     }
+
 
     public static void ShareApp(Context context, String AppName) {
         try {

@@ -77,7 +77,13 @@ public class NextAnimation {
      */
     public static void SliderAnimation(Activity context) {
         main_context = context;
-        if (checkConnection(context)) {
+        /**
+         * ActivityFinish == 0 next activity
+         * ActivityFinish == 1 next and finish activity
+         * ActivityFinish == 2 finish activity
+         */
+        if (NextAnimation.checkConnection(context)) {
+
             /*Stop Ads*/
             if (MyProHelperClass.getCounter_Inter() == 0) {
                 return;
@@ -128,7 +134,9 @@ public class NextAnimation {
      */
     public static void BackAnimation(Activity context) {
         main_context = context;
-        if (checkConnection(context)) {
+
+        if (NextAnimation.checkConnection(context)) {
+
             if (MyProHelperClass.getBackAdsOnOff().equals("1")) {
                 /**
                  * Skip Ads
@@ -194,8 +202,9 @@ public class NextAnimation {
                 @Override
                 public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
                     super.onAdFailedToShowFullScreenContent(adError);
+//                     AllAdsPreLoadsInter("g");
                     AllGoogle_Fails_OtherAdShow(adview);
-                 }
+                }
 
                 @Override
                 public void onAdShowedFullScreenContent() {
@@ -205,15 +214,16 @@ public class NextAnimation {
                 @Override
                 public void onAdDismissedFullScreenContent() {
                     super.onAdDismissedFullScreenContent();
+//                     AllAdsPreLoadsInter("g");
                 }
 
             });
         } else {
+            //             AllAdsPreLoadsInter("g");
             AllGoogle_Fails_OtherAdShow(adview);
-         }
+        }
         AutoGoogleInterID = 1;
         AllAdsPreLoadsInter("g");
-
     }
 
     private static void Google_Fails_Facebook_AppLoving_Unity_Show() {
@@ -227,18 +237,26 @@ public class NextAnimation {
             e.printStackTrace();
         }
         AllAdsPreLoadsInter("f");
+
     }
 
     private static void Google_Facebook_Fails_AppLoving_Unity_Show() {
         try {
-            if (applovin_interstitialAd.isReady()) {
-                applovin_interstitialAd.showAd();
+
+            if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
+                if (applovin_interstitialAd.isReady()) {
+                    applovin_interstitialAd.showAd();
+                } else {
+                    AllAds_Fails_Unity_Show();
+                }
             } else {
                 AllAds_Fails_Unity_Show();
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         AllAdsPreLoadsInter("a");
 
     }
@@ -262,11 +280,11 @@ public class NextAnimation {
                 @Override
                 public void onAdDismissedFullScreenContent() {
                     super.onAdDismissedFullScreenContent();
-                 }
+                }
             });
         } else {
             AllGoogle_Fails_OtherAdShow(adview);
-         }
+        }
         AllAdsPreLoadsInter("g1");
 
     }
@@ -295,7 +313,8 @@ public class NextAnimation {
             });
         } else {
             AllGoogle_Fails_OtherAdShow(adview);
-         }
+
+        }
 
         AllAdsPreLoadsInter("g2");
 
@@ -320,23 +339,26 @@ public class NextAnimation {
                 @Override
                 public void onAdDismissedFullScreenContent() {
                     super.onAdDismissedFullScreenContent();
-                 }
+                }
             });
         } else {
             AllGoogle_Fails_OtherAdShow(adview);
-         }
+        }
+
         AllAdsPreLoadsInter("g3");
 
     }
 
     private static void AllAds_Fails_Unity_Show() {
+
         if (UnityAdLoadChecker) {
+
             UnityAds.show((Activity) main_context, MyProHelperClass.getUnityInterID(), new UnityAdsShowOptions(), new IUnityAdsShowListener() {
                 @Override
                 public void onUnityAdsShowFailure(String placementId, UnityAds.UnityAdsShowError error, String message) {
-                    CustomADSInter();
-                    UnityAdLoadChecker = false;
                     AllAdsPreLoadsInter("u");
+                    CustomADSInter();
+
                 }
 
                 @Override
@@ -352,7 +374,6 @@ public class NextAnimation {
 
                 @Override
                 public void onUnityAdsShowComplete(String placementId, UnityAds.UnityAdsShowCompletionState state) {
-                    UnityAdLoadChecker = false;
                     AllAdsPreLoadsInter("u");
                 }
             });
@@ -381,15 +402,22 @@ public class NextAnimation {
             GoogleADSShow("f");
         }
         AllAdsPreLoadsInter("f");
+
     }
 
     private static void Facebook_Fails_RegularAppLovingShow() {
         try {
-            if (applovin_interstitialAd.isReady()) {
-                applovin_interstitialAd.showAd();
+
+            if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
+                if (applovin_interstitialAd.isReady()) {
+                    applovin_interstitialAd.showAd();
+                } else {
+                    AllAds_Fails_Unity_Show();
+                }
             } else {
                 AllAds_Fails_Unity_Show();
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -400,11 +428,17 @@ public class NextAnimation {
     /*AppLoving Inter Show*/
     private static void RegularAppLovingShow() {
         try {
-            if (applovin_interstitialAd.isReady()) {
-                applovin_interstitialAd.showAd();
+
+            if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
+                if (applovin_interstitialAd.isReady()) {
+                    applovin_interstitialAd.showAd();
+                } else {
+                    GoogleADSShow("a");
+                }
             } else {
                 GoogleADSShow("a");
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -424,6 +458,7 @@ public class NextAnimation {
 
     /*Unity Inter Show*/
     private static void UnityADSShow() {
+
         if (UnityAdLoadChecker) {
             UnityAds.show((Activity) main_context, MyProHelperClass.getUnityInterID(), new UnityAdsShowOptions(), new IUnityAdsShowListener() {
                 @Override
@@ -446,13 +481,13 @@ public class NextAnimation {
 
                 @Override
                 public void onUnityAdsShowComplete(String placementId, UnityAds.UnityAdsShowCompletionState state) {
-                     AllAdsPreLoadsInter("u");
+                    AllAdsPreLoadsInter("u");
+
                 }
             });
         } else {
             GoogleADSShow("u");
-         }
-
+        }
     }
 
     private static void Unity_Google_ShowFails_Facebook_ShowLisner() {
@@ -462,24 +497,33 @@ public class NextAnimation {
             Unity_Google_Facebook_ShowFails_ApplovinShowLisner();
         }
         AllAdsPreLoadsInter("f");
+
     }
 
     private static void Unity_Google_Facebook_ShowFails_ApplovinShowLisner() {
         try {
-            if (applovin_interstitialAd.isReady()) {
-                applovin_interstitialAd.showAd();
+
+            if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
+                if (applovin_interstitialAd.isReady()) {
+                    applovin_interstitialAd.showAd();
+                } else {
+                    CustomADSInter();
+                }
             } else {
                 CustomADSInter();
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         AllAdsPreLoadsInter("a");
+
     }
 
     /*Custom Inter Show*/
     private static void CustomADSInter() {
         if (Splash.adsViewModals.size() != 0) {
+
             main_context.startActivity(new Intent(main_context, CustomAdsActivity.class));
         }
     }
@@ -501,7 +545,7 @@ public class NextAnimation {
                 Mix1Ads(MyProHelperClass.getmix_ad_inter()); //1 ads
             } else if (MyProHelperClass.getmix_ad_inter().length() == 2) {
                 Mix2Ads(MyProHelperClass.getmix_ad_inter());  // 2 ads
-            } else{
+            } else {
                 MixUnlimitedAdsInter(MyProHelperClass.getmix_ad_inter()); // Unlimited
             }
         }
@@ -685,7 +729,9 @@ public class NextAnimation {
 
                 @Override
                 public void onInterstitialDismissed(Ad ad) {
-                 }
+
+//                    AllAdsPreLoadsInter("f");
+                }
 
                 @Override
                 public void onError(Ad ad, com.facebook.ads.AdError adError) {
@@ -722,6 +768,7 @@ public class NextAnimation {
 
     /*AppLoving*/
     public static void AppLovingInterPreLoad() {
+
         applovin_interstitialAd = new MaxInterstitialAd(MyProHelperClass.getAppLovinInter(), (Activity) main_context);
         applovin_interstitialAd.setListener(new MaxAdListener() {
             @Override
@@ -735,7 +782,8 @@ public class NextAnimation {
 
             @Override
             public void onAdHidden(MaxAd ad) {
-             }
+//                AllAdsPreLoadsInter("a");
+            }
 
             @Override
             public void onAdClicked(MaxAd ad) {
@@ -753,25 +801,30 @@ public class NextAnimation {
             }
         });
         applovin_interstitialAd.loadAd();
+
     }
 
     /*Unity*/
     public static void UnityInterPreLoad() {
+
         UnityAds.load(MyProHelperClass.getUnityInterID(), new IUnityAdsLoadListener() {
             @Override
             public void onUnityAdsAdLoaded(String placementId) {
                 UnityAdLoadChecker = true;
-             }
+
+            }
 
             @Override
             public void onUnityAdsFailedToLoad(String placementId, UnityAds.UnityAdsLoadError error, String message) {
                 UnityAdLoadChecker = false;
-             }
+
+            }
         });
     }
 
     /*All Preload*/
     public static void AllAdsPreLoadsInter(String refresh) {
+
         if (refresh.equals("g")) {
             google_InterstitialAd = null;
         } else if (refresh.equals("g1")) {
@@ -787,6 +840,7 @@ public class NextAnimation {
         } else if (refresh.equals("u")) {
             UnityAdLoadChecker = false;
         }
+
 
         /*Google*/
         if (MyProHelperClass.Google_inter_number == 1) {
@@ -847,6 +901,8 @@ public class NextAnimation {
                 UnityInterPreLoad();
             }
         }
+
+
     }
 
 }
