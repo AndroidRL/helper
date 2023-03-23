@@ -1,0 +1,126 @@
+[
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
+        "source": "animation.almonten.koola.app-pngs-37:/drawable-anydpi-v24/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "animation.almonten.koola.app-main-44:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/xml_backup_rules.xml.flat",
+        "source": "animation.almonten.koola.app-main-44:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "animation.almonten.koola.app-main-44:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/xml_data_extraction_rules.xml.flat",
+        "source": "animation.almonten.koola.app-main-44:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "animation.almonten.koola.app-main-44:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/layout_activity_main.xml.flat",
+        "source": "animation.almonten.koola.app-main-44:/layout/activity_main.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/drawable-v24_roundads.xml.flat",
+        "source": "animation.almonten.koola.app-main-44:/drawable-v24/roundads.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/drawable-v24_updateapp.png.flat",
+        "source": "animation.almonten.koola.app-main-44:/drawable-v24/updateapp.png"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/drawable-v24_close.xml.flat",
+        "source": "animation.almonten.koola.app-main-44:/drawable-v24/close.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "animation.almonten.koola.app-main-44:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/drawable-v24_boader.xml.flat",
+        "source": "animation.almonten.koola.app-main-44:/drawable-v24/boader.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/drawable-v24_c_nine.gif.flat",
+        "source": "animation.almonten.koola.app-main-44:/drawable-v24/c_nine.gif"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "animation.almonten.koola.app-main-44:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/drawable-v24_app_btn.xml.flat",
+        "source": "animation.almonten.koola.app-main-44:/drawable-v24/app_btn.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "animation.almonten.koola.app-main-44:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "animation.almonten.koola.app-main-44:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "animation.almonten.koola.app-main-44:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/drawable_ic_launcher_background.xml.flat",
+        "source": "animation.almonten.koola.app-main-44:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/layout_activity_testing.xml.flat",
+        "source": "animation.almonten.koola.app-main-44:/layout/activity_testing.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/drawable-v24_ic_launcher_background.xml.flat",
+        "source": "animation.almonten.koola.app-main-44:/drawable-v24/ic_launcher_background.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/layout_back_dialog_exit.xml.flat",
+        "source": "animation.almonten.koola.app-main-44:/layout/back_dialog_exit.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/drawable-v24_exit_btn.xml.flat",
+        "source": "animation.almonten.koola.app-main-44:/drawable-v24/exit_btn.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/layout_exit_screen.xml.flat",
+        "source": "animation.almonten.koola.app-main-44:/layout/exit_screen.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/layout_activity_splash.xml.flat",
+        "source": "animation.almonten.koola.app-main-44:/layout/activity_splash.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "animation.almonten.koola.app-main-44:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/layout_no_internet_item.xml.flat",
+        "source": "animation.almonten.koola.app-main-44:/layout/no_internet_item.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/drawable-v24_close_bg.xml.flat",
+        "source": "animation.almonten.koola.app-main-44:/drawable-v24/close_bg.xml"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "animation.almonten.koola.app-main-44:/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "animation.almonten.koola.app-main-44:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "animation.almonten.koola.app-merged_res-42:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "animation.almonten.koola.app-main-44:/mipmap-mdpi/ic_launcher_round.webp"
+    }
+]

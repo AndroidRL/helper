@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -1444,7 +1445,7 @@ public class Splash extends AppCompatActivity {
     public static void CustomAPICalls() {
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
         asyncHttpClient.addHeader(DECode(Util.dojnghdklfjngkdfjng), DECode(Util.dfhdlkhmdflkhnmlkdfhm));
-        asyncHttpClient.get(DECode(Util.askjdgnkjsgn) + PackName, new JsonHttpResponseHandler() {
+        asyncHttpClient.get(DECode(Util.custom) + PackName, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -1454,8 +1455,7 @@ public class Splash extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 super.onSuccess(statusCode, headers, response);
 
-
-                try {
+                 try {
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject firstEvent = (JSONObject) response.get(i);
                         adsViewModals.add(new AdsViewModal(firstEvent.getString("app_name"), firstEvent.getString("enable_ads"), firstEvent.getString("ad_app_name"), firstEvent.getString("app_description"), firstEvent.getString("app_logo"), firstEvent.getString("app_banner")));
