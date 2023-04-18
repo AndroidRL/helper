@@ -106,8 +106,14 @@ public class SmallAnimation {
                 banner_skip_ads++;
                 if (MyProHelperClass.getCounter_Banner() + 1 == banner_skip_ads) {
                     banner_skip_ads = 0;
+                    if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
+                        BannerMixAds();
+                    } else {
+                        RegularBannerAdsShow();
+                    }
                     return;
                 }
+                return;
             }
 
             /**

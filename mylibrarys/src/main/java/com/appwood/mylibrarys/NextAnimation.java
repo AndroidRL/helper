@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -94,8 +93,14 @@ public class NextAnimation {
                 auto_notShow_ads_inter++;
                 if (MyProHelperClass.getCounter_Inter() + 1 == auto_notShow_ads_inter) {
                     auto_notShow_ads_inter = 0;
+                    if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
+                        MixAds();
+                    } else {
+                        RegularADS();
+                    }
                     return;
                 }
+                return;
             }
 
             /*Mix and Regular ads*/
@@ -134,9 +139,7 @@ public class NextAnimation {
      */
     public static void BackAnimation(Activity context) {
         main_context = context;
-
         if (NextAnimation.checkConnection(context)) {
-
             if (MyProHelperClass.getBackAdsOnOff().equals("1")) {
                 /**
                  * Skip Ads
@@ -144,10 +147,15 @@ public class NextAnimation {
                 if (MyProHelperClass.getBackCounter() != 5000) {
                     auto_notShow_adsBack++;
                     if (MyProHelperClass.getBackCounter() + 1 == auto_notShow_adsBack) {
-                        context.finish();
                         auto_notShow_adsBack = 0;
+                        if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
+                            MixAds();
+                        } else {
+                            RegularADS();
+                        }
                         return;
                     }
+                    return;
                 }
                 /**
                  * Mix Ads
@@ -157,11 +165,7 @@ public class NextAnimation {
                 } else {
                     RegularADS();
                 }
-            } else {
-                context.finish();
             }
-        } else {
-            context.finish();
         }
     }
 

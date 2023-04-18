@@ -107,8 +107,14 @@ public class BigAnimation {
                 auto_notShow_ads_native++;
                 if (MyProHelperClass.getCounter_Native() + 1 == auto_notShow_ads_native) {
                     auto_notShow_ads_native = 0;
+                    if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
+                        NativeMixAds();
+                    } else {
+                        RegularAds();
+                    }
                     return;
                 }
+                return;
             }
 
             /*Mix Ads*/
