@@ -81,37 +81,37 @@ public class NextAnimation {
          * ActivityFinish == 1 next and finish activity
          * ActivityFinish == 2 finish activity
          */
-        if (NextAnimation.checkConnection(context)) {
+        if (!MyProHelperClass.isOnline(context)) {
+            context.startActivity(new Intent(context, InternetErrorActivity.class));
+            return;
+        }
+        /*Stop Ads*/
+        if (MyProHelperClass.getCounter_Inter() == 0) {
+            return;
+        }
 
-            /*Stop Ads*/
-            if (MyProHelperClass.getCounter_Inter() == 0) {
-                return;
-            }
-
-            /*Skip Ads*/
-            if (MyProHelperClass.getCounter_Inter() != 5000) {
-                auto_notShow_ads_inter++;
-                if (MyProHelperClass.getCounter_Inter() + 1 == auto_notShow_ads_inter) {
-                    auto_notShow_ads_inter = 0;
-                    if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
-                        MixAds();
-                    } else {
-                        RegularADS();
-                    }
-                    return;
+        /*Skip Ads*/
+        if (MyProHelperClass.getCounter_Inter() != 5000) {
+            auto_notShow_ads_inter++;
+            if (MyProHelperClass.getCounter_Inter() + 1 == auto_notShow_ads_inter) {
+                auto_notShow_ads_inter = 0;
+                if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
+                    MixAds();
+                } else {
+                    RegularADS();
                 }
                 return;
             }
-
-            /*Mix and Regular ads*/
-            if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
-                MixAds();
-            } else {
-                RegularADS();
-            }
-        } else {
-            CustomADSInter();
+            return;
         }
+
+        /*Mix and Regular ads*/
+        if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
+            MixAds();
+        } else {
+            RegularADS();
+        }
+
     }
 
 
@@ -119,9 +119,9 @@ public class NextAnimation {
      * Regular Ads
      */
     private static void RegularADS() {
-        if (MyProHelperClass.getGoogleEnable().equals("1") && MyProHelperClass.getlive_status().equals("1")) {
+        if (MyProHelperClass.getGoogleEnable().equals("1")) {
             GoogleADSShow("r");
-        } else if (MyProHelperClass.getFacebookEnable().equals("1") && MyProHelperClass.getlive_status().equals("1")) {
+        } else if (MyProHelperClass.getFacebookEnable().equals("1")) {
             FacebookADSShow();
         } else if (MyProHelperClass.getAppLovinEnable().equals("1")) {
             RegularAppLovingShow();
@@ -129,8 +129,6 @@ public class NextAnimation {
             UnityADSShow();
         } else if (MyProHelperClass.get_q_link_btn_on_off().equals("1")) {
             MyProHelperClass.BtnAutolink();
-        } else if (MyProHelperClass.getCustomEnable().equals("1")) {
-            CustomADSInter();
         }
     }
 
@@ -356,12 +354,10 @@ public class NextAnimation {
     private static void AllAds_Fails_Unity_Show() {
 
         if (UnityAdLoadChecker) {
-
             UnityAds.show((Activity) main_context, MyProHelperClass.getUnityInterID(), new UnityAdsShowOptions(), new IUnityAdsShowListener() {
                 @Override
                 public void onUnityAdsShowFailure(String placementId, UnityAds.UnityAdsShowError error, String message) {
                     AllAdsPreLoadsInter("u");
-                    CustomADSInter();
 
                 }
 
@@ -381,8 +377,6 @@ public class NextAnimation {
                     AllAdsPreLoadsInter("u");
                 }
             });
-        } else {
-            CustomADSInter();
         }
     }
 
@@ -506,17 +500,11 @@ public class NextAnimation {
 
     private static void Unity_Google_Facebook_ShowFails_ApplovinShowLisner() {
         try {
-
             if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
                 if (applovin_interstitialAd.isReady()) {
                     applovin_interstitialAd.showAd();
-                } else {
-                    CustomADSInter();
                 }
-            } else {
-                CustomADSInter();
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -527,7 +515,6 @@ public class NextAnimation {
     /*Custom Inter Show*/
     private static void CustomADSInter() {
         if (Splash.adsViewModals.size() != 0) {
-
             main_context.startActivity(new Intent(main_context, CustomAdsActivity.class));
         }
     }
@@ -589,9 +576,9 @@ public class NextAnimation {
     }
 
     private static void MixAdsShow(String value) {
-        if (value.equals("g") && MyProHelperClass.getlive_status().equals("1")) {
+        if (value.equals("g")) {
             GoogleADSShow("r");
-        } else if (value.equals("f") && MyProHelperClass.getlive_status().equals("1")) {
+        } else if (value.equals("f")) {
             FacebookADSShow();
         } else if (value.equals("a")) {
             RegularAppLovingShow();
@@ -599,8 +586,6 @@ public class NextAnimation {
             UnityADSShow();
         } else if (value.equals("q")) {
             MyProHelperClass.BtnAutolink();
-        } else if (value.equals("c")) {
-            CustomADSInter();
         }
     }
 
@@ -848,36 +833,36 @@ public class NextAnimation {
 
         /*Google*/
         if (MyProHelperClass.Google_inter_number == 1) {
-            if (MyProHelperClass.getGoogleInter() != null && !MyProHelperClass.getGoogleInter().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogleInter() != null && !MyProHelperClass.getGoogleInter().isEmpty()) {
                 if (google_InterstitialAd == null) {
                     GoogleInterPreload();
                 }
             }
         } else if (MyProHelperClass.Google_inter_number == 2) {
-            if (MyProHelperClass.getGoogleInter() != null && !MyProHelperClass.getGoogleInter().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogleInter() != null && !MyProHelperClass.getGoogleInter().isEmpty()) {
                 if (google_InterstitialAd_1 == null) {
                     GoogleInterPreload1();
                 }
 
             }
-            if (MyProHelperClass.getGoogleInter1() != null && !MyProHelperClass.getGoogleInter1().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogleInter1() != null && !MyProHelperClass.getGoogleInter1().isEmpty()) {
                 if (google_InterstitialAd_2 == null) {
                     GoogleInterPreload2();
                 }
 
             }
         } else if (MyProHelperClass.Google_inter_number == 3) {
-            if (MyProHelperClass.getGoogleInter() != null && !MyProHelperClass.getGoogleInter().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogleInter() != null && !MyProHelperClass.getGoogleInter().isEmpty()) {
                 if (google_InterstitialAd_1 == null) {
                     GoogleInterPreload1();
                 }
             }
-            if (MyProHelperClass.getGoogleInter1() != null && !MyProHelperClass.getGoogleInter1().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogleInter1() != null && !MyProHelperClass.getGoogleInter1().isEmpty()) {
                 if (google_InterstitialAd_2 == null) {
                     GoogleInterPreload2();
                 }
             }
-            if (MyProHelperClass.getGoogleInter2() != null && !MyProHelperClass.getGoogleInter2().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogleInter2() != null && !MyProHelperClass.getGoogleInter2().isEmpty()) {
                 if (google_InterstitialAd_3 == null) {
                     GoogleInterPreload3();
 
@@ -886,21 +871,21 @@ public class NextAnimation {
         }
 
         /*Facebook*/
-        if (MyProHelperClass.getFacebookInter() != null && !MyProHelperClass.getFacebookInter().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+        if (MyProHelperClass.getFacebookInter() != null && !MyProHelperClass.getFacebookInter().isEmpty()) {
             if (facebook_interstitialAd == null) {
                 FacebookInterPreLoad();
             }
         }
 
         /*App Loving*/
-        if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+        if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
             if (applovin_interstitialAd == null) {
                 AppLovingInterPreLoad();
             }
         }
 
         /*Unity*/
-        if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+        if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
             if (!UnityAdLoadChecker) {
                 UnityInterPreLoad();
             }

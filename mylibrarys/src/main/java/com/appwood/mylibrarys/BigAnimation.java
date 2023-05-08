@@ -95,8 +95,10 @@ public class BigAnimation {
         main_context = context1;
         main_native = main_native1;
 
-        if (checkConnection(main_context)) {
-
+        if (!MyProHelperClass.isOnline(context1)) {
+            context1.startActivity(new Intent(context1, InternetErrorActivity.class));
+            return;
+        }
             /*Stop Ad*/
             if (MyProHelperClass.getCounter_Native() == 0) {
                 return;
@@ -124,22 +126,16 @@ public class BigAnimation {
                 RegularAds();
             }
 
-        } else {
-            CustomADSNative();
-        }
+
     }
 
     private static void RegularAds() {
-        if (MyProHelperClass.getGoogleEnable().equals("1") && MyProHelperClass.getlive_status().equals("1")) {
+        if (MyProHelperClass.getGoogleEnable().equals("1")) {
             GoogleADSNativeShow("r");
-        } else if (MyProHelperClass.getFacebookEnable().equals("1") && MyProHelperClass.getlive_status().equals("1")) {
+        } else if (MyProHelperClass.getFacebookEnable().equals("1")) {
             FacebookNativeShow();
         } else if (MyProHelperClass.getAppLovinEnable().equals("1")) {
             AppLovingNativeShow();
-        } else if (MyProHelperClass.getUnityEnable().equals("1")) {
-            CustomADSNative();
-        } else if (MyProHelperClass.getCustomEnable().equals("1")) {
-            CustomADSNative();
         } else {
             main_native.removeAllViews();
         }
@@ -223,8 +219,6 @@ public class BigAnimation {
         if (appLoving_native_ads != null) {
             main_native.removeAllViews();
             main_native.addView(max_nativeAdView);
-        } else {
-            CustomADSNative();
         }
         AllAdsPreLoadsNative("a");
     }
@@ -350,8 +344,6 @@ public class BigAnimation {
     private static void AppLoving_Google_Fails_facebook_Show() {
         if (facebook_native_ads != null) {
             FacebookNativePopulateShow();
-        } else {
-            CustomADSNative();
         }
         AllAdsPreLoadsNative("f");
     }
@@ -450,14 +442,12 @@ public class BigAnimation {
     }
 
     private static void MixAdsShowNative(String value) {
-        if (value.equals("g") && MyProHelperClass.getlive_status().equals("1")) {
+        if (value.equals("g")) {
             GoogleADSNativeShow("r");
-        } else if (value.equals("f") && MyProHelperClass.getlive_status().equals("1")) {
+        } else if (value.equals("f")) {
             FacebookNativeShow();
         } else if (value.equals("a")) {
             AppLovingNativeShow();
-        } else if (value.equals("c")) {
-            CustomADSNative();
         } else {
             main_native.removeAllViews();
         }
@@ -663,7 +653,7 @@ public class BigAnimation {
 
         if (MyProHelperClass.Google_native_number == 1) {
 
-            if (MyProHelperClass.getGoogleNative() != null && !MyProHelperClass.getGoogleNative().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogleNative() != null && !MyProHelperClass.getGoogleNative().isEmpty()) {
                 if (google_native_ads == null) {
                     GoogleNativePreload();
                 }
@@ -671,13 +661,13 @@ public class BigAnimation {
 
         } else if (MyProHelperClass.Google_native_number == 2) {
 
-            if (MyProHelperClass.getGoogleNative() != null && !MyProHelperClass.getGoogleNative().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogleNative() != null && !MyProHelperClass.getGoogleNative().isEmpty()) {
                 if (google_native_ads1 == null) {
                     GoogleNativePreload1();
                 }
 
             }
-            if (MyProHelperClass.getGoogleNative1() != null && !MyProHelperClass.getGoogleNative1().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogleNative1() != null && !MyProHelperClass.getGoogleNative1().isEmpty()) {
                 if (google_native_ads2 == null) {
                     GoogleNativePreload2();
                 }
@@ -686,20 +676,20 @@ public class BigAnimation {
 
         } else if (MyProHelperClass.Google_native_number == 3) {
 
-            if (MyProHelperClass.getGoogleNative() != null && !MyProHelperClass.getGoogleNative().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogleNative() != null && !MyProHelperClass.getGoogleNative().isEmpty()) {
                 if (google_native_ads1 == null) {
                     GoogleNativePreload1();
 
                 }
             }
-            if (MyProHelperClass.getGoogleNative1() != null && !MyProHelperClass.getGoogleNative1().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogleNative1() != null && !MyProHelperClass.getGoogleNative1().isEmpty()) {
                 if (google_native_ads2 == null) {
                     GoogleNativePreload2();
 
                 }
             }
 
-            if (MyProHelperClass.getGoogleNative2() != null && !MyProHelperClass.getGoogleNative2().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogleNative2() != null && !MyProHelperClass.getGoogleNative2().isEmpty()) {
                 if (google_native_ads3 == null) {
                     GoogleNativePreload3();
                 }
@@ -708,13 +698,13 @@ public class BigAnimation {
         }
 
 
-        if (MyProHelperClass.getFacebookNative() != null && !MyProHelperClass.getFacebookNative().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+        if (MyProHelperClass.getFacebookNative() != null && !MyProHelperClass.getFacebookNative().isEmpty()) {
             if (facebook_native_ads == null) {
                 FacebookNativePreLoad();
             }
         }
 
-        if (MyProHelperClass.getAppLovinNative() != null && !MyProHelperClass.getAppLovinNative().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+        if (MyProHelperClass.getAppLovinNative() != null && !MyProHelperClass.getAppLovinNative().isEmpty()) {
             if (appLoving_native_ads == null) {
                 AppLovingNativePreLoad();
             }

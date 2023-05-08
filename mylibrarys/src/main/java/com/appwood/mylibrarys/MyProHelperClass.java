@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Handler;
 
@@ -493,16 +495,7 @@ public class MyProHelperClass extends Application {
         return sharedPreferences.getString("skip_country_list", null);
     }
 
-    /**
-     * App Live Status
-     */
-    public static void setlive_status(String live_status) {
-        editor.putString("live_status", live_status).commit();
-    }
 
-    public static String getlive_status() {
-        return sharedPreferences.getString("live_status", null);
-    }
 
     /**
      * MIX ADS
@@ -733,6 +726,11 @@ public class MyProHelperClass extends Application {
             return;
         }
         LinkOpenChromeCustomTabUrl(instance, Auto_Link[getRandomNumber(0, Auto_Link.length - 1)]);
+    }
+
+    public static boolean isOnline(Context context) {
+        NetworkInfo activeNetworkInfo = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
 }

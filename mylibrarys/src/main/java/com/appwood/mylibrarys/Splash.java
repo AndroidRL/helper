@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
@@ -51,6 +50,8 @@ public class Splash extends AppCompatActivity {
     public static Context contextx;
     public static Intent intentx;
 
+    public static int on_offAds;
+
     public static boolean isShowOpen = false;
     public static AppOpenManager appOpenManager;
     public static String PackName = "";
@@ -69,11 +70,23 @@ public class Splash extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(contextx, "llllllllllllll", Toast.LENGTH_SHORT).show();
+    }
+
     /*Splash*/
-    public static void StartAnimation(Context context, Intent intent, String packageName, String versionCode) {
+    public static void StartAnimation(Context context, Intent intent, String packageName, String versionCode, int on_off) {
         PackName = packageName;
         contextx = context;
         intentx = intent;
+        on_offAds = on_off;
+
+        if (!MyProHelperClass.isOnline(context)) {
+            context.startActivity(new Intent(context, InternetErrorActivity.class));
+            return;
+        }
 
         /*Custom*/
         Splash.CustomAPICalls();
@@ -280,11 +293,6 @@ public class Splash extends AppCompatActivity {
                     }
 
                     /**
-                     * Custom
-                     */
-                    MyProHelperClass.setCustomEnable(response.getString("custom_ads_switch"));  //on_off Custom ads
-
-                    /**
                      * Back Button
                      */
                     MyProHelperClass.setBackAdsOnOff(response.getString("enable_back_button"));
@@ -316,16 +324,6 @@ public class Splash extends AppCompatActivity {
                         MyProHelperClass.setCounter_Banner(Integer.parseInt(response.getString("skip_banner_ad")));
                     } else {
                         MyProHelperClass.setCounter_Banner(5000);
-                    }
-
-                    /**
-                     * App Live Status
-                     */
-
-                    if (PackName.equals("Test")) {
-                        MyProHelperClass.setlive_status("1");
-                    } else {
-                        MyProHelperClass.setlive_status(response.getString("live"));
                     }
 
                     /**
@@ -462,17 +460,21 @@ public class Splash extends AppCompatActivity {
      * Show Ads
      */
     private static void ShowADS() {
-
+        if (on_offAds == 1) {
+            AllAdsPreLoad();
+            NextIntent(contextx, intentx);
+            return;
+        }
         if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
             MixOpenAds(String.valueOf(MyProHelperClass.getmix_ad_inter().charAt(0)));
             return;
         }
 
-        if (MyProHelperClass.getGoogleEnable().equals("1") && MyProHelperClass.getlive_status().equals("1")) {
+        if (MyProHelperClass.getGoogleEnable().equals("1")) {
 
             GoogleAppOpen();
 
-        } else if (MyProHelperClass.getFacebookEnable().equals("1") && MyProHelperClass.getlive_status().equals("1")) {
+        } else if (MyProHelperClass.getFacebookEnable().equals("1")) {
 
             FaceBookAppOpen();
 
@@ -483,11 +485,6 @@ public class Splash extends AppCompatActivity {
         } else if (MyProHelperClass.getUnityEnable().equals("1")) {
 
             UnityAppOpen();
-
-        } else if (MyProHelperClass.getCustomEnable().equals("1")) {
-
-            CustomOpenAds();
-
         } else {
             NextIntent(contextx, intentx);
         }
@@ -707,7 +704,10 @@ public class Splash extends AppCompatActivity {
     }
 
     private static void CustomOpenAds() {
-        new Handler().postDelayed(new Runnable() {
+        NextIntent(contextx, intentx);
+
+
+      /*  new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (customads_status) {
@@ -721,7 +721,7 @@ public class Splash extends AppCompatActivity {
                     CustomOpenAds();
                 }
             }
-        }, 100);
+        }, 100);*/
     }
 
     /**
@@ -731,7 +731,7 @@ public class Splash extends AppCompatActivity {
 
         if (Skip.equals("g")) {
 
-            if (MyProHelperClass.getfacebook_open_ad_id() != null && !MyProHelperClass.getfacebook_open_ad_id().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getfacebook_open_ad_id() != null && !MyProHelperClass.getfacebook_open_ad_id().isEmpty()) {
                 com.facebook.ads.InterstitialAd interstitialAd_FB_1 = new com.facebook.ads.InterstitialAd(contextx, MyProHelperClass.getfacebook_open_ad_id());
                 InterstitialAdListener adListener = new InterstitialAdListener() {
                     @Override
@@ -775,7 +775,7 @@ public class Splash extends AppCompatActivity {
 
         } else if (Skip.equals("f")) {
 
-            if (MyProHelperClass.getGoogle_OpenADS() != null && !MyProHelperClass.getGoogle_OpenADS().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogle_OpenADS() != null && !MyProHelperClass.getGoogle_OpenADS().isEmpty()) {
                 isShowOpen = false;
                 AppOpenManager.OnAppOpenClose onAppOpenClose = new AppOpenManager.OnAppOpenClose() {
                     @Override
@@ -817,7 +817,7 @@ public class Splash extends AppCompatActivity {
 
         } else if (Skip.equals("a")) {
 
-            if (MyProHelperClass.getGoogle_OpenADS() != null && !MyProHelperClass.getGoogle_OpenADS().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogle_OpenADS() != null && !MyProHelperClass.getGoogle_OpenADS().isEmpty()) {
 
                 isShowOpen = false;
                 AppOpenManager.OnAppOpenClose onAppOpenClose = new AppOpenManager.OnAppOpenClose() {
@@ -861,7 +861,7 @@ public class Splash extends AppCompatActivity {
 
         } else if (Skip.equals("u")) {
 
-            if (MyProHelperClass.getGoogle_OpenADS() != null && !MyProHelperClass.getGoogle_OpenADS().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogle_OpenADS() != null && !MyProHelperClass.getGoogle_OpenADS().isEmpty()) {
                 isShowOpen = false;
                 AppOpenManager.OnAppOpenClose onAppOpenClose = new AppOpenManager.OnAppOpenClose() {
                     @Override
@@ -1303,7 +1303,7 @@ public class Splash extends AppCompatActivity {
          * Banner
          */
         /*Google Banner*/
-        if (MyProHelperClass.getGoogleBanner() != null && !MyProHelperClass.getGoogleBanner().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+        if (MyProHelperClass.getGoogleBanner() != null && !MyProHelperClass.getGoogleBanner().isEmpty()) {
 
             if (MyProHelperClass.getGoogleBanner().equals(MyProHelperClass.getGoogleBanner1()) && MyProHelperClass.getGoogleBanner().equals(MyProHelperClass.getGoogleBanner2()) && MyProHelperClass.getGoogleBanner1().equals(MyProHelperClass.getGoogleBanner2())) {
                 MyProHelperClass.Google_banner_number = 1;
@@ -1327,7 +1327,7 @@ public class Splash extends AppCompatActivity {
         }
 
         /*Facebook Banner*/
-        if (MyProHelperClass.getFacebookBanner() != null && !MyProHelperClass.getFacebookBanner().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+        if (MyProHelperClass.getFacebookBanner() != null && !MyProHelperClass.getFacebookBanner().isEmpty()) {
             SmallAnimation.AutoLoadFBBannerID = 1;
             SmallAnimation.FacebookBannerPreLoad();
         }
@@ -1348,7 +1348,7 @@ public class Splash extends AppCompatActivity {
          * Native
          */
         /*Google Native*/
-        if (MyProHelperClass.getGoogleNative() != null && !MyProHelperClass.getGoogleNative().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+        if (MyProHelperClass.getGoogleNative() != null && !MyProHelperClass.getGoogleNative().isEmpty()) {
             if (MyProHelperClass.getGoogleNative().equals(MyProHelperClass.getGoogleNative1()) && MyProHelperClass.getGoogleNative().equals(MyProHelperClass.getGoogleNative2()) && MyProHelperClass.getGoogleNative1().equals(MyProHelperClass.getGoogleNative2())) {
                 MyProHelperClass.Google_native_number = 1;
                 BigAnimation.AutoGoogleNativeID = 1;
@@ -1368,7 +1368,7 @@ public class Splash extends AppCompatActivity {
         }
 
         /*Facebook Native*/
-        if (MyProHelperClass.getFacebookNative() != null && !MyProHelperClass.getFacebookNative().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+        if (MyProHelperClass.getFacebookNative() != null && !MyProHelperClass.getFacebookNative().isEmpty()) {
             BigAnimation.AutoLoadFBNativeID = 1;
             BigAnimation.FacebookNativePreLoad();
         }
@@ -1385,7 +1385,7 @@ public class Splash extends AppCompatActivity {
          * Inter
          */
         /*Google Inter*/
-        if (MyProHelperClass.getGoogleInter() != null && !MyProHelperClass.getGoogleInter().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+        if (MyProHelperClass.getGoogleInter() != null && !MyProHelperClass.getGoogleInter().isEmpty()) {
 
             //Inter
             if (MyProHelperClass.getGoogleInter().equals(MyProHelperClass.getGoogleInter1()) && MyProHelperClass.getGoogleInter().equals(MyProHelperClass.getGoogleInter2()) && MyProHelperClass.getGoogleInter1().equals(MyProHelperClass.getGoogleInter2())) {
@@ -1407,7 +1407,7 @@ public class Splash extends AppCompatActivity {
         }
 
         /*Facebook Mix Auto Load Inter*/
-        if (MyProHelperClass.getFacebookInter() != null && !MyProHelperClass.getFacebookInter().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+        if (MyProHelperClass.getFacebookInter() != null && !MyProHelperClass.getFacebookInter().isEmpty()) {
             NextAnimation.AutoLoadFBInterID = 1;
             NextAnimation.FacebookInterPreLoad();
         }
@@ -1455,7 +1455,7 @@ public class Splash extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 super.onSuccess(statusCode, headers, response);
 
-                 try {
+                try {
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject firstEvent = (JSONObject) response.get(i);
                         adsViewModals.add(new AdsViewModal(firstEvent.getString("app_name"), firstEvent.getString("enable_ads"), firstEvent.getString("ad_app_name"), firstEvent.getString("app_description"), firstEvent.getString("app_logo"), firstEvent.getString("app_banner")));

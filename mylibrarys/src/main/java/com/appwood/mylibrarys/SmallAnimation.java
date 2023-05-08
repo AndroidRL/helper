@@ -91,8 +91,11 @@ public class SmallAnimation {
     public static void BottomAnimation(Context context1, RelativeLayout main_banner1) {
         main_banner = main_banner1;
         main_context = context1;
+        if (!MyProHelperClass.isOnline(context1)) {
+            context1.startActivity(new Intent(context1, InternetErrorActivity.class));
+            return;
+        }
 
-        if (checkConnection(main_context)) {
             /**
              * Stop Ads
              */
@@ -126,9 +129,7 @@ public class SmallAnimation {
             }
 
 
-        } else {
-            RegularCustomBannerAdsShow();
-        }
+
     }
 
 
@@ -137,16 +138,14 @@ public class SmallAnimation {
      */
     /*Regula*/
     private static void RegularBannerAdsShow() {
-        if (MyProHelperClass.getGoogleEnable().equals("1") && MyProHelperClass.getlive_status().equals("1")) {
+        if (MyProHelperClass.getGoogleEnable().equals("1")) {
             RegularGoogleADSBannerShow("r");
-        } else if (MyProHelperClass.getFacebookEnable().equals("1") && MyProHelperClass.getlive_status().equals("1")) {
+        } else if (MyProHelperClass.getFacebookEnable().equals("1")) {
             RegularFacebookBannerShow();
         } else if (MyProHelperClass.getAppLovinEnable().equals("1")) {
             RegularAppLovingBannerShow();
         } else if (MyProHelperClass.getUnityEnable().equals("1")) {
             RegularUnityBannerShow();
-        } else if (MyProHelperClass.getCustomEnable().equals("1")) {
-            RegularCustomBannerAdsShow();
         } else {
             main_banner.removeAllViews();
         }
@@ -240,8 +239,6 @@ public class SmallAnimation {
         if (regular_unity_banner_adView != null) {
             main_banner.removeAllViews();
             main_banner.addView(regular_unity_banner_adView);
-        } else {
-            RegularCustomBannerAdsShow();
         }
         AllAdsPreLoadsBanner("u");
     }
@@ -346,8 +343,6 @@ public class SmallAnimation {
         if (regular_applovin_banner_adView != null) {
             main_banner.removeAllViews();
             main_banner.addView(regular_applovin_banner_adView);
-        } else {
-            RegularCustomBannerAdsShow();
         }
         AllAdsPreLoadsBanner("a");
     }
@@ -446,16 +441,14 @@ public class SmallAnimation {
     }
 
     private static void MixAdsShow(String value) {
-        if (value.equals("g") && MyProHelperClass.getlive_status().equals("1")) {
+        if (value.equals("g")) {
             RegularGoogleADSBannerShow("r");
-        } else if (value.equals("f") && MyProHelperClass.getlive_status().equals("1")) {
+        } else if (value.equals("f")) {
             RegularFacebookBannerShow();
         } else if (value.equals("a")) {
             RegularAppLovingBannerShow();
         } else if (value.equals("u")) {
             RegularUnityBannerShow();
-        } else if (value.equals("c")) {
-            RegularCustomBannerAdsShow();
         } else {
             main_banner.removeAllViews();
         }
@@ -776,7 +769,7 @@ public class SmallAnimation {
 
         if (MyProHelperClass.Google_banner_number == 1) {
 
-            if (MyProHelperClass.getGoogleBanner() != null && !MyProHelperClass.getGoogleBanner().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogleBanner() != null && !MyProHelperClass.getGoogleBanner().isEmpty()) {
                 if (regular_google_native_banner == null) {
                     GoogleBannerPreload();
                 }
@@ -784,12 +777,12 @@ public class SmallAnimation {
 
         } else if (MyProHelperClass.Google_banner_number == 2) {
 
-            if (MyProHelperClass.getGoogleBanner() != null && !MyProHelperClass.getGoogleBanner().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogleBanner() != null && !MyProHelperClass.getGoogleBanner().isEmpty()) {
                 if (regular_google_native_banner_1 == null) {
                     GoogleBannerPreload1();
                 }
             }
-            if (MyProHelperClass.getGoogleBanner1() != null && !MyProHelperClass.getGoogleBanner1().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogleBanner1() != null && !MyProHelperClass.getGoogleBanner1().isEmpty()) {
                 if (regular_google_native_banner_2 == null) {
                     GoogleBannerPreload2();
                 }
@@ -797,18 +790,18 @@ public class SmallAnimation {
 
         } else if (MyProHelperClass.Google_banner_number == 3) {
 
-            if (MyProHelperClass.getGoogleBanner() != null && !MyProHelperClass.getGoogleBanner().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogleBanner() != null && !MyProHelperClass.getGoogleBanner().isEmpty()) {
                 if (regular_google_native_banner_1 == null) {
                     GoogleBannerPreload1();
                 }
             }
-            if (MyProHelperClass.getGoogleBanner1() != null && !MyProHelperClass.getGoogleBanner1().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogleBanner1() != null && !MyProHelperClass.getGoogleBanner1().isEmpty()) {
                 if (regular_google_native_banner_2 == null) {
                     GoogleBannerPreload2();
                 }
             }
 
-            if (MyProHelperClass.getGoogleBanner2() != null && !MyProHelperClass.getGoogleBanner2().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+            if (MyProHelperClass.getGoogleBanner2() != null && !MyProHelperClass.getGoogleBanner2().isEmpty()) {
                 if (regular_google_native_banner_3 == null) {
                     GoogleBannerPreload3();
                 }
@@ -816,20 +809,20 @@ public class SmallAnimation {
         }
 
 
-        if (MyProHelperClass.getFacebookBanner() != null && !MyProHelperClass.getFacebookBanner().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+        if (MyProHelperClass.getFacebookBanner() != null && !MyProHelperClass.getFacebookBanner().isEmpty()) {
             if (regular_facebook_banner_adView == null) {
                 FacebookBannerPreLoad();
             }
         }
 
 
-        if (MyProHelperClass.getAppLovinBanner() != null && !MyProHelperClass.getAppLovinBanner().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+        if (MyProHelperClass.getAppLovinBanner() != null && !MyProHelperClass.getAppLovinBanner().isEmpty()) {
             if (regular_applovin_banner_adView == null) {
                 AppLovingBannerPreLoad();
             }
         }
 
-        if (MyProHelperClass.getUnityBannerID() != null && !MyProHelperClass.getUnityBannerID().isEmpty() && MyProHelperClass.getlive_status().equals("1")) {
+        if (MyProHelperClass.getUnityBannerID() != null && !MyProHelperClass.getUnityBannerID().isEmpty()) {
             if (regular_unity_banner_adView == null) {
                 UnityBannerPreLoad();
             }

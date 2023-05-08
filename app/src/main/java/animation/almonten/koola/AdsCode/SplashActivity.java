@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,12 +27,14 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        FirebaseGetId();
+
+
+//        FirebaseGetId();
     }
 
     private void FirebaseGetId() {
         if (isOnline()) {
-            Splash.StartAnimation(this, new Intent(this, MainActivity.class),"Test", "1");
+            Splash.StartAnimation(this, new Intent(this, MainActivity.class),"Test", "1",0);
             return;
         }
         Dialog dialog = new Dialog(SplashActivity.this);
@@ -63,5 +66,9 @@ public class SplashActivity extends AppCompatActivity {
         NetworkInfo activeNetworkInfo = ((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Splash.StartAnimation(this, new Intent(this, MainActivity.class),"Test", "1",1);
+    }
 }
