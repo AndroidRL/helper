@@ -8,8 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.TelephonyManager;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -70,11 +70,6 @@ public class Splash extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Toast.makeText(contextx, "llllllllllllll", Toast.LENGTH_SHORT).show();
-    }
 
     /*Splash*/
     public static void StartAnimation(Context context, Intent intent, String packageName, String versionCode, int on_off) {
@@ -434,6 +429,10 @@ public class Splash extends AppCompatActivity {
                         MyProHelperClass.setBackAdsOnOff("0");
                         NextIntent(contextx, intentx);
                     } else {
+                        if (on_offAds == 1) {
+                            AllAdsPreLoad();
+                            return;
+                        }
                         ShowADS();
                     }
                     AllAdsPreLoad();
@@ -460,11 +459,7 @@ public class Splash extends AppCompatActivity {
      * Show Ads
      */
     private static void ShowADS() {
-        if (on_offAds == 1) {
-            AllAdsPreLoad();
-            NextIntent(contextx, intentx);
-            return;
-        }
+
         if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
             MixOpenAds(String.valueOf(MyProHelperClass.getmix_ad_inter().charAt(0)));
             return;
@@ -1296,6 +1291,15 @@ public class Splash extends AppCompatActivity {
         MixAdOnBanner();
         MixAdOnNative();
         MixAdOnInter();
+        //Off Open Ads
+        if (on_offAds == 1) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    NextIntent(contextx, intentx);
+                }
+            },3000);
+        }
     }
 
     private static void MixAdOnBanner() {

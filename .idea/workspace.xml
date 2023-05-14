@@ -9,9 +9,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2bbf8e50-7997-4911-83ca-c7ad0cd633ca" name="Changes" comment="1.0.5">
-      <change afterPath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/InternetErrorActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrarys/src/main/res/layout/activity_internet_error.xml" afterDir="false" />
+    <list default="true" id="2bbf8e50-7997-4911-83ca-c7ad0cd633ca" name="Changes" comment="1.0.6">
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" afterDir="false" />
@@ -20,17 +21,11 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/animation/almonten/koola/AdsCode/SplashActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/animation/almonten/koola/AdsCode/SplashActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-night/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-night/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mylibrarys/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mylibrarys/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/BigAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/BigAnimation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/MyProHelperClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/MyProHelperClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/NextAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/NextAnimation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/SmallAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/SmallAnimation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/Splash.java" beforeDir="false" afterPath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/Splash.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,6 +54,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$USER_HOME$/.gradle/caches/transforms-3/e74f6046ed433f88ab7dd6e15f111d5e/transformed/play-services-ads-lite-21.3.0/jars/classes.jar!/com/google/android/gms/ads/nativead/NativeAdView.class" root0="SKIP_INSPECTION" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -76,7 +74,7 @@
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cidr.known.project.marker": "true",
     "com.google.services.firebase.aqiPopupShown": "true",
-    "last_opened_file_path": "D:/Running Project/ADS Demo/08-05-2023 1.0.6/Ads Demo/mylibrarys/src/main/res/drawable",
+    "last_opened_file_path": "F:/WatVideoPlayer",
     "project.structure.last.edited": "SDK Location",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.2",
@@ -168,7 +166,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681789818308</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="1.0.6">
+      <created>1683539393697</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1683539393697</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -184,6 +189,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="1.0.5" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.0.5" />
+    <MESSAGE value="1.0.6" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.0.6" />
   </component>
 </project>
