@@ -47,7 +47,7 @@ public class ExitScreen extends Activity {
     }
 
     private void no() {
-        NextAnimation.BackAnimation(ExitScreen.this);
+        NextAnimation.BackAnimation(ExitScreen.this, null);
     }
 
     @Override

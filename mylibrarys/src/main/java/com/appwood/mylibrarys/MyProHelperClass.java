@@ -2,14 +2,19 @@ package com.appwood.mylibrarys;
 
 
 import android.app.Application;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Handler;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.res.ResourcesCompat;
@@ -573,6 +578,15 @@ public class MyProHelperClass extends Application {
     }
 
 
+    public static void setExtraSwitch_4(String ExtraSwitch_4) {
+        editor.putString("ExtraSwitch_4", ExtraSwitch_4).commit();
+    }
+
+    public static String getExtraSwitch_4() {
+        return sharedPreferences.getString("ExtraSwitch_4", null);
+    }  //1 preload start //o preload stop
+
+
     public static void setExtraBtn_2(String ExtraBtn_2) {
         editor.putString("ExtraBtn_2", ExtraBtn_2).commit();
     }
@@ -733,6 +747,28 @@ public class MyProHelperClass extends Application {
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
+
+    public static Dialog startLoader(final Context context) {
+        final Dialog d = new Dialog(context);
+        d.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        d.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        d.setContentView(R.layout.progress);
+        d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        d.setCancelable(false);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(d.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        d.show();
+        d.getWindow().setAttributes(lp);
+        return d;
+    }
+
+    public static void stopLoader(final Dialog d) {
+        if (d != null && d.isShowing()) {
+            d.cancel();
+        }
+    }
 }
 
 

@@ -1,6 +1,7 @@
 package com.appwood.mylibrarys;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -26,6 +27,8 @@ import com.unity3d.ads.UnityAdsShowOptions;
 
 public class NextAnimation {
 
+    public static int intent_status;
+
     /*Google*/
     public static com.google.android.gms.ads.interstitial.InterstitialAd google_InterstitialAd;
     public static com.google.android.gms.ads.interstitial.InterstitialAd google_InterstitialAd_1;
@@ -48,8 +51,10 @@ public class NextAnimation {
 
     /*Helper*/
     public static Activity main_context;
+    public static Intent main_intent;
     public static int auto_notShow_adsBack = 0;
 
+    public static Dialog dialog;
 
     /**
      * INTERNET CHECK CODE
@@ -74,8 +79,10 @@ public class NextAnimation {
     /**
      * INTERSTITIAL ADS CODE START
      */
-    public static void SliderAnimation(Activity context) {
+    public static void SliderAnimation(Activity context, Intent intent, int i) {
         main_context = context;
+        main_intent = intent;
+        intent_status = i;
         /**
          * ActivityFinish == 0 next activity
          * ActivityFinish == 1 next and finish activity
@@ -95,12 +102,28 @@ public class NextAnimation {
             auto_notShow_ads_inter++;
             if (MyProHelperClass.getCounter_Inter() + 1 == auto_notShow_ads_inter) {
                 auto_notShow_ads_inter = 0;
-                if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
-                    MixAds();
+                if (MyProHelperClass.getExtraSwitch_4().equals("0")) {
+                    dialog = MyProHelperClass.startLoader(main_context);
+                    StopPreLoad();
                 } else {
-                    RegularADS();
+                    if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
+                        MixAds();
+                    } else {
+                        RegularADS();
+                    }
                 }
                 return;
+            }
+            return;
+        }
+
+        /*Stop pre Load*/
+        if (MyProHelperClass.getExtraSwitch_4().equals("0")) {
+            if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
+                StopPreLoadMixAds();
+            } else {
+                dialog = MyProHelperClass.startLoader(main_context);
+                StopPreLoad();
             }
             return;
         }
@@ -112,8 +135,26 @@ public class NextAnimation {
             RegularADS();
         }
 
+
     }
 
+
+    /**
+     * Not preload ads
+     */
+    private static void StopPreLoad() {
+        if (MyProHelperClass.getGoogleEnable().equals("1")) {
+            NotPreGoogle();
+        } else if (MyProHelperClass.getFacebookEnable().equals("1")) {
+            NotPreFacebook();
+        } else if (MyProHelperClass.getAppLovinEnable().equals("1")) {
+            NotPreAppLoving();
+        } else if (MyProHelperClass.getUnityEnable().equals("1")) {
+            NotPreUnity();
+        } else if (MyProHelperClass.get_q_link_btn_on_off().equals("1")) {
+            MyProHelperClass.BtnAutolink();
+        }
+    }
 
     /**
      * Regular Ads
@@ -135,8 +176,9 @@ public class NextAnimation {
     /**
      * Back Btn Interstitial
      */
-    public static void BackAnimation(Activity context) {
+    public static void BackAnimation(Activity context, Intent intent) {
         main_context = context;
+        main_intent = intent;
         if (NextAnimation.checkConnection(context)) {
             if (MyProHelperClass.getBackAdsOnOff().equals("1")) {
                 /**
@@ -155,6 +197,14 @@ public class NextAnimation {
                     }
                     return;
                 }
+
+                /*Stop pre Load*/
+                if (MyProHelperClass.getExtraSwitch_4().equals("0")) {
+                    dialog = MyProHelperClass.startLoader(main_context);
+                    StopPreLoad();
+                    return;
+                }
+
                 /**
                  * Mix Ads
                  */
@@ -217,6 +267,7 @@ public class NextAnimation {
                 public void onAdDismissedFullScreenContent() {
                     super.onAdDismissedFullScreenContent();
 //                     AllAdsPreLoadsInter("g");
+
                 }
 
             });
@@ -892,6 +943,241 @@ public class NextAnimation {
         }
 
 
+    }
+
+    /**
+     * Without pre load
+     */
+
+    private static void NotPreUnity() {
+        UnityAds.load(MyProHelperClass.getUnityInterID(), new IUnityAdsLoadListener() {
+            @Override
+            public void onUnityAdsAdLoaded(String placementId) {
+                MyProHelperClass.stopLoader(dialog);
+                UnityAds.show((Activity) main_context, MyProHelperClass.getUnityInterID(), new UnityAdsShowOptions(), new IUnityAdsShowListener() {
+                    @Override
+                    public void onUnityAdsShowFailure(String placementId, UnityAds.UnityAdsShowError error, String message) {
+                        NextIntent();
+                    }
+
+                    @Override
+                    public void onUnityAdsShowStart(String placementId) {
+
+
+                    }
+
+                    @Override
+                    public void onUnityAdsShowClick(String placementId) {
+
+                    }
+
+                    @Override
+                    public void onUnityAdsShowComplete(String placementId, UnityAds.UnityAdsShowCompletionState state) {
+                        NextIntent();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onUnityAdsFailedToLoad(String placementId, UnityAds.UnityAdsLoadError error, String message) {
+                NextIntent();
+            }
+        });
+    }
+
+    private static void NotPreAppLoving() {
+        applovin_interstitialAd = new MaxInterstitialAd(MyProHelperClass.getAppLovinInter(), (Activity) main_context);
+        applovin_interstitialAd.setListener(new MaxAdListener() {
+            @Override
+            public void onAdLoaded(MaxAd ad) {
+                if (applovin_interstitialAd.isReady()) {
+                    MyProHelperClass.stopLoader(dialog);
+                    applovin_interstitialAd.showAd();
+                }
+            }
+
+            @Override
+            public void onAdDisplayed(MaxAd ad) {
+            }
+
+            @Override
+            public void onAdHidden(MaxAd ad) {
+                NextIntent();
+            }
+
+            @Override
+            public void onAdClicked(MaxAd ad) {
+            }
+
+            @Override
+            public void onAdLoadFailed(String adUnitId, MaxError error) {
+                applovin_interstitialAd = null;
+                NextIntent();
+            }
+
+            @Override
+            public void onAdDisplayFailed(MaxAd ad, MaxError error) {
+
+            }
+        });
+        applovin_interstitialAd.loadAd();
+    }
+
+    private static void NotPreFacebook() {
+        facebook_interstitialAd = new com.facebook.ads.InterstitialAd(main_context, MyProHelperClass.getFacebookInter());
+        InterstitialAdListener adListener = new InterstitialAdListener() {
+            @Override
+            public void onInterstitialDisplayed(Ad ad) {
+
+            }
+
+            @Override
+            public void onInterstitialDismissed(Ad ad) {
+                NextIntent();
+            }
+
+            @Override
+            public void onError(Ad ad, com.facebook.ads.AdError adError) {
+                facebook_interstitialAd = null;
+                NextIntent();
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                if (facebook_interstitialAd != null && facebook_interstitialAd.isAdLoaded()) {
+                    MyProHelperClass.stopLoader(dialog);
+                    facebook_interstitialAd.show();
+                }
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+
+            }
+        };
+        facebook_interstitialAd.loadAd(facebook_interstitialAd.buildLoadAdConfig().withAdListener(adListener).build());
+    }
+
+    private static void NotPreGoogle() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        google_InterstitialAd.load(main_context, MyProHelperClass.getGoogleInter(), adRequest, new InterstitialAdLoadCallback() {
+            @Override
+            public void onAdLoaded(@NonNull com.google.android.gms.ads.interstitial.InterstitialAd interstitialAd) {
+                super.onAdLoaded(interstitialAd);
+                google_InterstitialAd = interstitialAd;
+                if (google_InterstitialAd != null) {
+                    google_InterstitialAd.show(main_context);
+                    google_InterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                        @Override
+                        public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                            super.onAdFailedToShowFullScreenContent(adError);
+                            NextIntent();
+                        }
+
+                        @Override
+                        public void onAdShowedFullScreenContent() {
+                            super.onAdShowedFullScreenContent();
+                            MyProHelperClass.stopLoader(dialog);
+
+                        }
+
+                        @Override
+                        public void onAdDismissedFullScreenContent() {
+                            super.onAdDismissedFullScreenContent();
+                            NextIntent();
+                        }
+                    });
+                } else {
+                    NextIntent();
+                }
+            }
+
+            @Override
+            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
+                google_InterstitialAd = null;
+                NextIntent();
+            }
+        });
+    }
+
+    public static void NextIntent() {
+        MyProHelperClass.stopLoader(dialog);
+        if (main_intent == null) {
+            main_context.finish();
+            return;
+        }
+        if (intent_status == 0) {
+            main_context.startActivity(main_intent);
+        } else if (intent_status == 1) {
+            main_context.startActivity(main_intent);
+            main_context.finish();
+        }
+    }
+
+    private static void StopPreLoadMixAds() {
+        if (MyProHelperClass.getmix_ad_inter().length() != 0) {
+            if (MyProHelperClass.getmix_ad_inter().length() == 1) {
+                StopPreLoadMix1Ads(MyProHelperClass.getmix_ad_inter()); //1 ads
+            } else if (MyProHelperClass.getmix_ad_inter().length() == 2) {
+                StopPreLoadMix2Ads(MyProHelperClass.getmix_ad_inter());  // 2 ads
+            } else {
+                StopPreLoadMixUnlimitedAdsInter(MyProHelperClass.getmix_ad_inter()); // Unlimited
+            }
+        }
+    }
+
+    private static void StopPreLoadMixAdsShow(String value) {
+        if (value.equals("g")) {
+            NotPreGoogle();
+        } else if (value.equals("f")) {
+            NotPreFacebook();
+        } else if (value.equals("a")) {
+            NotPreAppLoving();
+        } else if (value.equals("u")) {
+            NotPreUnity();
+        } else if (value.equals("q")) {
+            MyProHelperClass.BtnAutolink();
+        }
+    }
+
+    private static void StopPreLoadMix1Ads(String s) {
+        StopPreLoadMixAdsShow(String.valueOf(s.charAt(0)));
+    }
+
+    private static void StopPreLoadMix2Ads(String s) {
+        if (MyProHelperClass.getmix_ad_counter_inter() != 5000) {
+            mix_adsInter++;
+            if (MyProHelperClass.getmix_ad_counter_inter() + 1 == mix_adsInter) {
+                StopPreLoadMixAdsShow(String.valueOf(s.charAt(1)));
+                mix_adsInter = 0;
+            } else {
+                StopPreLoadMixAdsShow(String.valueOf(s.charAt(0)));
+            }
+        } else {
+            if (mix_adsInter == 0) {
+                mix_adsInter = 1;
+                StopPreLoadMixAdsShow(String.valueOf(s.charAt(0)));
+            } else if (mix_adsInter == 1) {
+                mix_adsInter = 0;
+                StopPreLoadMixAdsShow(String.valueOf(s.charAt(1)));
+            }
+        }
+    }
+
+    private static void StopPreLoadMixUnlimitedAdsInter(String s) {
+        StopPreLoadMixAdsShow(String.valueOf(s.charAt(mix_adsInter)));
+        if (MyProHelperClass.getmix_ad_inter().length() - 1 == mix_adsInter) {
+            mix_adsInter = 0;
+        } else {
+            mix_adsInter++;
+        }
     }
 
 }

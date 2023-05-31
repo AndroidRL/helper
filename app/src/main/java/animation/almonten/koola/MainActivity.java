@@ -18,56 +18,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BigAnimation.TopAnimation(this, findViewById(R.id.top_animation));
-        SmallAnimation.BottomAnimation( this, findViewById(R.id.bottom_animation));
+//        SmallAnimation.BottomAnimation(this, findViewById(R.id.bottom_animation));
     }
 
     public void ADS(View view) {
-        startActivity(new Intent(this,TestingActivity.class));
-        NextAnimation.SliderAnimation(this);
+//        startActivity(new Intent(this,TestingActivity.class));
+        NextAnimation.SliderAnimation(this, new Intent(this, TestingActivity.class), 0);
     }
-
-
 
     @Override
     public void onBackPressed() {
-        NextAnimation.BackAnimation(this);
+        NextAnimation.BackAnimation(this, null);
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

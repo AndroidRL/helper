@@ -202,5 +202,16 @@
             android:textSize="17sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gnt_outline_shape"
+            android:backgroundTint="#000"
+            android:text="Ad"
+            android:textSize="10sp"
+            android:padding="2dp"
+            android:textColor="#fff" />
+
+
     </RelativeLayout>
 </com.google.android.gms.ads.nativead.NativeAdView>

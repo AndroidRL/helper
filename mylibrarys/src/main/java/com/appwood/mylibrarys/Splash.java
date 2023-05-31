@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -389,6 +390,9 @@ public class Splash extends AppCompatActivity {
                     extra_text_3 = response.getString("extra_text_3");
                     extra_text_4 = response.getString("extra_text_4");
 
+                    //Stop Preload ads
+                    MyProHelperClass.setExtraSwitch_4(response.getString("extra_switch_4"));
+
                     /**
                      * Other App Open
                      */
@@ -429,26 +433,43 @@ public class Splash extends AppCompatActivity {
                         MyProHelperClass.setBackAdsOnOff("0");
                         NextIntent(contextx, intentx);
                     } else {
-                        if (on_offAds == 1) {
+                        if (MyProHelperClass.getExtraSwitch_4().equals("1")) {
+                            if (on_offAds == 1) {
+                                //only preload
+                                AllAdsPreLoad();
+                                return;
+                            }
+                            //show ads
+                            ShowADS();
+                            //preload ads
                             AllAdsPreLoad();
-                            return;
+                        } else {
+                            if (on_offAds == 1) {
+                                //Next
+                                NextIntent(contextx, intentx);
+                            } else {
+                                //Open Ads
+//                                InOpenAds();
+                                 ShowADS();
+                            }
                         }
-                        ShowADS();
                     }
-                    AllAdsPreLoad();
-                } catch (JSONException e) {
+                } catch (
+                        JSONException e) {
                     e.printStackTrace();
                 }
             }
 
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable
+                    throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
 
     }
+
 
     public static void NextIntent(Context context, Intent intent) {
         context.startActivity(intent);
@@ -459,26 +480,17 @@ public class Splash extends AppCompatActivity {
      * Show Ads
      */
     private static void ShowADS() {
-
         if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
             MixOpenAds(String.valueOf(MyProHelperClass.getmix_ad_inter().charAt(0)));
             return;
         }
-
         if (MyProHelperClass.getGoogleEnable().equals("1")) {
-
             GoogleAppOpen();
-
         } else if (MyProHelperClass.getFacebookEnable().equals("1")) {
-
             FaceBookAppOpen();
-
         } else if (MyProHelperClass.getAppLovinEnable().equals("1")) {
-
             AppLovingAppOpen();
-
         } else if (MyProHelperClass.getUnityEnable().equals("1")) {
-
             UnityAppOpen();
         } else {
             NextIntent(contextx, intentx);
@@ -488,18 +500,22 @@ public class Splash extends AppCompatActivity {
     private static void UnityAppOpen() {
 
         if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
-
             UnityAds.load(MyProHelperClass.getUnityInterID(), new IUnityAdsLoadListener() {
                 @Override
                 public void onUnityAdsAdLoaded(String placementId) {
                     UnityAds.show((Activity) contextx, MyProHelperClass.getUnityInterID(), new UnityAdsShowOptions(), new IUnityAdsShowListener() {
                         @Override
                         public void onUnityAdsShowFailure(String placementId, UnityAds.UnityAdsShowError error, String message) {
-                            /*Unity Mix Auto Load Inter*/
-                            if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
-                                NextAnimation.UnityInterPreLoad();
+                            if (MyProHelperClass.getExtraSwitch_4().equals("1")) {
+                                /*Unity Mix Auto Load Inter*/
+                                if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
+                                    NextAnimation.UnityInterPreLoad();
+                                }
+                                FailsAds("u");
+                            } else {
+                                NextIntent(contextx, intentx);
                             }
-                            FailsAds("u");
+
                         }
 
                         @Override
@@ -515,29 +531,34 @@ public class Splash extends AppCompatActivity {
 
                         @Override
                         public void onUnityAdsShowComplete(String placementId, UnityAds.UnityAdsShowCompletionState state) {
-                            NextIntent(contextx, intentx);
-                            /*Unity Mix Auto Load Inter*/
-                            if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
-                                NextAnimation.UnityInterPreLoad();
+                            if (MyProHelperClass.getExtraSwitch_4().equals("1")) {
+                                NextIntent(contextx, intentx);
+                                /*Unity Mix Auto Load Inter*/
+                                if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
+                                    NextAnimation.UnityInterPreLoad();
+                                }
+                            } else {
+                                NextIntent(contextx, intentx);
                             }
                         }
                     });
                 }
-
                 @Override
                 public void onUnityAdsFailedToLoad(String placementId, UnityAds.UnityAdsLoadError error, String message) {
-                    /*Unity Mix Auto Load Inter*/
-                    if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
-                        NextAnimation.UnityInterPreLoad();
+                    if (MyProHelperClass.getExtraSwitch_4().equals("1")) {
+                        /*Unity Mix Auto Load Inter*/
+                        if (MyProHelperClass.getUnityInterID() != null && !MyProHelperClass.getUnityInterID().isEmpty()) {
+                            NextAnimation.UnityInterPreLoad();
+                        }
+                        FailsAds("u");
+                    } else {
+                        NextIntent(contextx, intentx);
                     }
-                    FailsAds("u");
                 }
             });
-
         } else {
             FailsAds("u");
         }
-
     }
 
     private static void AppLovingAppOpen() {
@@ -550,10 +571,14 @@ public class Splash extends AppCompatActivity {
                     if (interstitialAd.isReady()) {
                         interstitialAd.showAd();
                     } else {
-                        FailsAds("a");
-                        /*AppLoving Inter PreLoad*/
-                        if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
-                            NextAnimation.AppLovingInterPreLoad();
+                        if (MyProHelperClass.getExtraSwitch_4().equals("1")) {
+                            FailsAds("a");
+                            /*AppLoving Inter PreLoad*/
+                            if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
+                                NextAnimation.AppLovingInterPreLoad();
+                            }
+                        } else {
+                            NextIntent(contextx, intentx);
                         }
                     }
                 }
@@ -564,12 +589,15 @@ public class Splash extends AppCompatActivity {
 
                 @Override
                 public void onAdHidden(MaxAd ad) {
-                    NextIntent(contextx, intentx);
-                    /*AppLoving Inter PreLoad*/
-                    if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
-                        NextAnimation.AppLovingInterPreLoad();
+                    if (MyProHelperClass.getExtraSwitch_4().equals("1")) {
+                        NextIntent(contextx, intentx);
+                        /*AppLoving Inter PreLoad*/
+                        if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
+                            NextAnimation.AppLovingInterPreLoad();
+                        }
+                    } else {
+                        NextIntent(contextx, intentx);
                     }
-
                 }
 
                 @Override
@@ -579,10 +607,14 @@ public class Splash extends AppCompatActivity {
 
                 @Override
                 public void onAdLoadFailed(String adUnitId, MaxError error) {
-                    FailsAds("a");
-                    /*AppLoving Inter PreLoad*/
-                    if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
-                        NextAnimation.AppLovingInterPreLoad();
+                    if (MyProHelperClass.getExtraSwitch_4().equals("1")) {
+                        FailsAds("a");
+                        /*AppLoving Inter PreLoad*/
+                        if (MyProHelperClass.getAppLovinInter() != null && !MyProHelperClass.getAppLovinInter().isEmpty()) {
+                            NextAnimation.AppLovingInterPreLoad();
+                        }
+                    } else {
+                        NextIntent(contextx, intentx);
                     }
                 }
 
@@ -624,7 +656,10 @@ public class Splash extends AppCompatActivity {
                     if (interstitialAd_FB_1 != null) {
                         interstitialAd_FB_1.show();
                     } else {
-                        FailsAds("f");
+                        if (MyProHelperClass.getExtraSwitch_4().equals("1"))
+                            FailsAds("f");
+                        else
+                            NextIntent(contextx, intentx);
                     }
                 }
 
@@ -649,7 +684,6 @@ public class Splash extends AppCompatActivity {
     private static void GoogleAppOpen() {
 
         if (MyProHelperClass.getGoogle_OpenADS() != null && !MyProHelperClass.getGoogle_OpenADS().isEmpty()) {
-
             try {
                 isShowOpen = false;
                 AppOpenManager.OnAppOpenClose onAppOpenClose = new AppOpenManager.OnAppOpenClose() {
@@ -660,27 +694,25 @@ public class Splash extends AppCompatActivity {
                         }
                         if (checkAppOpen) {
                             checkAppOpen = false;
-                            FailsAds("g");
+                            if (MyProHelperClass.getExtraSwitch_4().equals("1"))
+                                FailsAds("g");
+                            else
+                                NextIntent(contextx, intentx);
                         }
                     }
 
                     @Override
                     public void OnAppOpenClose() {
-
                         if (checkAppOpen) {
                             checkAppOpen = false;
                         }
-
                         if (isShowOpen) {
                             isShowOpen = false;
                         }
-
                         if (!OpenAdsStatus) {
                             OpenAdsStatus = true;
                             NextIntent(contextx, intentx);
                         }
-
-
                     }
                 };
                 isShowOpen = true;
@@ -1298,7 +1330,7 @@ public class Splash extends AppCompatActivity {
                 public void run() {
                     NextIntent(contextx, intentx);
                 }
-            },3000);
+            }, 3000);
         }
     }
 
@@ -1529,4 +1561,11 @@ public class Splash extends AppCompatActivity {
             context.startActivity(marketIntent);
         }
     }
+
+
+    //Without preload ads
+    private static void InOpenAds() {
+        GoogleAppOpen();
+    }
+
 }

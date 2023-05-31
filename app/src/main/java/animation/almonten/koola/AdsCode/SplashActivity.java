@@ -29,6 +29,6 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Splash.StartAnimation(this, new Intent(this, MainActivity.class), "Test", "1", 1);
+        Splash.StartAnimation(this, new Intent(this, MainActivity.class), "Test", "1", 0);
     }
 }
