@@ -183,41 +183,60 @@ public class NextAnimation {
     public static void BackAnimation(Activity context, Intent intent) {
         main_context = context;
         main_intent = intent;
-        if (NextAnimation.checkConnection(context)) {
-            if (MyProHelperClass.getBackAdsOnOff().equals("1")) {
-                /**
-                 * Skip Ads
-                 */
-                if (MyProHelperClass.getBackCounter() != 5000) {
-                    auto_notShow_adsBack++;
-                    if (MyProHelperClass.getBackCounter() + 1 == auto_notShow_adsBack) {
-                        auto_notShow_adsBack = 0;
+
+        if (MyProHelperClass.getBackAdsOnOff().equals("1")) {
+            if (!MyProHelperClass.isOnline(context)) {
+                context.startActivity(new Intent(context, InternetErrorActivity.class));
+                return;
+            }
+            /*Stop Ads*/
+            if (MyProHelperClass.getCounter_Inter() == 0) {
+                return;
+            }
+
+            /*Skip Ads*/
+            if (MyProHelperClass.getCounter_Inter() != 5000) {
+                auto_notShow_ads_inter++;
+                if (MyProHelperClass.getCounter_Inter() + 1 == auto_notShow_ads_inter) {
+                    auto_notShow_ads_inter = 0;
+                    if (MyProHelperClass.getExtraSwitch_4().equals("0")) {
+                        dialog = MyProHelperClass.startLoader(main_context);
+                        if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
+                            StopPreLoadMixAds();
+                        } else {
+                            StopPreLoad();
+                        }
+                    } else {
                         if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
                             MixAds();
                         } else {
                             RegularADS();
                         }
-                        return;
                     }
                     return;
                 }
-
-                /*Stop pre Load*/
-                if (MyProHelperClass.getExtraSwitch_4().equals("0")) {
-                    dialog = MyProHelperClass.startLoader(main_context);
-                    StopPreLoad();
-                    return;
-                }
-
-                /**
-                 * Mix Ads
-                 */
-                if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
-                    MixAds();
-                } else {
-                    RegularADS();
-                }
+                return;
             }
+
+            /*Stop pre Load*/
+            if (MyProHelperClass.getExtraSwitch_4().equals("0")) {
+                dialog = MyProHelperClass.startLoader(main_context);
+                if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
+                    StopPreLoadMixAds();
+                } else {
+                    StopPreLoad();
+                }
+                return;
+            }
+
+            /*Mix and Regular ads*/
+            if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
+                MixAds();
+            } else {
+                RegularADS();
+            }
+        } else {
+            NextIntent();
         }
     }
 

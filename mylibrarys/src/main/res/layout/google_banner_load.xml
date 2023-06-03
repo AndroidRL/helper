@@ -7,7 +7,7 @@
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_view_container"
         android:layout_width="match_parent"
-        android:layout_height="290dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/linear_ads_shows_small_banner"

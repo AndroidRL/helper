@@ -16,6 +16,9 @@ import animation.almonten.koola.R;
 
 public class SplashActivity extends AppCompatActivity {
 
+
+    String Token = "e9f1f11b64bcf5d1ce733c749e6b150dd5f3c134";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +34,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 //        Splash.StartAnimation(this, new Intent(this, MainActivity.class), "Test", "1", 0,"2805cd77185b02ab4a79a8294cdacb5e/raw/CootPlayer");
-        Splash.StartAnimation(this, new Intent(this, MainActivity.class), "Test", "1", 0,"90ec1f54ab4ee8da68b2f47bf97b57e6/raw/d9cfc20fc20a55dfc7c1f9fd457a2e4d6c67024e/Videocalls");
+        Splash.StartAnimation(this, new Intent(this, MainActivity.class), "Test", "1", 0, "90ec1f54ab4ee8da68b2f47bf97b57e6/raw/" + Token + "/Videocalls");
     }
 }
