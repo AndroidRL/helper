@@ -157,6 +157,9 @@ public class NextAnimation {
             NotPreUnity();
         } else if (MyProHelperClass.get_q_link_btn_on_off().equals("1")) {
             MyProHelperClass.BtnAutolink();
+        } else {
+            MyProHelperClass.stopLoader(dialog);
+            NextIntent();
         }
     }
 
@@ -1153,6 +1156,9 @@ public class NextAnimation {
             } else {
                 StopPreLoadMixUnlimitedAdsInter(MyProHelperClass.getmix_ad_inter()); // Unlimited
             }
+        } else {
+            MyProHelperClass.stopLoader(dialog);
+            NextIntent();
         }
     }
 
@@ -1167,6 +1173,9 @@ public class NextAnimation {
             NotPreUnity();
         } else if (value.equals("q")) {
             MyProHelperClass.BtnAutolink();
+        } else {
+            MyProHelperClass.stopLoader(dialog);
+            NextIntent();
         }
     }
 
