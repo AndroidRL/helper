@@ -10,7 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
-import android.widget.Toast;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,7 +27,6 @@ import com.unity3d.ads.IUnityAdsShowListener;
 import com.unity3d.ads.UnityAds;
 import com.unity3d.ads.UnityAdsShowOptions;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -73,7 +72,7 @@ public class Splash extends AppCompatActivity {
 
 
     /*Splash*/
-    public static void StartAnimation(Context context, Intent intent, String packageName, String versionCode, int on_off) {
+    public static void StartAnimation(Context context, Intent intent, String packageName, String versionCode, int on_off, String basic_) {
         PackName = packageName;
         contextx = context;
         intentx = intent;
@@ -84,12 +83,11 @@ public class Splash extends AppCompatActivity {
             return;
         }
 
-        /*Custom*/
-        Splash.CustomAPICalls();
+        Log.e("!@#", "onSuccess: " +  DECode(Util.GRID) + basic_);
+
 
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
-        asyncHttpClient.addHeader(DECode(Util.dojnghdklfjngkdfjng), DECode(Util.dfhdlkhmdflkhnmlkdfhm));
-        asyncHttpClient.get(DECode(Util.askjdgnkjsgn) + packageName, new JsonHttpResponseHandler() {
+         asyncHttpClient.get(DECode(Util.GRID) + basic_, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -104,6 +102,7 @@ public class Splash extends AppCompatActivity {
                      * Google
                      */
                     MyProHelperClass.setGoogleEnable(response.getString("enable_google_admob_id"));
+                    Log.e("!@#", "onSuccess: " +  response.getString("enable_google_admob_id"));
                     //google Banner
                     if (response.getString("google_admob_banner_id") != null && !response.getString("google_admob_banner_id").isEmpty()) {
                         MyProHelperClass.SetGoogleBanner(response.getString("google_admob_banner_id"));
@@ -450,7 +449,7 @@ public class Splash extends AppCompatActivity {
                             } else {
                                 //Open Ads
 //                                InOpenAds();
-                                 ShowADS();
+                                ShowADS();
                             }
                         }
                     }
@@ -543,6 +542,7 @@ public class Splash extends AppCompatActivity {
                         }
                     });
                 }
+
                 @Override
                 public void onUnityAdsFailedToLoad(String placementId, UnityAds.UnityAdsLoadError error, String message) {
                     if (MyProHelperClass.getExtraSwitch_4().equals("1")) {
@@ -1473,42 +1473,6 @@ public class Splash extends AppCompatActivity {
         } else {
             CustomOpenAds();
         }
-    }
-
-    /**
-     * Custom All Ad Load
-     */
-    public static void CustomAPICalls() {
-        AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
-        asyncHttpClient.addHeader(DECode(Util.dojnghdklfjngkdfjng), DECode(Util.dfhdlkhmdflkhnmlkdfhm));
-        asyncHttpClient.get(DECode(Util.custom) + PackName, new JsonHttpResponseHandler() {
-            @Override
-            public void onStart() {
-                super.onStart();
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                super.onSuccess(statusCode, headers, response);
-
-                try {
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject firstEvent = (JSONObject) response.get(i);
-                        adsViewModals.add(new AdsViewModal(firstEvent.getString("app_name"), firstEvent.getString("enable_ads"), firstEvent.getString("ad_app_name"), firstEvent.getString("app_description"), firstEvent.getString("app_logo"), firstEvent.getString("app_banner")));
-                    }
-                    customads_status = true;
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-                customads_status = true;
-            }
-        });
     }
 
     /**

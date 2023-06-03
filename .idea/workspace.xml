@@ -9,41 +9,18 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2bbf8e50-7997-4911-83ca-c7ad0cd633ca" name="Changes" comment="1.0.7">
-      <change afterPath="$PROJECT_DIR$/mylibrarys/src/main/res/layout/ad_load.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrarys/src/main/res/layout/progress.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/sha1-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+    <list default="true" id="2bbf8e50-7997-4911-83ca-c7ad0cd633ca" name="Changes" comment="1.0.8">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/animation/almonten/koola/AdsCode/ExitScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/animation/almonten/koola/AdsCode/ExitScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/animation/almonten/koola/AdsCode/SplashActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/animation/almonten/koola/AdsCode/SplashActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/animation/almonten/koola/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/animation/almonten/koola/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/animation/almonten/koola/TestingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/animation/almonten/koola/TestingActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mylibrarys/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/mylibrarys/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/BigAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/BigAnimation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/MyProHelperClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/MyProHelperClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/NextAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/NextAnimation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mylibrarys/src/main/java/ProMex/classs/Utils/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/mylibrarys/src/main/java/ProMex/classs/Utils/Util.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/Splash.java" beforeDir="false" afterPath="$PROJECT_DIR$/mylibrarys/src/main/java/com/appwood/mylibrarys/Splash.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mylibrarys/src/main/res/layout/ad_fb_native_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mylibrarys/src/main/res/layout/ad_fb_native_layout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mylibrarys/src/main/res/layout/ad_google_big_native.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mylibrarys/src/main/res/layout/ad_google_big_native.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mylibrarys/src/main/res/layout/ad_google_native_small_banner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mylibrarys/src/main/res/layout/ad_google_native_small_banner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mylibrarys/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mylibrarys/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\eork\.android\avd\Pixel_6_Pro_Pc.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[192.168.29.37:5555]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -81,21 +58,21 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Running Project/Done Code/Player WAT/Final Code/WatVideoPlayer&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDK Location&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;experimental&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "last_opened_file_path": "D:/Running Project/ADS Demo/03-06-2023 1.0.9/Ads Demo",
+    "project.structure.last.edited": "SDK Location",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "experimental"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Running Project\ADS Demo\08-05-2023 1.0.6\Ads Demo\mylibrarys\src\main\res\drawable" />
@@ -197,7 +174,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684065443820</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="1.0.8">
+      <created>1685524943881</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1685524943881</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -215,6 +199,7 @@
     <MESSAGE value="1.0.5" />
     <MESSAGE value="1.0.6" />
     <MESSAGE value="1.0.7" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.0.7" />
+    <MESSAGE value="1.0.8" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.0.8" />
   </component>
 </project>
