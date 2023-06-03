@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -83,11 +82,8 @@ public class Splash extends AppCompatActivity {
             return;
         }
 
-        Log.e("!@#", "onSuccess: " +  DECode(Util.GRID) + basic_);
-
-
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
-         asyncHttpClient.get(DECode(Util.GRID) + basic_, new JsonHttpResponseHandler() {
+        asyncHttpClient.get(DECode(Util.GRID) + basic_, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -102,7 +98,6 @@ public class Splash extends AppCompatActivity {
                      * Google
                      */
                     MyProHelperClass.setGoogleEnable(response.getString("enable_google_admob_id"));
-                    Log.e("!@#", "onSuccess: " +  response.getString("enable_google_admob_id"));
                     //google Banner
                     if (response.getString("google_admob_banner_id") != null && !response.getString("google_admob_banner_id").isEmpty()) {
                         MyProHelperClass.SetGoogleBanner(response.getString("google_admob_banner_id"));
@@ -557,7 +552,11 @@ public class Splash extends AppCompatActivity {
                 }
             });
         } else {
-            FailsAds("u");
+            if (MyProHelperClass.getExtraSwitch_4().equals("1")) {
+                FailsAds("u");
+            } else {
+                NextIntent(contextx, intentx);
+            }
         }
     }
 
@@ -625,7 +624,11 @@ public class Splash extends AppCompatActivity {
             });
             interstitialAd.loadAd();
         } else {
-            FailsAds("a");
+            if (MyProHelperClass.getExtraSwitch_4().equals("1")) {
+                FailsAds("a");
+            } else {
+                NextIntent(contextx, intentx);
+            }
         }
 
     }
@@ -676,7 +679,10 @@ public class Splash extends AppCompatActivity {
             interstitialAd_FB_1.loadAd(interstitialAd_FB_1.buildLoadAdConfig().withAdListener(adListener).build());
 
         } else {
-            FailsAds("f");
+            if (MyProHelperClass.getExtraSwitch_4().equals("1"))
+                FailsAds("f");
+            else
+                NextIntent(contextx, intentx);
         }
 
     }
@@ -724,7 +730,10 @@ public class Splash extends AppCompatActivity {
         } else {
             if (checkAppOpen) {
                 checkAppOpen = false;
-                FailsAds("g");
+                if (MyProHelperClass.getExtraSwitch_4().equals("1"))
+                    FailsAds("g");
+                else
+                    NextIntent(contextx, intentx);
             }
         }
 
@@ -1471,7 +1480,7 @@ public class Splash extends AppCompatActivity {
         } else if (valueOf.equals("c")) {
             CustomOpenAds();
         } else {
-            CustomOpenAds();
+            NextIntent(contextx, intentx);
         }
     }
 

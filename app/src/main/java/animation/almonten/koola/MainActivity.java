@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.appwood.mylibrarys.BigAnimation;
 import com.appwood.mylibrarys.NextAnimation;
-import com.appwood.mylibrarys.SmallAnimation;
 
 
 public class MainActivity extends AppCompatActivity {

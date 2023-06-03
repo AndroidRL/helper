@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
@@ -102,14 +103,11 @@ public class BigAnimation {
             if (MyProHelperClass.getCounter_Native() + 1 == auto_notShow_ads_native) {
                 auto_notShow_ads_native = 0;
                 if (MyProHelperClass.getExtraSwitch_4().equals("0")) {
-                    /*Stop pre Load*/
-                    LayoutInflater inflater = (LayoutInflater) main_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    LinearLayout load_view = (LinearLayout) inflater.inflate(R.layout.ad_load, main_native, false);
-                    ShimmerFrameLayout layouts = load_view.findViewById(R.id.shimmer_view_container);
-                    layouts.startShimmer();
-                    main_native.removeAllViews();
-                    main_native.addView(load_view);
-                    StopPreLoadNative();
+                    if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
+                        StopPreLoadNativeMixAds();
+                    } else {
+                        StopPreLoadNative();
+                    }
                 } else {
                     if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
                         NativeMixAds();
@@ -123,12 +121,6 @@ public class BigAnimation {
         }
 
         if (MyProHelperClass.getExtraSwitch_4().equals("0")) {
-            LayoutInflater inflater = (LayoutInflater) main_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            LinearLayout load_view = (LinearLayout) inflater.inflate(R.layout.ad_load, main_native, false);
-            ShimmerFrameLayout layouts = load_view.findViewById(R.id.shimmer_view_container);
-            layouts.startShimmer();
-            main_native.removeAllViews();
-            main_native.addView(load_view);
             if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
                 StopPreLoadNativeMixAds();
             } else {
@@ -151,21 +143,25 @@ public class BigAnimation {
     private static void StopPreLoadNative() {
         if (MyProHelperClass.getGoogleEnable().equals("1")) {
             if (MyProHelperClass.getGoogleNative() != null && !MyProHelperClass.getGoogleNative().isEmpty()) {
+                GoogleBigNativeLoadDialog();
                 StopPreGoogleNative();
             } else {
+                GoogleSmallNativeLoadDialog();
                 StopPreGoogleNativeSmall();
             }
         } else if (MyProHelperClass.getFacebookEnable().equals("1")) {
+            FacebookNativeLoadDialog();
             StopPreFacebookNative();
         } else if (MyProHelperClass.getAppLovinEnable().equals("1")) {
+            GoogleBigNativeLoadDialog();
             StopPreAppLovingNative();
         } else if (MyProHelperClass.getUnityEnable().equals("1")) {
+            GoogleSmallNativeLoadDialog();
             StopPreUnityNative();
         } else {
             main_native.removeAllViews();
         }
     }
-
 
     private static void RegularAds() {
         if (MyProHelperClass.getGoogleEnable().equals("1")) {
@@ -906,7 +902,7 @@ public class BigAnimation {
             public void onBannerFailedToLoad(BannerView bannerAdView, BannerErrorInfo errorInfo) {
                 regular_unity_banner_adView = null;
                 main_native.removeAllViews();
-            }
+             }
 
             @Override
             public void onBannerClick(BannerView bannerAdView) {
@@ -972,19 +968,52 @@ public class BigAnimation {
     private static void StopPreLoadMixAdsShowNative(String value) {
         if (value.equals("g")) {
             if (MyProHelperClass.getGoogleNative() != null && !MyProHelperClass.getGoogleNative().isEmpty()) {
+                GoogleBigNativeLoadDialog();
                 StopPreGoogleNative();
             } else {
+                GoogleSmallNativeLoadDialog();
                 StopPreGoogleNativeSmall();
             }
         } else if (value.equals("f")) {
+            FacebookNativeLoadDialog();
             StopPreFacebookNative();
         } else if (value.equals("a")) {
+            GoogleBigNativeLoadDialog();
             StopPreAppLovingNative();
         } else if (value.equals("u")) {
+            GoogleSmallNativeLoadDialog();
             StopPreUnityNative();
         } else {
             main_native.removeAllViews();
         }
+    }
+
+    public static void GoogleBigNativeLoadDialog() {
+        LayoutInflater inflater = (LayoutInflater) main_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout load_view = (LinearLayout) inflater.inflate(R.layout.google_native_load, main_native, false);
+        ShimmerFrameLayout layouts = load_view.findViewById(R.id.shimmer_view_container);
+        layouts.startShimmer();
+        main_native.removeAllViews();
+        main_native.addView(load_view);
+    }
+
+    public static void GoogleSmallNativeLoadDialog() {
+
+        LayoutInflater inflater = (LayoutInflater) main_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout load_view = (LinearLayout) inflater.inflate(R.layout.google_banner_load, main_native, false);
+        ShimmerFrameLayout layouts = load_view.findViewById(R.id.shimmer_view_container);
+        layouts.startShimmer();
+        main_native.removeAllViews();
+        main_native.addView(load_view);
+    }
+
+    public static void FacebookNativeLoadDialog() {
+        LayoutInflater inflater = (LayoutInflater) main_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout load_view = (LinearLayout) inflater.inflate(R.layout.fb_native_load, main_native, false);
+        ShimmerFrameLayout layouts = load_view.findViewById(R.id.shimmer_view_container);
+        layouts.startShimmer();
+        main_native.removeAllViews();
+        main_native.addView(load_view);
     }
 
 }

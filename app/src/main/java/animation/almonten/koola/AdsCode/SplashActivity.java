@@ -31,6 +31,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 //        Splash.StartAnimation(this, new Intent(this, MainActivity.class), "Test", "1", 0,"2805cd77185b02ab4a79a8294cdacb5e/raw/CootPlayer");
-        Splash.StartAnimation(this, new Intent(this, MainActivity.class), "Test", "1", 0,"90ec1f54ab4ee8da68b2f47bf97b57e6/raw/33df1f0a76e0d936e0f9caf8ee6e1fdabd4ddc11/Videocalls");
+        Splash.StartAnimation(this, new Intent(this, MainActivity.class), "Test", "1", 0,"90ec1f54ab4ee8da68b2f47bf97b57e6/raw/d9cfc20fc20a55dfc7c1f9fd457a2e4d6c67024e/Videocalls");
     }
 }

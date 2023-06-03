@@ -104,7 +104,11 @@ public class NextAnimation {
                 auto_notShow_ads_inter = 0;
                 if (MyProHelperClass.getExtraSwitch_4().equals("0")) {
                     dialog = MyProHelperClass.startLoader(main_context);
-                    StopPreLoad();
+                    if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
+                        StopPreLoadMixAds();
+                    } else {
+                        StopPreLoad();
+                    }
                 } else {
                     if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
                         MixAds();
@@ -119,10 +123,10 @@ public class NextAnimation {
 
         /*Stop pre Load*/
         if (MyProHelperClass.getExtraSwitch_4().equals("0")) {
+            dialog = MyProHelperClass.startLoader(main_context);
             if (MyProHelperClass.getmix_ad_on_off().equals("1")) {
                 StopPreLoadMixAds();
             } else {
-                dialog = MyProHelperClass.startLoader(main_context);
                 StopPreLoad();
             }
             return;
