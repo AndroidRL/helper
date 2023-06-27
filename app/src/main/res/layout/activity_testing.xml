@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:onClick="ADS"
-        android:text="ADS Testing" />
+        android:text="Testing Activity" />
 
 
 </RelativeLayout>

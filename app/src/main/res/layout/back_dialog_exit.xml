@@ -19,7 +19,7 @@
             android:paddingTop="20sp"
             android:paddingRight="20sp"
             android:paddingBottom="20sp"
-            android:text="@string/are_you_sure_n_you_want_to_exit"
+            android:text="are_you_sure_n_you_want_to_exit"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -42,7 +42,7 @@
                 android:background="@drawable/app_btn"
                 android:backgroundTint="#4CAF50"
                 android:gravity="center"
-                android:text="@string/no_text"
+                android:text="No"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -60,7 +60,7 @@
                 android:background="@drawable/app_btn"
                 android:backgroundTint="#BF1B1B"
                 android:gravity="center"
-                android:text="@string/yes_text"
+                android:text="Yes"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
